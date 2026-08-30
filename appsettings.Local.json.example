@@ -1,0 +1,22 @@
+{
+  "Portal": {
+    "BaseUrl": "https://e-albania-test.com/",
+    "Headless": false
+  },
+  "Qytetar": {
+    "Username": "J35413056V",
+    "Password": "FJALEKALIMI"
+  },
+  "QytetarJ70903019W": {
+    "Username": "J70903019W",
+    "Password": "FJALEKALIMI"
+  },
+  "QytetarF60416142P": {
+    "Username": "F60416142P",
+    "Password": "FJALEKALIMI"
+  },
+  "Biznes": {
+    "Username": "M53330201S",
+    "Password": "FJALEKALIMI"
+  }
+}

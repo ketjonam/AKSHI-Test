@@ -1,0 +1,2342 @@
+[
+    {
+        "code":  "11145",
+        "title":  "VertetimPerGradatShkencore",
+        "institution":  "AMS",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "11145",
+        "startMode":  "NewApplication",
+        "sourceFile":  "AMS\\_11145_.cs"
+    },
+    {
+        "code":  "11145",
+        "title":  "VertetimPerGradatShkencore_FailCase_ReturnsUiMessage",
+        "institution":  "AMS",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "11145",
+        "startMode":  "NewApplication",
+        "sourceFile":  "AMS\\_11145_FailCase_.cs"
+    },
+    {
+        "code":  "12413",
+        "title":  "ShqyrtimiDosjes",
+        "institution":  "AMS",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "12413",
+        "startMode":  "NewApplication",
+        "sourceFile":  "AMS\\_12413_.cs"
+    },
+    {
+        "code":  "12413",
+        "title":  "ShqyrtimiDosjes_FailCase_ReturnsUiMessage",
+        "institution":  "AMS",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "12413",
+        "startMode":  "NewApplication",
+        "sourceFile":  "AMS\\_12413_FailCase_.cs"
+    },
+    {
+        "code":  "13559",
+        "title":  "RinovimiLicensesAdministratoreveTeFalimentit",
+        "institution":  "AMS",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "13559",
+        "startMode":  "NewApplication",
+        "sourceFile":  "AMS\\_13559_.cs"
+    },
+    {
+        "code":  "13559",
+        "title":  "RinovimiLicensesAdministratoreveTeFalimentit_FailCase_ReturnsUiMessage",
+        "institution":  "AMS",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "13559",
+        "startMode":  "NewApplication",
+        "sourceFile":  "AMS\\_13559_FailCase_.cs"
+    },
+    {
+        "code":  "15007",
+        "title":  "PeshkimClodhesArgetues",
+        "institution":  "AMS",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "15007",
+        "startMode":  "NewApplication",
+        "sourceFile":  "AMS\\_15007_.cs"
+    },
+    {
+        "code":  "15007",
+        "title":  "PeshkimClodhesArgetues_FailCase_ReturnsUiMessage",
+        "institution":  "AMS",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "15007",
+        "startMode":  "NewApplication",
+        "sourceFile":  "AMS\\_15007_FailCase_.cs"
+    },
+    {
+        "code":  "15046",
+        "title":  "LejeKalimiKufitar",
+        "institution":  "AMS",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "15046",
+        "startMode":  "NewApplication",
+        "sourceFile":  "AMS\\_15046_.cs"
+    },
+    {
+        "code":  "15046",
+        "title":  "LejeKalimiKufitar_FailCase_ReturnsUiMessage",
+        "institution":  "AMS",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "15046",
+        "startMode":  "NewApplication",
+        "sourceFile":  "AMS\\_15046_FailCase_.cs"
+    },
+    {
+        "code":  "15166",
+        "title":  "FondiPyjor",
+        "institution":  "AMS",
+        "profileType":  "Organisation",
+        "loginProfile":  "Biznes",
+        "search":  "15166",
+        "startMode":  "NewApplication",
+        "sourceFile":  "AMS\\_15166_.cs"
+    },
+    {
+        "code":  "15166",
+        "title":  "FondiPyjor_FailCase_ReturnsUiMessage",
+        "institution":  "AMS",
+        "profileType":  "Organisation",
+        "loginProfile":  "Biznes",
+        "search":  "15166",
+        "startMode":  "NewApplication",
+        "sourceFile":  "AMS\\_15166_FailCase_.cs"
+    },
+    {
+        "code":  "15389",
+        "title":  "PyjetdheKullotat",
+        "institution":  "AMS",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "15389",
+        "startMode":  "NewApplication",
+        "sourceFile":  "AMS\\_15389_.cs"
+    },
+    {
+        "code":  "15389",
+        "title":  "PyjetdheKullotat_FailCase_ReturnsUiMessage",
+        "institution":  "AMS",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "15389",
+        "startMode":  "NewApplication",
+        "sourceFile":  "AMS\\_15389_FailCase_.cs"
+    },
+    {
+        "code":  "9429",
+        "title":  "LicensimiAdministratoreveTeFalimentit",
+        "institution":  "AMS",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "9429",
+        "startMode":  "NewApplication",
+        "sourceFile":  "AMS\\_9429_.cs"
+    },
+    {
+        "code":  "9429",
+        "title":  "LicensimiAdministratoreveTeFalimentit_FailCase_ReturnsUiMessage",
+        "institution":  "AMS",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "9429",
+        "startMode":  "NewApplication",
+        "sourceFile":  "AMS\\_9429_FailCase_.cs"
+    },
+    {
+        "code":  "9635",
+        "title":  "KerkesePerLenieShtetesie",
+        "institution":  "AMS",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "9635",
+        "startMode":  "NewApplication",
+        "sourceFile":  "AMS\\_9635_.cs"
+    },
+    {
+        "code":  "9635",
+        "title":  "KerkesePerLenieShtetesie_FailCase_ReturnsUiMessage",
+        "institution":  "AMS",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "9635",
+        "startMode":  "NewApplication",
+        "sourceFile":  "AMS\\_9635_FailCase_.cs"
+    },
+    {
+        "code":  "9636",
+        "title":  "KerkesePeRifitimShtetesie",
+        "institution":  "AMS",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "9636",
+        "startMode":  "NewApplication",
+        "sourceFile":  "AMS\\_9636_.cs"
+    },
+    {
+        "code":  "9636",
+        "title":  "KerkesePeRifitimShtetesie_FailCase_ReturnsUiMessage",
+        "institution":  "AMS",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "9636",
+        "startMode":  "NewApplication",
+        "sourceFile":  "AMS\\_9636_FailCase_.cs"
+    },
+    {
+        "code":  "9852",
+        "title":  "KerkesePerPjesmarrjeNeAktivitete",
+        "institution":  "AMS",
+        "profileType":  "Organisation",
+        "loginProfile":  "Biznes",
+        "search":  "9852",
+        "startMode":  "NewApplication",
+        "sourceFile":  "AMS\\_9852_.cs"
+    },
+    {
+        "code":  "9852",
+        "title":  "KerkesePerPjesmarrjeNeAktivitete_FailCase_ReturnsUiMessage",
+        "institution":  "AMS",
+        "profileType":  "Organisation",
+        "loginProfile":  "Biznes",
+        "search":  "9852",
+        "startMode":  "NewApplication",
+        "sourceFile":  "AMS\\_9852_FailCase_.cs"
+    },
+    {
+        "code":  "12426",
+        "title":  "MarrjeFleteProjekti",
+        "institution":  "AQTN",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "12426",
+        "startMode":  "NewApplication",
+        "sourceFile":  "AQTN\\_12426_.cs"
+    },
+    {
+        "code":  "12426",
+        "title":  "MarrjeFleteProjekti_FailCase_ReturnsUiMessage",
+        "institution":  "AQTN",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "12426",
+        "startMode":  "NewApplication",
+        "sourceFile":  "AQTN\\_12426_FailCase_.cs"
+    },
+    {
+        "code":  "12427",
+        "title":  "MarrjeDosjePronesie",
+        "institution":  "AQTN",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "12427",
+        "startMode":  "NewApplication",
+        "sourceFile":  "AQTN\\_12427_.cs"
+    },
+    {
+        "code":  "12427",
+        "title":  "MarrjeDosjePronesie_FailCase_ReturnsUiMessage",
+        "institution":  "AQTN",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "12427",
+        "startMode":  "NewApplication",
+        "sourceFile":  "AQTN\\_12427_FailCase_.cs"
+    },
+    {
+        "code":  "12428",
+        "title":  "MarrjeGenPlan",
+        "institution":  "AQTN",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "12428",
+        "startMode":  "NewApplication",
+        "sourceFile":  "AQTN\\_12428_.cs"
+    },
+    {
+        "code":  "12428",
+        "title":  "MarrjeGenPlan_FailCase_ReturnsUiMessage",
+        "institution":  "AQTN",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "12428",
+        "startMode":  "NewApplication",
+        "sourceFile":  "AQTN\\_12428_FailCase_.cs"
+    },
+    {
+        "code":  "13826",
+        "title":  "Dhenie_tellesie_sondave_puseve",
+        "institution":  "AQTN",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "13826",
+        "startMode":  "NewApplication",
+        "sourceFile":  "AQTN\\_13826_.cs"
+    },
+    {
+        "code":  "13826",
+        "title":  "Dhenie_tellesie_sondave_puseve_FailCase_ReturnsUiMessage",
+        "institution":  "AQTN",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "13826",
+        "startMode":  "NewApplication",
+        "sourceFile":  "AQTN\\_13826_FailCase_.cs"
+    },
+    {
+        "code":  "13827",
+        "title":  "FletePreventivi",
+        "institution":  "AQTN",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "13827",
+        "startMode":  "NewApplication",
+        "sourceFile":  "AQTN\\_13827_.cs"
+    },
+    {
+        "code":  "13827",
+        "title":  "FletePreventivi_FailCase_ReturnsUiMessage",
+        "institution":  "AQTN",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "13827",
+        "startMode":  "NewApplication",
+        "sourceFile":  "AQTN\\_13827_FailCase_.cs"
+    },
+    {
+        "code":  "13828",
+        "title":  "PlaniRregulluesFshati",
+        "institution":  "AQTN",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "13828",
+        "startMode":  "NewApplication",
+        "sourceFile":  "AQTN\\_13828_.cs"
+    },
+    {
+        "code":  "13828",
+        "title":  "PlaniRregulluesFshati_FailCase_ReturnsUiMessage",
+        "institution":  "AQTN",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "13828",
+        "startMode":  "NewApplication",
+        "sourceFile":  "AQTN\\_13828_FailCase_.cs"
+    },
+    {
+        "code":  "13829",
+        "title":  "Plansheta_Gjeodezike",
+        "institution":  "AQTN",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "13829",
+        "startMode":  "NewApplication",
+        "sourceFile":  "AQTN\\_13829_.cs"
+    },
+    {
+        "code":  "13829",
+        "title":  "Plansheta_Gjeodezike_FailCase_ReturnsUiMessage",
+        "institution":  "AQTN",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "13829",
+        "startMode":  "NewApplication",
+        "sourceFile":  "AQTN\\_13829_FailCase_.cs"
+    },
+    {
+        "code":  "13830",
+        "title":  "PunimeGjeologjikeGjeofizike",
+        "institution":  "AQTN",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "13830",
+        "startMode":  "NewApplication",
+        "sourceFile":  "AQTN\\_13830_.cs"
+    },
+    {
+        "code":  "13830",
+        "title":  "PunimeGjeologjikeGjeofizike_FailCase_ReturnsUiMessage",
+        "institution":  "AQTN",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "13830",
+        "startMode":  "NewApplication",
+        "sourceFile":  "AQTN\\_13830_FailCase_.cs"
+    },
+    {
+        "code":  "13831",
+        "title":  "PikeKordinate",
+        "institution":  "AQTN",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "13831",
+        "startMode":  "NewApplication",
+        "sourceFile":  "AQTN\\_13831_.cs"
+    },
+    {
+        "code":  "13831",
+        "title":  "PikeKordinate_FailCase_ReturnsUiMessage",
+        "institution":  "AQTN",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "13831",
+        "startMode":  "NewApplication",
+        "sourceFile":  "AQTN\\_13831_FailCase_.cs"
+    },
+    {
+        "code":  "13832",
+        "title":  "Projekteve_Ujesjellesve_Kanalizimeve",
+        "institution":  "AQTN",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "13832",
+        "startMode":  "NewApplication",
+        "sourceFile":  "AQTN\\_13832_.cs"
+    },
+    {
+        "code":  "13832",
+        "title":  "Projekteve_Ujesjellesve_Kanalizimeve_FailCase_ReturnsUiMessage",
+        "institution":  "AQTN",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "13832",
+        "startMode":  "NewApplication",
+        "sourceFile":  "AQTN\\_13832_FailCase_.cs"
+    },
+    {
+        "code":  "13833",
+        "title":  "Projekteve_Ujesjellesve_Kanalizimeve_KurJepenPjesore",
+        "institution":  "AQTN",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "13833",
+        "startMode":  "NewApplication",
+        "sourceFile":  "AQTN\\_13833_.cs"
+    },
+    {
+        "code":  "13833",
+        "title":  "Projekteve_Ujesjellesve_Kanalizimeve_KurJepenPjesore_FailCase_ReturnsUiMessage",
+        "institution":  "AQTN",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "13833",
+        "startMode":  "NewApplication",
+        "sourceFile":  "AQTN\\_13833_FailCase_.cs"
+    },
+    {
+        "code":  "13834",
+        "title":  "FotografiDixhitaleDokumentitTeknik",
+        "institution":  "AQTN",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "13834",
+        "startMode":  "NewApplication",
+        "sourceFile":  "AQTN\\_13834_.cs"
+    },
+    {
+        "code":  "13834",
+        "title":  "FotografiDixhitaleDokumentitTeknik_FailCase_ReturnsUiMessage",
+        "institution":  "AQTN",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "13834",
+        "startMode":  "NewApplication",
+        "sourceFile":  "AQTN\\_13834_FailCase_.cs"
+    },
+    {
+        "code":  "13846",
+        "title":  "FleteProjektiTip",
+        "institution":  "AQTN",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "13846",
+        "startMode":  "NewApplication",
+        "sourceFile":  "AQTN\\_13846_.cs"
+    },
+    {
+        "code":  "13846",
+        "title":  "FleteProjektiTip_FailCase_ReturnsUiMessage",
+        "institution":  "AQTN",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "13846",
+        "startMode":  "NewApplication",
+        "sourceFile":  "AQTN\\_13846_FailCase_.cs"
+    },
+    {
+        "code":  "13847",
+        "title":  "FleteProjektiA0",
+        "institution":  "AQTN",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "13847",
+        "startMode":  "NewApplication",
+        "sourceFile":  "AQTN\\_13847_.cs"
+    },
+    {
+        "code":  "13847",
+        "title":  "FleteProjektiA0_FailCase_ReturnsUiMessage",
+        "institution":  "AQTN",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "13847",
+        "startMode":  "NewApplication",
+        "sourceFile":  "AQTN\\_13847_FailCase_.cs"
+    },
+    {
+        "code":  "11154",
+        "title":  "RegjitrimAnijeKontrateBareboat",
+        "institution":  "DPDe",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "11154",
+        "startMode":  "NewApplication",
+        "sourceFile":  "DPDe\\_11154_.cs"
+    },
+    {
+        "code":  "11155",
+        "title":  "LejeDrejtimiPerMjetetLundruese",
+        "institution":  "DPDe",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "11155",
+        "startMode":  "NewApplication",
+        "sourceFile":  "DPDe\\_11155_.cs"
+    },
+    {
+        "code":  "11158",
+        "title":  "CertifikateMinimumiAnijeMjetLundrues",
+        "institution":  "DPDe",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "11158",
+        "startMode":  "NewApplication",
+        "sourceFile":  "DPDe\\_11158_.cs"
+    },
+    {
+        "code":  "11159",
+        "title":  "PasaporteDetareFloteTregtare",
+        "institution":  "DPDe",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "11159",
+        "startMode":  "NewApplication",
+        "sourceFile":  "DPDe\\_11159_.cs"
+    },
+    {
+        "code":  "11161",
+        "title":  "PasaporteDetareFlotePeshkimi",
+        "institution":  "DPDe",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "11161",
+        "startMode":  "NewApplication",
+        "sourceFile":  "DPDe\\_11161_.cs"
+    },
+    {
+        "code":  "14929",
+        "title":  "RegjistrimFillestarAnijeImportuar",
+        "institution":  "DPDe",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "14929",
+        "startMode":  "NewApplication",
+        "sourceFile":  "DPDe\\_14929_.cs"
+    },
+    {
+        "code":  "14930",
+        "title":  "RegjistrimAnijeNdertuarBrendaVendit",
+        "institution":  "DPDe",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "14930",
+        "startMode":  "NewApplication",
+        "sourceFile":  "DPDe\\_14930_.cs"
+    },
+    {
+        "code":  "14931",
+        "title":  "RegjistrimiteDhenaveTeNdryshuaraAnije",
+        "institution":  "DPDe",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "14931",
+        "startMode":  "NewApplication",
+        "sourceFile":  "DPDe\\_14931_.cs"
+    },
+    {
+        "code":  "14933",
+        "title":  "PasaporteDetareShtetasShqiptarTeHuaj",
+        "institution":  "DPDe",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "14933",
+        "startMode":  "NewApplication",
+        "sourceFile":  "DPDe\\_14933_.cs"
+    },
+    {
+        "code":  "14934",
+        "title":  "CertifikateKompetence",
+        "institution":  "DPDe",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "14934",
+        "startMode":  "NewApplication",
+        "sourceFile":  "DPDe\\_14934_.cs"
+    },
+    {
+        "code":  "14935",
+        "title":  "CertifikateEndorsement",
+        "institution":  "DPDe",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "14935",
+        "startMode":  "NewApplication",
+        "sourceFile":  "DPDe\\_14935_.cs"
+    },
+    {
+        "code":  "14936",
+        "title":  "CertifikateSipasKonventes",
+        "institution":  "DPDe",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "14936",
+        "startMode":  "NewApplication",
+        "sourceFile":  "DPDe\\_14936_.cs"
+    },
+    {
+        "code":  "15099",
+        "title":  "CertifikatePerPilot",
+        "institution":  "DPDe",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "15099",
+        "startMode":  "NewApplication",
+        "sourceFile":  "DPDe\\_15099_.cs"
+    },
+    {
+        "code":  "10092",
+        "title":  "Regjistrim_Ciklomotori",
+        "institution":  "DPSHTRR",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "10092",
+        "startMode":  "NewApplication",
+        "sourceFile":  "DPSHTRR\\_10092_.cs"
+    },
+    {
+        "code":  "10092",
+        "title":  "Regjistrim_Ciklomotori_FailCase_ReturnsUiMessage",
+        "institution":  "DPSHTRR",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "10092",
+        "startMode":  "NewApplication",
+        "sourceFile":  "DPSHTRR\\_10092_FailCase_.cs"
+    },
+    {
+        "code":  "10094",
+        "title":  "Regjistrim_Mjeti",
+        "institution":  "DPSHTRR",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "10094",
+        "startMode":  "NewApplication",
+        "sourceFile":  "DPSHTRR\\_10094_.cs"
+    },
+    {
+        "code":  "10094",
+        "title":  "Regjistrim_Mjeti_FailCase_ReturnsUiMessage",
+        "institution":  "DPSHTRR",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "10094",
+        "startMode":  "NewApplication",
+        "sourceFile":  "DPSHTRR\\_10094_FailCase_.cs"
+    },
+    {
+        "code":  "10096",
+        "title":  "Aplikim_Per_Nderrim_Targe",
+        "institution":  "DPSHTRR",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "10096",
+        "startMode":  "NewApplication",
+        "sourceFile":  "DPSHTRR\\_10096_Individ.cs"
+    },
+    {
+        "code":  "10096",
+        "title":  "Aplikim_Per_Nderrim_Targe_FailCase_ReturnsUiMessage",
+        "institution":  "DPSHTRR",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "10096",
+        "startMode":  "NewApplication",
+        "sourceFile":  "DPSHTRR\\_10096_FailCase_.cs"
+    },
+    {
+        "code":  "10098",
+        "title":  "Aplikim_Per_Nderrim_LejeQarkullimi",
+        "institution":  "DPSHTRR",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "10098",
+        "startMode":  "NewApplication",
+        "sourceFile":  "DPSHTRR\\_10098.cs"
+    },
+    {
+        "code":  "10098",
+        "title":  "Aplikim_Per_Nderrim_LejeQarkullimi_FailCase_ReturnsUiMessage",
+        "institution":  "DPSHTRR",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "10098",
+        "startMode":  "NewApplication",
+        "sourceFile":  "DPSHTRR\\_10098_FailCase_.cs"
+    },
+    {
+        "code":  "10100",
+        "title":  "Ndrimm_Pronesie",
+        "institution":  "DPSHTRR",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "10100",
+        "startMode":  "NewApplication",
+        "sourceFile":  "DPSHTRR\\_10100.cs"
+    },
+    {
+        "code":  "10100",
+        "title":  "Ndrimm_Pronesie_FailCase_ReturnsUiMessage",
+        "institution":  "DPSHTRR",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "10100",
+        "startMode":  "NewApplication",
+        "sourceFile":  "DPSHTRR\\_10100_FailCase_.cs"
+    },
+    {
+        "code":  "10109",
+        "title":  "Ndryshim_Gjeneralitetesh",
+        "institution":  "DPSHTRR",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "10109",
+        "startMode":  "NewApplication",
+        "sourceFile":  "DPSHTRR\\_10109_.cs"
+    },
+    {
+        "code":  "10109",
+        "title":  "Ndryshim_Gjeneralitetesh_FailCase_ReturnsUiMessage",
+        "institution":  "DPSHTRR",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "10109",
+        "startMode":  "NewApplication",
+        "sourceFile":  "DPSHTRR\\_10109_FailCase_.cs"
+    },
+    {
+        "code":  "10112",
+        "title":  "Rrimarrje_Leje_Drejtimi",
+        "institution":  "DPSHTRR",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "10112",
+        "startMode":  "NewApplication",
+        "sourceFile":  "DPSHTRR\\_10112_.cs"
+    },
+    {
+        "code":  "10112",
+        "title":  "Rrimarrje_Leje_Drejtimi_FailCase_ReturnsUiMessage",
+        "institution":  "DPSHTRR",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "10112",
+        "startMode":  "NewApplication",
+        "sourceFile":  "DPSHTRR\\_10112_FailCase_.cs"
+    },
+    {
+        "code":  "14111",
+        "title":  "KonvertimLejesDrejtimit",
+        "institution":  "DPSHTRR",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "14111",
+        "startMode":  "NewApplication",
+        "sourceFile":  "DPSHTRR\\_14111_.cs"
+    },
+    {
+        "code":  "14111",
+        "title":  "KonvertimLejesDrejtimit_FailCase_ReturnsUiMessage",
+        "institution":  "DPSHTRR",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "14111",
+        "startMode":  "NewApplication",
+        "sourceFile":  "DPSHTRR\\_14111_FailCase_.cs"
+    },
+    {
+        "code":  "39",
+        "title":  "AutomjeteteMia",
+        "institution":  "DPSHTRR",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "39",
+        "startMode":  "NewApplication",
+        "sourceFile":  "DPSHTRR\\_39_NID.cs"
+    },
+    {
+        "code":  "5016",
+        "title":  "GjendjaAktiveeMjetit",
+        "institution":  "DPSHTRR",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "5016",
+        "startMode":  "NewApplication",
+        "sourceFile":  "DPSHTRR\\_5016_.cs"
+    },
+    {
+        "code":  "5017",
+        "title":  "GjobatKontrollitTeknik",
+        "institution":  "DPSHTRR",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "5017",
+        "startMode":  "NewApplication",
+        "sourceFile":  "DPSHTRR\\_5017_.cs"
+    },
+    {
+        "code":  "772",
+        "title":  "TaksaVjetore",
+        "institution":  "DPSHTRR",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "772",
+        "startMode":  "NewApplication",
+        "sourceFile":  "DPSHTRR\\_772_NID.cs"
+    },
+    {
+        "code":  "879",
+        "title":  "KundravajtjeRrugore",
+        "institution":  "DPSHTRR",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "879",
+        "startMode":  "NewApplication",
+        "sourceFile":  "DPSHTRR\\_879_KundravajtjeRrugore.cs"
+    },
+    {
+        "code":  "10090",
+        "title":  "RipajisjeDAP",
+        "institution":  "DPSHTRR-AMS",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "10090",
+        "startMode":  "NewApplication",
+        "sourceFile":  "DPSHTRR-AMS\\_10090_.cs"
+    },
+    {
+        "code":  "10090",
+        "title":  "RipajisjeDAP_FailCase_ReturnsUiMessage",
+        "institution":  "DPSHTRR-AMS",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "10090",
+        "startMode":  "NewApplication",
+        "sourceFile":  "DPSHTRR-AMS\\_10090_FailCase_.cs"
+    },
+    {
+        "code":  "10091",
+        "title":  "PajisjemeDAPperMakineriteeRenda",
+        "institution":  "DPSHTRR-AMS",
+        "profileType":  "Organisation",
+        "loginProfile":  "Biznes",
+        "search":  "10091",
+        "startMode":  "NewApplication",
+        "sourceFile":  "DPSHTRR-AMS\\_10091_.cs"
+    },
+    {
+        "code":  "10091",
+        "title":  "PajisjemeDAPperMakineriteeRenda_FailCase_ReturnsUiMessage",
+        "institution":  "DPSHTRR-AMS",
+        "profileType":  "Organisation",
+        "loginProfile":  "Biznes",
+        "search":  "10091",
+        "startMode":  "NewApplication",
+        "sourceFile":  "DPSHTRR-AMS\\_10091_FailCase_.cs"
+    },
+    {
+        "code":  "10093",
+        "title":  "RipajisjeDAPperMakineriteeRenda",
+        "institution":  "DPSHTRR-AMS",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "10093",
+        "startMode":  "NewApplication",
+        "sourceFile":  "DPSHTRR-AMS\\_10093_.cs"
+    },
+    {
+        "code":  "10093",
+        "title":  "RipajisjeDAPperMakineriteeRenda_FailCase_ReturnsUiMessage",
+        "institution":  "DPSHTRR-AMS",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "10093",
+        "startMode":  "NewApplication",
+        "sourceFile":  "DPSHTRR-AMS\\_10093_FailCase_.cs"
+    },
+    {
+        "code":  "10095",
+        "title":  "PajisjemeCKP",
+        "institution":  "DPSHTRR-AMS",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "10095",
+        "startMode":  "NewApplication",
+        "sourceFile":  "DPSHTRR-AMS\\_10095_.cs"
+    },
+    {
+        "code":  "10095",
+        "title":  "PajisjemeCKP_FailCase_ReturnsUiMessage",
+        "institution":  "DPSHTRR-AMS",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "10095",
+        "startMode":  "NewApplication",
+        "sourceFile":  "DPSHTRR-AMS\\_10095_FailCase_.cs"
+    },
+    {
+        "code":  "10099",
+        "title":  "LejeDrejtimiNderkombetare",
+        "institution":  "DPSHTRR-AMS",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "10099",
+        "startMode":  "NewApplication",
+        "sourceFile":  "DPSHTRR-AMS\\_10099_.cs"
+    },
+    {
+        "code":  "10099",
+        "title":  "LejeDrejtimiNderkombetare_FailCase_ReturnsUiMessage",
+        "institution":  "DPSHTRR-AMS",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "10099",
+        "startMode":  "NewApplication",
+        "sourceFile":  "DPSHTRR-AMS\\_10099_FailCase_.cs"
+    },
+    {
+        "code":  "10114",
+        "title":  "TransferimDosje",
+        "institution":  "DPSHTRR-AMS",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "10114",
+        "startMode":  "NewApplication",
+        "sourceFile":  "DPSHTRR-AMS\\_10114_.cs"
+    },
+    {
+        "code":  "10114",
+        "title":  "TransferimDosje_FailCase_ReturnsUiMessage",
+        "institution":  "DPSHTRR-AMS",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "10114",
+        "startMode":  "NewApplication",
+        "sourceFile":  "DPSHTRR-AMS\\_10114_FailCase_.cs"
+    },
+    {
+        "code":  "13785",
+        "title":  "RinovimADR",
+        "institution":  "DPSHTRR-AMS",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "13785",
+        "startMode":  "NewApplication",
+        "sourceFile":  "DPSHTRR-AMS\\_13785_.cs"
+    },
+    {
+        "code":  "13785",
+        "title":  "RinovimADR_FailCase_ReturnsUiMessage",
+        "institution":  "DPSHTRR-AMS",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "13785",
+        "startMode":  "NewApplication",
+        "sourceFile":  "DPSHTRR-AMS\\_13785_FailCase_.cs"
+    },
+    {
+        "code":  "13786",
+        "title":  "RinovimCKP",
+        "institution":  "DPSHTRR-AMS",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "13786",
+        "startMode":  "NewApplication",
+        "sourceFile":  "DPSHTRR-AMS\\_13786_.cs"
+    },
+    {
+        "code":  "13786",
+        "title":  "RinovimCKP_FailCase_ReturnsUiMessage",
+        "institution":  "DPSHTRR-AMS",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "13786",
+        "startMode":  "NewApplication",
+        "sourceFile":  "DPSHTRR-AMS\\_13786_FailCase_.cs"
+    },
+    {
+        "code":  "13788",
+        "title":  "ZevendesimCKP",
+        "institution":  "DPSHTRR-AMS",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "13788",
+        "startMode":  "NewApplication",
+        "sourceFile":  "DPSHTRR-AMS\\_13788_.cs"
+    },
+    {
+        "code":  "13788",
+        "title":  "ZevendesimCKP_FailCase_ReturnsUiMessage",
+        "institution":  "DPSHTRR-AMS",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "13788",
+        "startMode":  "NewApplication",
+        "sourceFile":  "DPSHTRR-AMS\\_13788_FailCase_.cs"
+    },
+    {
+        "code":  "13789",
+        "title":  "PajisjemeCertifikateADR",
+        "institution":  "DPSHTRR-AMS",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "13789",
+        "startMode":  "NewApplication",
+        "sourceFile":  "DPSHTRR-AMS\\_13789_.cs"
+    },
+    {
+        "code":  "13789",
+        "title":  "PajisjemeCertifikateADR_FailCase_ReturnsUiMessage",
+        "institution":  "DPSHTRR-AMS",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "13789",
+        "startMode":  "NewApplication",
+        "sourceFile":  "DPSHTRR-AMS\\_13789_FailCase_.cs"
+    },
+    {
+        "code":  "10059",
+        "title":  "ShperblimLindjeGrandBiznes",
+        "institution":  "ISSH",
+        "profileType":  "Organisation",
+        "loginProfile":  "Biznes",
+        "search":  "10059",
+        "startMode":  "NewApplication",
+        "sourceFile":  "ISSH\\_10059_.cs"
+    },
+    {
+        "code":  "10060",
+        "title":  "ShperblimLindjeGrantVetepunesuar",
+        "institution":  "ISSH",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "10060",
+        "startMode":  "NewApplication",
+        "sourceFile":  "ISSH\\_10060_.cs"
+    },
+    {
+        "code":  "13019",
+        "title":  "KonfirmimKreditimiLlogarie",
+        "institution":  "ISSH",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "13019",
+        "startMode":  "NewApplication",
+        "sourceFile":  "ISSH\\_13019_.cs"
+    },
+    {
+        "code":  "13019",
+        "title":  "KonfirmimKreditimiLlogariePersonAutorizuar",
+        "institution":  "ISSH",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "13019",
+        "startMode":  "NewApplication",
+        "sourceFile":  "ISSH\\_13019_.cs"
+    },
+    {
+        "code":  "14928",
+        "title":  "NjohjeSigurimiPerKB",
+        "institution":  "ISSH",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "14928",
+        "startMode":  "NewApplication",
+        "sourceFile":  "ISSH\\_14928_.cs"
+    },
+    {
+        "code":  "14986",
+        "title":  "RimbursimShpenzimeshKarburanti",
+        "institution":  "ISSH",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "14986",
+        "startMode":  "NewApplication",
+        "sourceFile":  "ISSH\\_14986_.cs"
+    },
+    {
+        "code":  "2304",
+        "title":  "KerkesePerRishqyrtimPensioni",
+        "institution":  "ISSH",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "2304",
+        "startMode":  "NewApplication",
+        "sourceFile":  "ISSH\\_2304_.cs"
+    },
+    {
+        "code":  "2306",
+        "title":  "KerkeseTransferimDosjePensioni",
+        "institution":  "ISSH",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "2306",
+        "startMode":  "NewApplication",
+        "sourceFile":  "ISSH\\_2306_.cs"
+    },
+    {
+        "code":  "2308",
+        "title":  "AplikimPerPensionTeParakoheshemUshtarak",
+        "institution":  "ISSH",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "2308",
+        "startMode":  "NewApplication",
+        "sourceFile":  "ISSH\\_2308_.cs"
+    },
+    {
+        "code":  "2308",
+        "title":  "AplikimPerPensionTeParakoheshemUshtarak_GabimMarrjaTeDhenaveGjendjaCivile",
+        "institution":  "ISSH",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "2308",
+        "startMode":  "NewApplication",
+        "sourceFile":  "ISSH\\_2308_.cs"
+    },
+    {
+        "code":  "2308",
+        "title":  "AplikimPerPensionTeParakoheshemUshtarak_FailCase_ReturnsUiMessage",
+        "institution":  "ISSH",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "2308",
+        "startMode":  "NewApplication",
+        "sourceFile":  "ISSH\\_2308_FailCase_.cs"
+    },
+    {
+        "code":  "368",
+        "title":  "PensionetePaterhequra",
+        "institution":  "ISSH",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "368",
+        "startMode":  "NewApplication",
+        "sourceFile":  "ISSH\\_368_.cs"
+    },
+    {
+        "code":  "381",
+        "title":  "PensioniIM",
+        "institution":  "ISSH",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "381",
+        "startMode":  "NewApplication",
+        "sourceFile":  "ISSH\\_381_.cs"
+    },
+    {
+        "code":  "5023",
+        "title":  "AplikimPensioniFunksioneKushtetuese",
+        "institution":  "ISSH",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "5023",
+        "startMode":  "NewApplication",
+        "sourceFile":  "ISSH\\_5023_.cs"
+    },
+    {
+        "code":  "5031",
+        "title":  "KartelaPleqerise",
+        "institution":  "ISSH",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "5031",
+        "startMode":  "NewApplication",
+        "sourceFile":  "ISSH\\_5031_.cs"
+    },
+    {
+        "code":  "5034",
+        "title":  "KontributetSigurimeveShoqerore",
+        "institution":  "ISSH",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "5034",
+        "startMode":  "NewApplication",
+        "sourceFile":  "ISSH\\_5034_.cs"
+    },
+    {
+        "code":  "6156",
+        "title":  "AplikimPerPensionPleqerieSuplementarPilot",
+        "institution":  "ISSH",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "6156",
+        "startMode":  "NewApplication",
+        "sourceFile":  "ISSH\\_6156_.cs"
+    },
+    {
+        "code":  "6157",
+        "title":  "AplikimPensionInvaliditetiSuplementar",
+        "institution":  "ISSH",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "6157",
+        "startMode":  "NewApplication",
+        "sourceFile":  "ISSH\\_6157_.cs"
+    },
+    {
+        "code":  "6158",
+        "title":  "AplikimPerPensionFamiljar",
+        "institution":  "ISSH",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "6158",
+        "startMode":  "NewApplication",
+        "sourceFile":  "ISSH\\_6158_.cs"
+    },
+    {
+        "code":  "6159",
+        "title":  "AplikimSiDeshmorAtdheu",
+        "institution":  "ISSH",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "6159",
+        "startMode":  "NewApplication",
+        "sourceFile":  "ISSH\\_6159_.cs"
+    },
+    {
+        "code":  "6161",
+        "title":  "AplikimPerRikomisionimKMCAP",
+        "institution":  "ISSH",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "6161",
+        "startMode":  "NewApplication",
+        "sourceFile":  "ISSH\\_6161_.cs"
+    },
+    {
+        "code":  "6162",
+        "title":  "AplikimMbylljePensioni",
+        "institution":  "ISSH",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "6162",
+        "startMode":  "NewApplication",
+        "sourceFile":  "ISSH\\_6162_.cs"
+    },
+    {
+        "code":  "6162",
+        "title":  "AplikimMbylljePensioniFamiljar",
+        "institution":  "ISSH",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "6162",
+        "startMode":  "NewApplication",
+        "sourceFile":  "ISSH\\_6162_.cs"
+    },
+    {
+        "code":  "6163",
+        "title":  "MasatPaterhequraKMCAP",
+        "institution":  "ISSH",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "6163",
+        "startMode":  "NewApplication",
+        "sourceFile":  "ISSH\\_6163_.cs"
+    },
+    {
+        "code":  "6164",
+        "title":  "PensioniInvaliditetitMCAP",
+        "institution":  "ISSH",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "6164",
+        "startMode":  "NewApplication",
+        "sourceFile":  "ISSH\\_6164_.cs"
+    },
+    {
+        "code":  "6165",
+        "title":  "MasatPaterhequraInvaliditeti",
+        "institution":  "ISSH",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "6165",
+        "startMode":  "NewApplication",
+        "sourceFile":  "ISSH\\_6165_.cs"
+    },
+    {
+        "code":  "6166",
+        "title":  "PensionPleqerie",
+        "institution":  "ISSH",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "6166",
+        "startMode":  "NewApplication",
+        "sourceFile":  "ISSH\\_6166_.cs"
+    },
+    {
+        "code":  "6167",
+        "title":  "MasatPaterhequraPensioniPleqerise",
+        "institution":  "ISSH",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "6167",
+        "startMode":  "NewApplication",
+        "sourceFile":  "ISSH\\_6167_.cs"
+    },
+    {
+        "code":  "6169",
+        "title":  "PensionFamiljar",
+        "institution":  "ISSH",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "6169",
+        "startMode":  "NewApplication",
+        "sourceFile":  "ISSH\\_6169_.cs"
+    },
+    {
+        "code":  "6171",
+        "title":  "PensionSuplementarFunksioneKushtetuese",
+        "institution":  "ISSH",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "6171",
+        "startMode":  "NewApplication",
+        "sourceFile":  "ISSH\\_6171_.cs"
+    },
+    {
+        "code":  "6172",
+        "title":  "PensioniSuplementarTitullShkencor",
+        "institution":  "ISSH",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "6172",
+        "startMode":  "NewApplication",
+        "sourceFile":  "ISSH\\_6172_.cs"
+    },
+    {
+        "code":  "6175",
+        "title":  "MasatPaterhequraPensioniVdekjes",
+        "institution":  "ISSH",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "6175",
+        "startMode":  "NewApplication",
+        "sourceFile":  "ISSH\\_6175_.cs"
+    },
+    {
+        "code":  "6176",
+        "title":  "MasatPaterhequraPensioniFamiljar",
+        "institution":  "ISSH",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "6176",
+        "startMode":  "NewApplication",
+        "sourceFile":  "ISSH\\_6176_.cs"
+    },
+    {
+        "code":  "6177",
+        "title":  "MasatPaterhequraDeshmorAtdheut",
+        "institution":  "ISSH",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "6177",
+        "startMode":  "NewApplication",
+        "sourceFile":  "ISSH\\_6177_.cs"
+    },
+    {
+        "code":  "6178",
+        "title":  "MasatPaterhequraFunksioneKushtetuese",
+        "institution":  "ISSH",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "6178",
+        "startMode":  "NewApplication",
+        "sourceFile":  "ISSH\\_6178_.cs"
+    },
+    {
+        "code":  "6179",
+        "title":  "MasatPaterhequraTitullShkencor",
+        "institution":  "ISSH",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "6179",
+        "startMode":  "NewApplication",
+        "sourceFile":  "ISSH\\_6179_.cs"
+    },
+    {
+        "code":  "6180",
+        "title":  "MasatPaterhequraPilot",
+        "institution":  "ISSH",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "6180",
+        "startMode":  "NewApplication",
+        "sourceFile":  "ISSH\\_6180_.cs"
+    },
+    {
+        "code":  "7171",
+        "title":  "MasatPaterhequraLundrues",
+        "institution":  "ISSH",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "7171",
+        "startMode":  "NewApplication",
+        "sourceFile":  "ISSH\\_7171_.cs"
+    },
+    {
+        "code":  "13710",
+        "title":  "TrasferimiNxenesve",
+        "institution":  "MAS",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "13710",
+        "startMode":  "NewApplication",
+        "sourceFile":  "MAS\\_13710_.cs"
+    },
+    {
+        "code":  "13710",
+        "title":  "TrasferimiNxenesve_FailCase_ReturnsUiMessage",
+        "institution":  "MAS",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "13710",
+        "startMode":  "NewApplication",
+        "sourceFile":  "MAS\\_13710_FailCase_.cs"
+    },
+    {
+        "code":  "13711",
+        "title":  "TrasferimiNxenesveNeGjimnaz",
+        "institution":  "MAS",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "13711",
+        "startMode":  "NewApplication",
+        "sourceFile":  "MAS\\_13711_.cs"
+    },
+    {
+        "code":  "13712",
+        "title":  "RegjistrimiNeGjimnaz",
+        "institution":  "MAS",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "13712",
+        "startMode":  "NewApplication",
+        "sourceFile":  "MAS\\_13712_.cs"
+    },
+    {
+        "code":  "13712",
+        "title":  "RegjistrimiNeGjimnaz_FailCase_ReturnsUiMessage",
+        "institution":  "MAS",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "13712",
+        "startMode":  "NewApplication",
+        "sourceFile":  "MAS\\_13712_FailCase_.cs"
+    },
+    {
+        "code":  "853",
+        "title":  "NjehesimiDiplomave",
+        "institution":  "MAS",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "853",
+        "startMode":  "NewApplication",
+        "sourceFile":  "MAS\\_853_.cs"
+    },
+    {
+        "code":  "853",
+        "title":  "NjehesimiDiplomave_FailCase_ReturnsUiMessage",
+        "institution":  "MAS",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "853",
+        "startMode":  "NewApplication",
+        "sourceFile":  "MAS\\_853_FailCase_.cs"
+    },
+    {
+        "code":  "12583",
+        "title":  "VerifikimIGjendjesGjyqesore",
+        "institution":  "MEPJ",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "12583",
+        "startMode":  "NewApplication",
+        "sourceFile":  "MEPJ\\_12583_.cs"
+    },
+    {
+        "code":  "12583",
+        "title":  "VerifikimIGjendjesGjyqesore_FailCase_ReturnsUiMessage",
+        "institution":  "MEPJ",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "12583",
+        "startMode":  "NewApplication",
+        "sourceFile":  "MEPJ\\_12583_FailCase_.cs"
+    },
+    {
+        "code":  "12584",
+        "title":  "VerifikimILejesDrejtimit",
+        "institution":  "MEPJ",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "12584",
+        "startMode":  "NewApplication",
+        "sourceFile":  "MEPJ\\_12584_.cs"
+    },
+    {
+        "code":  "12584",
+        "title":  "VerifikimILejesDrejtimit_FailCase_ReturnsUiMessage",
+        "institution":  "MEPJ",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "12584",
+        "startMode":  "NewApplication",
+        "sourceFile":  "MEPJ\\_12584_FailCase_.cs"
+    },
+    {
+        "code":  "15866",
+        "title":  "NdihmeEPergjithshmeKonsullore",
+        "institution":  "MEPJ",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "15866",
+        "startMode":  "NewApplication",
+        "sourceFile":  "MEPJ\\_15866_.cs"
+    },
+    {
+        "code":  "15866",
+        "title":  "NdihmeEPergjithshmeKonsullore_FailCase_ReturnsUiMessage",
+        "institution":  "MEPJ",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "15866",
+        "startMode":  "NewApplication",
+        "sourceFile":  "MEPJ\\_15866_FailCase_.cs"
+    },
+    {
+        "code":  "9486",
+        "title":  "VertetimCertifikateMartese",
+        "institution":  "MEPJ",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "9486",
+        "startMode":  "NewApplication",
+        "sourceFile":  "MEPJ\\_9486_.cs"
+    },
+    {
+        "code":  "9486",
+        "title":  "VertetimCertifikateMartese_FailCase_ReturnsUiMessage",
+        "institution":  "MEPJ",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "9486",
+        "startMode":  "NewApplication",
+        "sourceFile":  "MEPJ\\_9486_FailCase_.cs"
+    },
+    {
+        "code":  "9487",
+        "title":  "VertetimKonsullore_MEPJ_9487",
+        "institution":  "MEPJ",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "9487",
+        "startMode":  "NewApplication",
+        "sourceFile":  "MEPJ\\_9487_.cs"
+    },
+    {
+        "code":  "9487",
+        "title":  "VertetimKonsullore_MEPJ_9487_FailCase_ReturnsUiMessage",
+        "institution":  "MEPJ",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "9487",
+        "startMode":  "NewApplication",
+        "sourceFile":  "MEPJ\\_9487_FailCase_.cs"
+    },
+    {
+        "code":  "9488",
+        "title":  "VertetimKonsulloreTeDhenatPersonale",
+        "institution":  "MEPJ",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "9488",
+        "startMode":  "NewApplication",
+        "sourceFile":  "MEPJ\\_9488_.cs"
+    },
+    {
+        "code":  "9488",
+        "title":  "VertetimKonsulloreTeDhenatPersonale_FailCase_ReturnsUiMessage",
+        "institution":  "MEPJ",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "9488",
+        "startMode":  "NewApplication",
+        "sourceFile":  "MEPJ\\_9488_FailCase_.cs"
+    },
+    {
+        "code":  "9765",
+        "title":  "AplikimPerIDPassaporte",
+        "institution":  "MEPJ",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "9765",
+        "startMode":  "NewApplication",
+        "sourceFile":  "MEPJ\\_9765_.cs"
+    },
+    {
+        "code":  "9765",
+        "title":  "AplikimPerIDPassaporte_FailCase_ReturnsUiMessage",
+        "institution":  "MEPJ",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "9765",
+        "startMode":  "NewApplication",
+        "sourceFile":  "MEPJ\\_9765_FailCase_.cs"
+    },
+    {
+        "code":  "9766",
+        "title":  "LejeTransportTrupiHiri",
+        "institution":  "MEPJ",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "9766",
+        "startMode":  "NewApplication",
+        "sourceFile":  "MEPJ\\_9766_.cs"
+    },
+    {
+        "code":  "9766",
+        "title":  "LejeTransportTrupiHiri_FailCase_ReturnsUiMessage",
+        "institution":  "MEPJ",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "9766",
+        "startMode":  "NewApplication",
+        "sourceFile":  "MEPJ\\_9766_FailCase_.cs"
+    },
+    {
+        "code":  "9767",
+        "title":  "RegjistrimFemije",
+        "institution":  "MEPJ",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "9767",
+        "startMode":  "NewApplication",
+        "sourceFile":  "MEPJ\\_9767_.cs"
+    },
+    {
+        "code":  "9767",
+        "title":  "RegjistrimFemije_FailCase_ReturnsUiMessage",
+        "institution":  "MEPJ",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "9767",
+        "startMode":  "NewApplication",
+        "sourceFile":  "MEPJ\\_9767_FailCase_.cs"
+    },
+    {
+        "code":  "9768",
+        "title":  "RegjistrimMartese",
+        "institution":  "MEPJ",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "9768",
+        "startMode":  "NewApplication",
+        "sourceFile":  "MEPJ\\_9768_.cs"
+    },
+    {
+        "code":  "9768",
+        "title":  "RegjistrimMartese_FailCase_ReturnsUiMessage",
+        "institution":  "MEPJ",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "9768",
+        "startMode":  "NewApplication",
+        "sourceFile":  "MEPJ\\_9768_FailCase_.cs"
+    },
+    {
+        "code":  "9770",
+        "title":  "Regjistrimvdekje",
+        "institution":  "MEPJ",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "9770",
+        "startMode":  "NewApplication",
+        "sourceFile":  "MEPJ\\_9770_.cs"
+    },
+    {
+        "code":  "9770",
+        "title":  "Regjistrimvdekje_FailCase_ReturnsUiMessage",
+        "institution":  "MEPJ",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "9770",
+        "startMode":  "NewApplication",
+        "sourceFile":  "MEPJ\\_9770_FailCase_.cs"
+    },
+    {
+        "code":  "9774",
+        "title":  "PerkthimDokumenti",
+        "institution":  "MEPJ",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "9774",
+        "startMode":  "NewApplication",
+        "sourceFile":  "MEPJ\\_9774_.cs"
+    },
+    {
+        "code":  "9774",
+        "title":  "PerkthimDokumenti_FailCase_ReturnsUiMessage",
+        "institution":  "MEPJ",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "9774",
+        "startMode":  "NewApplication",
+        "sourceFile":  "MEPJ\\_9774_FailCase_.cs"
+    },
+    {
+        "code":  "9775",
+        "title":  "VertetimKonsullorINdryshem",
+        "institution":  "MEPJ",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "9775",
+        "startMode":  "NewApplication",
+        "sourceFile":  "MEPJ\\_9775_.cs"
+    },
+    {
+        "code":  "9775",
+        "title":  "VertetimKonsullorINdryshem_FailCase_ReturnsUiMessage",
+        "institution":  "MEPJ",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "9775",
+        "startMode":  "NewApplication",
+        "sourceFile":  "MEPJ\\_9775_FailCase_.cs"
+    },
+    {
+        "code":  "9776",
+        "title":  "RegjistrimMarteseMeShtetasShqiptar",
+        "institution":  "MEPJ",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "9776",
+        "startMode":  "NewApplication",
+        "sourceFile":  "MEPJ\\_9776_.cs"
+    },
+    {
+        "code":  "9776",
+        "title":  "RegjistrimMarteseMeShtetasShqiptar_FailCase_ReturnsUiMessage",
+        "institution":  "MEPJ",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "9776",
+        "startMode":  "NewApplication",
+        "sourceFile":  "MEPJ\\_9776_FailCase_.cs"
+    },
+    {
+        "code":  "9777",
+        "title":  "VertetimCertifikatLindje",
+        "institution":  "MEPJ",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "9777",
+        "startMode":  "NewApplication",
+        "sourceFile":  "MEPJ\\_9777_.cs"
+    },
+    {
+        "code":  "9777",
+        "title":  "VertetimCertifikatLindje_FailCase_ReturnsUiMessage",
+        "institution":  "MEPJ",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "9777",
+        "startMode":  "NewApplication",
+        "sourceFile":  "MEPJ\\_9777_FailCase_.cs"
+    },
+    {
+        "code":  "9778",
+        "title":  "LidhjeMarteseMeShtetasTeHuaj",
+        "institution":  "MEPJ",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "9778",
+        "startMode":  "NewApplication",
+        "sourceFile":  "MEPJ\\_9778_.cs"
+    },
+    {
+        "code":  "9778",
+        "title":  "LidhjeMarteseMeShtetasTeHuaj_FailCase_ReturnsUiMessage",
+        "institution":  "MEPJ",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "9778",
+        "startMode":  "NewApplication",
+        "sourceFile":  "MEPJ\\_9778_FailCase_.cs"
+    },
+    {
+        "code":  "9779",
+        "title":  "VertetimKonsullorIdentiteti",
+        "institution":  "MEPJ",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "9779",
+        "startMode":  "NewApplication",
+        "sourceFile":  "MEPJ\\_9779_.cs"
+    },
+    {
+        "code":  "9779",
+        "title":  "VertetimKonsullorIdentiteti_FailCase_ReturnsUiMessage",
+        "institution":  "MEPJ",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "9779",
+        "startMode":  "NewApplication",
+        "sourceFile":  "MEPJ\\_9779_FailCase_.cs"
+    },
+    {
+        "code":  "9780",
+        "title":  "NjehesimiiKopjesMeOrigjinalin",
+        "institution":  "MEPJ",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "9780",
+        "startMode":  "NewApplication",
+        "sourceFile":  "MEPJ\\_9780_.cs"
+    },
+    {
+        "code":  "9780",
+        "title":  "NjehesimiiKopjesMeOrigjinalin_FailCase_ReturnsUiMessage",
+        "institution":  "MEPJ",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "9780",
+        "startMode":  "NewApplication",
+        "sourceFile":  "MEPJ\\_9780_FailCase_.cs"
+    },
+    {
+        "code":  "9782",
+        "title":  "AplikimPerProcesverbal",
+        "institution":  "MEPJ",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "9782",
+        "startMode":  "NewApplication",
+        "sourceFile":  "MEPJ\\_9782_.cs"
+    },
+    {
+        "code":  "9782",
+        "title":  "AplikimPerProcesverbal_FailCase_ReturnsUiMessage",
+        "institution":  "MEPJ",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "9782",
+        "startMode":  "NewApplication",
+        "sourceFile":  "MEPJ\\_9782_FailCase_.cs"
+    },
+    {
+        "code":  "9783",
+        "title":  "AplikimPerProkureTePosacme",
+        "institution":  "MEPJ",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "9783",
+        "startMode":  "NewApplication",
+        "sourceFile":  "MEPJ\\_9783_.cs"
+    },
+    {
+        "code":  "9783",
+        "title":  "AplikimPerProkureTePosacme_FailCase_ReturnsUiMessage",
+        "institution":  "MEPJ",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "9783",
+        "startMode":  "NewApplication",
+        "sourceFile":  "MEPJ\\_9783_FailCase_.cs"
+    },
+    {
+        "code":  "9803",
+        "title":  "AplikimPerVertetimCertifikateFamiljare",
+        "institution":  "MEPJ",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "9803",
+        "startMode":  "NewApplication",
+        "sourceFile":  "MEPJ\\_9803_.cs"
+    },
+    {
+        "code":  "9803",
+        "title":  "AplikimPerVertetimCertifikateFamiljare_FailCase_ReturnsUiMessage",
+        "institution":  "MEPJ",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "9803",
+        "startMode":  "NewApplication",
+        "sourceFile":  "MEPJ\\_9803_FailCase_.cs"
+    },
+    {
+        "code":  "11132",
+        "title":  "Biznes_11132",
+        "institution":  "MIE",
+        "profileType":  "Organisation",
+        "loginProfile":  "Biznes",
+        "search":  "11132",
+        "startMode":  "NewApplication",
+        "sourceFile":  "MIE\\Biznes_Web_11132.cs"
+    },
+    {
+        "code":  "11132",
+        "title":  "Biznes_11132_FailCase_ReturnsUiMessage",
+        "institution":  "MIE",
+        "profileType":  "Organisation",
+        "loginProfile":  "Biznes",
+        "search":  "11132",
+        "startMode":  "NewApplication",
+        "sourceFile":  "MIE\\Biznes_Web_11132_FailCase.cs"
+    },
+    {
+        "code":  "11133",
+        "title":  "Aplikim_i_Ri_NID_11133",
+        "institution":  "MIE",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "11133",
+        "startMode":  "NewApplication",
+        "sourceFile":  "MIE\\_11133_NID_Web.cs"
+    },
+    {
+        "code":  "11133",
+        "title":  "Aplikim_i_Ri_NID_11133_FailCase_ReturnsUiMessage",
+        "institution":  "MIE",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "11133",
+        "startMode":  "NewApplication",
+        "sourceFile":  "MIE\\_11133_NID_Web_FailCase.cs"
+    },
+    {
+        "code":  "11135",
+        "title":  "_11135_NIPT_Aplikim_i_Ri",
+        "institution":  "MIE",
+        "profileType":  "Organisation",
+        "loginProfile":  "Biznes",
+        "search":  "11135",
+        "startMode":  "NewApplication",
+        "sourceFile":  "MIE\\_11135_NIPT_WEB.cs"
+    },
+    {
+        "code":  "11135",
+        "title":  "_11135_NIPT_Aplikim_i_Ri_FailCase_ReturnsUiMessage",
+        "institution":  "MIE",
+        "profileType":  "Organisation",
+        "loginProfile":  "Biznes",
+        "search":  "11135",
+        "startMode":  "NewApplication",
+        "sourceFile":  "MIE\\_11135_NIPT_WEB_FailCase.cs"
+    },
+    {
+        "code":  "11136",
+        "title":  "Aplikim_i_Ri_NID_11136",
+        "institution":  "MIE",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "11136",
+        "startMode":  "NewApplication",
+        "sourceFile":  "MIE\\_11136_NID_Web.cs"
+    },
+    {
+        "code":  "11136",
+        "title":  "Aplikim_i_Ri_NID_11136_FailCase_ReturnsUiMessage",
+        "institution":  "MIE",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "11136",
+        "startMode":  "NewApplication",
+        "sourceFile":  "MIE\\_11136_NID_Web_FailCase.cs"
+    },
+    {
+        "code":  "11139",
+        "title":  "Aplikim_i_Ri_Biznes_11139",
+        "institution":  "MIE",
+        "profileType":  "Organisation",
+        "loginProfile":  "Biznes",
+        "search":  "11139",
+        "startMode":  "NewApplication",
+        "sourceFile":  "MIE\\_11139_NIPT.cs"
+    },
+    {
+        "code":  "11139",
+        "title":  "Aplikim_i_Ri_Biznes_11139_FailCase_ReturnsUiMessage",
+        "institution":  "MIE",
+        "profileType":  "Organisation",
+        "loginProfile":  "Biznes",
+        "search":  "11139",
+        "startMode":  "NewApplication",
+        "sourceFile":  "MIE\\_11139_NIPT_FailCase.cs"
+    },
+    {
+        "code":  "11140",
+        "title":  "_11140_NIPT_Aplikim_i_Ri",
+        "institution":  "MIE",
+        "profileType":  "Organisation",
+        "loginProfile":  "Biznes",
+        "search":  "11140",
+        "startMode":  "NewApplication",
+        "sourceFile":  "MIE\\_11140_NIPTWEB.cs"
+    },
+    {
+        "code":  "11140",
+        "title":  "_11140_NIPT_Aplikim_i_Ri_FailCase_ReturnsUiMessage",
+        "institution":  "MIE",
+        "profileType":  "Organisation",
+        "loginProfile":  "Biznes",
+        "search":  "11140",
+        "startMode":  "NewApplication",
+        "sourceFile":  "MIE\\_11140_NIPTWEB_FailCase.cs"
+    },
+    {
+        "code":  "11141",
+        "title":  "Aplikim_i_Ri_Biznes_11141",
+        "institution":  "MIE",
+        "profileType":  "Organisation",
+        "loginProfile":  "Biznes",
+        "search":  "11141",
+        "startMode":  "NewApplication",
+        "sourceFile":  "MIE\\_11141_BiznesWEB.cs"
+    },
+    {
+        "code":  "11143",
+        "title":  "Mbyllje_Aktiviteti_11143",
+        "institution":  "MIE",
+        "profileType":  "Organisation",
+        "loginProfile":  "Biznes",
+        "search":  "11143",
+        "startMode":  "Track",
+        "sourceFile":  "MIE\\_11143_BiznesWEB.cs"
+    },
+    {
+        "code":  "14764",
+        "title":  "_14764_NID_AplikimiRI",
+        "institution":  "MIE",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "14764",
+        "startMode":  "NewApplication",
+        "sourceFile":  "MIE\\_14764_NID.cs"
+    },
+    {
+        "code":  "26",
+        "title":  "_26_Individ",
+        "institution":  "MIE",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "26",
+        "startMode":  "NewApplication",
+        "sourceFile":  "MIE\\_26_NIDWEB.cs"
+    },
+    {
+        "code":  "365",
+        "title":  "NIPTWeb365",
+        "institution":  "MIE",
+        "profileType":  "Organisation",
+        "loginProfile":  "Biznes",
+        "search":  "365",
+        "startMode":  "NewApplication",
+        "sourceFile":  "MIE\\BiznesWeb365.cs"
+    },
+    {
+        "code":  "365",
+        "title":  "NIDWeb365",
+        "institution":  "MIE",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "365",
+        "startMode":  "NewApplication",
+        "sourceFile":  "MIE\\IndividWeb365.cs"
+    },
+    {
+        "code":  "895",
+        "title":  "NIPTWeb",
+        "institution":  "MIE",
+        "profileType":  "Organisation",
+        "loginProfile":  "Biznes",
+        "search":  "895",
+        "startMode":  "NewApplication",
+        "sourceFile":  "MIE\\BiznesWeb895.cs"
+    },
+    {
+        "code":  "895",
+        "title":  "NIPTWeb_FailCase_ReturnsUiMessage",
+        "institution":  "MIE",
+        "profileType":  "Organisation",
+        "loginProfile":  "Biznes",
+        "search":  "895",
+        "startMode":  "NewApplication",
+        "sourceFile":  "MIE\\BiznesWeb895_FailCase.cs"
+    },
+    {
+        "code":  "9286",
+        "title":  "GjurmoAplikim9286",
+        "institution":  "MIE",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "9286",
+        "startMode":  "Track",
+        "sourceFile":  "MIE\\Gjurmimi_9286.cs"
+    },
+    {
+        "code":  "9286",
+        "title":  "Aplikim_i_Ri_9286",
+        "institution":  "MIE",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "9286",
+        "startMode":  "NewApplication",
+        "sourceFile":  "MIE\\Individ_Web_9286.cs"
+    },
+    {
+        "code":  "9286",
+        "title":  "Aplikim_i_Ri_9286_FailCase_ReturnsUiMessage",
+        "institution":  "MIE",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "9286",
+        "startMode":  "NewApplication",
+        "sourceFile":  "MIE\\Individ_Web_9286_FailCase.cs"
+    },
+    {
+        "code":  "9287",
+        "title":  "Aplikim_i_Ri_9287",
+        "institution":  "MIE",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "9287",
+        "startMode":  "NewApplication",
+        "sourceFile":  "MIE\\NIDWeb_9287.cs"
+    },
+    {
+        "code":  "9287",
+        "title":  "Aplikim_i_Ri_9287_FailCase_ReturnsUiMessage",
+        "institution":  "MIE",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "9287",
+        "startMode":  "NewApplication",
+        "sourceFile":  "MIE\\NIDWeb_9287_FailCase.cs"
+    },
+    {
+        "code":  "9287",
+        "title":  "GjurmoAplikim9287",
+        "institution":  "MIE",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "9287",
+        "startMode":  "Track",
+        "sourceFile":  "MIE\\Gjurmimi_9287.cs"
+    },
+    {
+        "code":  "9288",
+        "title":  "Aplikim_i_Ri_Biznes_9288",
+        "institution":  "MIE",
+        "profileType":  "Organisation",
+        "loginProfile":  "Biznes",
+        "search":  "9288",
+        "startMode":  "NewApplication",
+        "sourceFile":  "MIE\\NIPTWeb_9288.cs"
+    },
+    {
+        "code":  "9288",
+        "title":  "Aplikim_i_Ri_Biznes_9288_FailCase_ReturnsUiMessage",
+        "institution":  "MIE",
+        "profileType":  "Organisation",
+        "loginProfile":  "Biznes",
+        "search":  "9288",
+        "startMode":  "NewApplication",
+        "sourceFile":  "MIE\\NIPTWeb_9288_FailCase.cs"
+    },
+    {
+        "code":  "9288",
+        "title":  "GjurmoAplikim9288",
+        "institution":  "MIE",
+        "profileType":  "Organisation",
+        "loginProfile":  "Biznes",
+        "search":  "9288",
+        "startMode":  "Track",
+        "sourceFile":  "MIE\\Gjurmimi_9288.cs"
+    },
+    {
+        "code":  "9291",
+        "title":  "Aplikim_i_Ri_9291",
+        "institution":  "MIE",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "9291",
+        "startMode":  "NewApplication",
+        "sourceFile":  "MIE\\Individ_Web_9291.cs"
+    },
+    {
+        "code":  "9291",
+        "title":  "Aplikim_i_Ri_9291_FailCase_ReturnsUiMessage",
+        "institution":  "MIE",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "9291",
+        "startMode":  "NewApplication",
+        "sourceFile":  "MIE\\Individ_Web_9291_FailCase.cs"
+    },
+    {
+        "code":  "9293",
+        "title":  "Aplikim_i_Ri_Biznes_9293",
+        "institution":  "MIE",
+        "profileType":  "Organisation",
+        "loginProfile":  "Biznes",
+        "search":  "9293",
+        "startMode":  "NewApplication",
+        "sourceFile":  "MIE\\NIPT_9293.cs"
+    },
+    {
+        "code":  "9293",
+        "title":  "Aplikim_i_Ri_Biznes_9293_FailCase_ReturnsUiMessage",
+        "institution":  "MIE",
+        "profileType":  "Organisation",
+        "loginProfile":  "Biznes",
+        "search":  "9293",
+        "startMode":  "NewApplication",
+        "sourceFile":  "MIE\\NIPT_9293_FailCase.cs"
+    },
+    {
+        "code":  "15128",
+        "title":  "RegjistrimPajisjeMjekesore",
+        "institution":  "MSHMS",
+        "profileType":  "Organisation",
+        "loginProfile":  "Biznes",
+        "search":  "15128",
+        "startMode":  "NewApplication",
+        "sourceFile":  "MSHMS\\_15128_.cs"
+    },
+    {
+        "code":  "15128",
+        "title":  "RegjistrimPajisjeMjekesore_FailCase_ReturnsUiMessage",
+        "institution":  "MSHMS",
+        "profileType":  "Organisation",
+        "loginProfile":  "Biznes",
+        "search":  "15128",
+        "startMode":  "NewApplication",
+        "sourceFile":  "MSHMS\\_15128_FailCase_.cs"
+    },
+    {
+        "code":  "15191",
+        "title":  "NenaMeShumeFemije",
+        "institution":  "MSHMS",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "15191",
+        "startMode":  "NewApplication",
+        "sourceFile":  "MSHMS\\_15191_.cs"
+    },
+    {
+        "code":  "15358",
+        "title":  "RilidhjeKontratemeInstitutetShendetesoreJoPublike",
+        "institution":  "MSHMS",
+        "profileType":  "Organisation",
+        "loginProfile":  "Biznes",
+        "search":  "15358",
+        "startMode":  "NewApplication",
+        "sourceFile":  "MSHMS\\_15358_.cs"
+    },
+    {
+        "code":  "15358",
+        "title":  "RilidhjeKontratemeInstitutetShendetesoreJoPublike_FailCase_ReturnsUiMessage",
+        "institution":  "MSHMS",
+        "profileType":  "Organisation",
+        "loginProfile":  "Biznes",
+        "search":  "15358",
+        "startMode":  "NewApplication",
+        "sourceFile":  "MSHMS\\_15358_FailCase_.cs"
+    },
+    {
+        "code":  "15366",
+        "title":  "LejeImportiPajisjesh",
+        "institution":  "MSHMS",
+        "profileType":  "Organisation",
+        "loginProfile":  "Biznes",
+        "search":  "15366",
+        "startMode":  "NewApplication",
+        "sourceFile":  "MSHMS\\_15366_.cs"
+    },
+    {
+        "code":  "4435",
+        "title":  "NdihmaEkonomikeIndivid",
+        "institution":  "MSHMS",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "4435",
+        "startMode":  "NewApplication",
+        "sourceFile":  "MSHMS\\_4435_.cs"
+    },
+    {
+        "code":  "4435",
+        "title":  "KontrolliMjekesorBaze",
+        "institution":  "MSHMS",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "4435",
+        "startMode":  "NewApplication",
+        "sourceFile":  "MSHMS\\_4701_.cs"
+    },
+    {
+        "code":  "4707",
+        "title":  "ListaBarnaveTeRimbursueshme",
+        "institution":  "MSHMS",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "4707",
+        "startMode":  "NewApplication",
+        "sourceFile":  "MSHMS\\_4707_.cs"
+    },
+    {
+        "code":  "9224",
+        "title":  "KartaShendetitPerFemije",
+        "institution":  "MSHMS",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "9224",
+        "startMode":  "NewApplication",
+        "sourceFile":  "MSHMS\\_9224_.cs"
+    }
+]

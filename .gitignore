@@ -1,0 +1,11 @@
+bin/
+obj/
+TestResults/
+TestArtifacts/
+AuthState/
+.vs/
+*.user
+*.suo
+playwright-report/
+test-results/
+appsettings.Local.json
