@@ -10,76 +10,106 @@ public class _10091_FailCase_ : BiznesTestBase
     protected override string ServiceCode => "10091";
     protected override string? ServiceTitle => "PajisjemeDAPperMakineriteeRenda_FailCase_ReturnsUiMessage";
     protected override ServiceStartMode StartMode => ServiceStartMode.NewApplication;
+    protected override bool StartServiceOnSetup => false;
+
+    private const string ExpectedServiceName =
+        "Aplikim për pajisje me Dëshmi Aftësie Profesionale për makineritë e rënda";
 
     [Test]
     public void PajisjemeDAPperMakineriteeRenda_FailCase_ReturnsUiMessage()
     {
+        OpenNewApplicationFromServicePage();
 
-
-
-        Thread.Sleep(4000);
+        Log("Assert Step1 title");
+        WaitForStepTitle("TË DHËNAT E SUBJEKTIT");
 
         Log("Kliko Vazhdo nga TË DHËNAT E SUBJEKTIT");
-        SafeClick(By.XPath("/html/body/div/main/div[3]/div/div/div/div/div[2]/button[2]"));
+        SafeClick(By.CssSelector("button.ealb-btn-continue"));
         Thread.Sleep(4000);
 
         Log("Ploteso NID kandidati");
-        IWebElement NID = wait.Until(ExpectedConditions.ElementIsVisible(
-            By.XPath("/html/body/div/main/div[3]/div/div/div/div/form/div/div[1]/div/input")));
+        IWebElement NID = FindInputByLabel("Nid");
         NID.SendKeys("J55728107R");
         NID.SendKeys(Keys.Tab);
         Thread.Sleep(2000);
 
         Log("Kliko Vazhdo button");
-        SafeClick(By.XPath("/html/body/div/main/div[3]/div/div/div/div/div[2]/button[2]"));
+        SafeClick(By.CssSelector("button.ealb-btn-continue"));
         Thread.Sleep(4000);
 
         Log("Kliko Vazhdo nga leja e drejtimit");
-        SafeClick(By.XPath("/html/body/div/main/div[3]/div/div/div/div/div[2]/button[2]"));
+        SafeClick(By.CssSelector("button.ealb-btn-continue"));
         Thread.Sleep(4000);
 
         Log("Assert LLOJI I DAP");
-        IWebElement Step4Title = wait.Until(ExpectedConditions.ElementIsVisible(
-            By.XPath("/html/body/div/main/div[3]/div/div/div/div/h4")));
-        Assert.That(Step4Title.Text.Trim(), Is.EqualTo("LLOJI I DAP"));
+        IWebElement Step4Title = WaitForStepTitle("LLOJI I DAP");
+        Assert.That(Step4Title.Text.Trim().ToUpperInvariant(), Is.EqualTo("LLOJI I DAP"));
 
-        Log("STIMULIM FAIL: pa zgjedhur llojin e DAP — provo Vazhdo/Dërgo.");
-        try
-        {
-            ClickDerghoAfterDocumentationReady();
-        }
-        catch (Exception)
-        {
-            Log("Nuk ka Dërgo në LLOJI I DAP — kliko Vazhdo pa fusha të plota.");
-            SafeClick(By.XPath("/html/body/div/main/div[3]/div/div/div/div/div[2]/button[2]"));
-            Thread.Sleep(2000);
-
-            string title = ReadVisibleMainTitle();
-            bool onDocs =
-                title.IndexOf("DOKUMENTACIONI", StringComparison.OrdinalIgnoreCase) >= 0
-                || driver.FindElements(By.CssSelector("main input[type='file']")).Count > 0;
-
-            if (onDocs)
-            {
-                Log("U arrit DOKUMENTACIONI pa upload — kliko Dërgo.");
-                try
-                {
-                    ClickDerghoAfterDocumentationReady();
-                }
-                catch (Exception ex)
-                {
-                    Log("FindDergho dështoi, fallback: " + ex.Message);
-                    SafeClick(By.XPath("/html/body/div/main/div[3]/div/div/div/div/div[2]/button[2]"));
-                }
-            }
-        }
+        Log("STIMULIM FAIL: pa zgjedhur llojin e DAP — kliko Dërgo.");
+        ClickDerghoAfterDocumentationReady();
 
         AssertFailWithUiMessage();
     }
 
+    private void OpenNewApplicationFromServicePage()
+    {
+        Log("Assert page header");
+        IWebElement headerContainer = wait.Until(ExpectedConditions.ElementIsVisible(
+            By.CssSelector("div.page-header-container")));
+        Assert.That(headerContainer.Displayed, Is.True, "Page header nuk eshte visible");
+
+        IWebElement serviceName = wait.Until(ExpectedConditions.ElementIsVisible(
+            By.Id("serviceNameBreadcrumb")));
+        Assert.That(serviceName.Displayed, Is.True, "Breadcrumb i sherbimit nuk eshte visible");
+        Assert.That(serviceName.Text.Trim(), Is.EqualTo(ExpectedServiceName),
+            "Emri i sherbimit nuk eshte i sakte");
+
+        Log("Scroll deri sa butoni Perdor te jete i dukshem");
+        By perdorLocator = By.CssSelector("button.use-service-button");
+        IWebElement perdorBtn = wait.Until(ExpectedConditions.ElementExists(perdorLocator));
+        ((IJavaScriptExecutor)driver).ExecuteScript(
+            "arguments[0].scrollIntoView({block:'center', inline:'nearest'});",
+            perdorBtn);
+        Thread.Sleep(500);
+        perdorBtn = wait.Until(ExpectedConditions.ElementToBeClickable(perdorLocator));
+        Assert.That(perdorBtn.Displayed, Is.True, "Butoni Perdor nuk eshte visible per tu klikuar");
+
+        Log("Kliko butonin Perdor");
+        SafeClick(perdorLocator);
+
+        Log("Kliko Aplikim i ri");
+        By aplikimIRiLocator = By.XPath(
+            "//div[contains(@class,'mbx-content') and @role='button'][.//h6[contains(@class,'mbx-title') and normalize-space()='Aplikim i ri']]");
+        IWebElement aplikimIRi = wait.Until(ExpectedConditions.ElementIsVisible(aplikimIRiLocator));
+        Assert.That(aplikimIRi.Displayed, Is.True, "Karta Aplikim i ri nuk eshte visible");
+        IWebElement aplikimIRiTitle = aplikimIRi.FindElement(By.CssSelector("h6.mbx-title"));
+        Assert.That(aplikimIRiTitle.Text.Trim(), Is.EqualTo("Aplikim i ri"),
+            "Titulli i kartes nuk eshte Aplikim i ri");
+        SafeClick(aplikimIRiLocator);
+        Thread.Sleep(1500);
+    }
+
+    private IWebElement WaitForStepTitle(string expectedUpper)
+    {
+        return wait.Until(d =>
+        {
+            var titles = d.FindElements(By.CssSelector("h4.text-uppercase"));
+            if (titles.Count == 0)
+                return null;
+            return titles[0].Text.Trim().ToUpperInvariant() == expectedUpper
+                ? titles[0]
+                : null;
+        });
+    }
+
+    private IWebElement FindInputByLabel(string labelPart)
+    {
+        return wait.Until(ExpectedConditions.ElementIsVisible(
+            By.XPath($"//form//label[contains(.,'{labelPart}')]/following-sibling::input")));
+    }
+
     private IWebElement FindDerghoButtonInMain()
     {
-
         var candidates = driver.FindElements(
             By.XPath("//main//button[contains(normalize-space(.), 'Dërgo') or contains(normalize-space(.), 'Dergo')]"));
         IWebElement pick = candidates.LastOrDefault(e =>
@@ -102,7 +132,6 @@ public class _10091_FailCase_ : BiznesTestBase
 
     private void ClickDerghoAfterDocumentationReady()
     {
-
         var sendWait = new WebDriverWait(driver, TimeSpan.FromSeconds(45));
         sendWait.Until(drv =>
         {
@@ -130,36 +159,8 @@ public class _10091_FailCase_ : BiznesTestBase
         Log("Klikuar butoni 'Dërgo' (JavaScript click pasi u aktivizua).");
     }
 
-    private string ReadVisibleMainTitle()
-    {
-
-        foreach (var by in new[]
-        {
-            By.XPath("//main//h4"),
-            By.XPath("//main//h5")
-        })
-        {
-            try
-            {
-                var el = driver.FindElements(by).FirstOrDefault(e =>
-                {
-                    try { return e.Displayed && !string.IsNullOrWhiteSpace(e.Text); }
-                    catch { return false; }
-                });
-                if (el != null)
-                    return el.Text.Trim();
-            }
-            catch
-            {
-            }
-        }
-
-        return string.Empty;
-    }
-
     private string CaptureVisibleUiMessageAfterDergo()
     {
-
         Thread.Sleep(1500);
 
         string[] preferredSelectors =
@@ -223,7 +224,6 @@ public class _10091_FailCase_ : BiznesTestBase
 
     private void AssertFailWithUiMessage()
     {
-
         By successHeadlineBy = By.XPath(
             "//h5[contains(normalize-space(.),'APLIKIMI JUAJ U DËRGUA ME SUKSES')]");
         By alertModalBy = By.CssSelector(".alert-modal-container");

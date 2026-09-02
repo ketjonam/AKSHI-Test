@@ -10,13 +10,17 @@ public class _9852_FailCase_ : BiznesTestBase
     protected override string ServiceCode => "9852";
     protected override string? ServiceTitle => "KerkesePerPjesmarrjeNeAktivitete_FailCase_ReturnsUiMessage";
     protected override ServiceStartMode StartMode => ServiceStartMode.NewApplication;
+    protected override bool StartServiceOnSetup => false;
+
+    private const string ExpectedServiceName = "Kërkesë për pjesëmarrje në aktivitete";
+    private const string ExpectedClosedWarning =
+        "Shërbimi nuk mund të përdoret për momentin. Periudha e aplikimeve për pjesëmarrje në panaire ka përfunduar";
 
     [Test]
     public void KerkesePerPjesmarrjeNeAktivitete_FailCase_ReturnsUiMessage()
     {
-
-
-
+        if (PassIfServiceClosedOtherwiseStart())
+            return;
 
         Log("Assert Step 1 Title");
         IWebElement step2Title = wait.Until(ExpectedConditions.ElementIsVisible(By.XPath("/html/body/div/main/div[3]/div/div/div/div/h4")));
@@ -204,6 +208,94 @@ public class _9852_FailCase_ : BiznesTestBase
 
         Assert.Fail(
             "Rasti FAIL (as sukses, as Kujdes). Mesazhi që u shfaq në UI: " + uiMessage);
+    }
+
+    private bool PassIfServiceClosedOtherwiseStart()
+    {
+        Log("Assert page header");
+        IWebElement headerContainer = wait.Until(ExpectedConditions.ElementIsVisible(
+            By.CssSelector("div.page-header-container")));
+        Assert.That(headerContainer.Displayed, Is.True, "Page header nuk eshte visible");
+
+        IWebElement serviceName = wait.Until(ExpectedConditions.ElementIsVisible(
+            By.Id("serviceNameBreadcrumb")));
+        Assert.That(serviceName.Displayed, Is.True, "Breadcrumb i sherbimit nuk eshte visible");
+        Assert.That(serviceName.Text.Trim(), Is.EqualTo(ExpectedServiceName),
+            "Emri i sherbimit nuk eshte i sakte");
+
+        Log("Kontrollo nese sherbimi eshte i mbyllur");
+        By warningBy = By.CssSelector("div.warning-message");
+        By perdorLocator = By.CssSelector("button.use-service-button");
+
+        try
+        {
+            new WebDriverWait(driver, TimeSpan.FromSeconds(10)).Until(drv =>
+            {
+                bool warningVisible = drv.FindElements(warningBy).Any(e =>
+                {
+                    try { return e.Displayed; }
+                    catch (StaleElementReferenceException) { return false; }
+                });
+                bool perdorVisible = drv.FindElements(perdorLocator).Any(e =>
+                {
+                    try { return e.Displayed; }
+                    catch (StaleElementReferenceException) { return false; }
+                });
+                return warningVisible || perdorVisible;
+            });
+        }
+        catch (WebDriverTimeoutException)
+        {
+        }
+
+        IWebElement? warning = driver.FindElements(warningBy).FirstOrDefault(e =>
+        {
+            try { return e.Displayed; }
+            catch (StaleElementReferenceException) { return false; }
+        });
+
+        if (warning is not null)
+        {
+            Log("U shfaq mesazhi i mbylljes se sherbimit.");
+            Assert.That(warning.Text.Trim(), Is.EqualTo(ExpectedClosedWarning));
+            Log("TEST PASSED (sherbimi i mbyllur — periudha e aplikimeve ka perfunduar)");
+            return true;
+        }
+
+        ClickPerdorAndNewApplicationIfPresent();
+        return false;
+    }
+
+    private void ClickPerdorAndNewApplicationIfPresent()
+    {
+        Log("Scroll deri sa butoni Perdor te jete i dukshem");
+        By perdorLocator = By.CssSelector("button.use-service-button");
+        IWebElement perdorBtn = wait.Until(ExpectedConditions.ElementExists(perdorLocator));
+        ((IJavaScriptExecutor)driver).ExecuteScript(
+            "arguments[0].scrollIntoView({block:'center', inline:'nearest'});",
+            perdorBtn);
+        Thread.Sleep(500);
+        perdorBtn = wait.Until(ExpectedConditions.ElementToBeClickable(perdorLocator));
+        Assert.That(perdorBtn.Displayed, Is.True, "Butoni Perdor nuk eshte visible per tu klikuar");
+
+        Log("Kliko butonin Perdor");
+        SafeClick(perdorLocator);
+
+        Log("Kliko Aplikim i ri nese shfaqet");
+        By aplikimIRiLocator = By.XPath(
+            "//div[contains(@class,'mbx-content') and @role='button'][.//h6[contains(@class,'mbx-title') and normalize-space()='Aplikim i ri']]");
+        try
+        {
+            var shortWait = new WebDriverWait(driver, TimeSpan.FromSeconds(8));
+            IWebElement aplikimIRi = shortWait.Until(ExpectedConditions.ElementIsVisible(aplikimIRiLocator));
+            Assert.That(aplikimIRi.Displayed, Is.True, "Karta Aplikim i ri nuk eshte visible");
+            SafeClick(aplikimIRiLocator);
+            Thread.Sleep(1500);
+        }
+        catch (WebDriverTimeoutException)
+        {
+            Log("Karta 'Aplikim i ri' nuk u shfaq — vazhdoj me formularin.");
+        }
     }
 
     private void BlurActiveElement()

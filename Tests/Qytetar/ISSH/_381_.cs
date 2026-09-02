@@ -13,20 +13,45 @@ public class _381_ : QytetarNidF602TestBase
     [Test]
     public void PensioniIM()
     {
+        Log("Assert page header");
+        IWebElement headerContainer = wait.Until(ExpectedConditions.ElementIsVisible(
+            By.CssSelector("div.page-header-container")));
+        Assert.That(headerContainer.Displayed, Is.True, "Page header nuk eshte visible");
 
+        IWebElement serviceName = wait.Until(ExpectedConditions.ElementIsVisible(
+            By.Id("serviceNameBreadcrumb")));
+        Assert.That(serviceName.Displayed, Is.True, "Breadcrumb i sherbimit nuk eshte visible");
+        Assert.That(serviceName.Text.Trim(), Is.EqualTo("Pensioni im"),
+            "Emri i sherbimit nuk eshte i sakte");
 
+        Log("Scroll deri sa butoni Perdor te jete i dukshem");
+        By perdorLocator = By.CssSelector("button.use-service-button");
+        IWebElement perdorBtn = wait.Until(ExpectedConditions.ElementExists(perdorLocator));
+        ((IJavaScriptExecutor)driver).ExecuteScript(
+            "arguments[0].scrollIntoView({block:'center', inline:'nearest'});",
+            perdorBtn);
+        Thread.Sleep(500);
+        perdorBtn = wait.Until(ExpectedConditions.ElementToBeClickable(perdorLocator));
+        Assert.That(perdorBtn.Displayed, Is.True, "Butoni Perdor nuk eshte visible per tu klikuar");
 
+        Log("Kliko butonin Perdor");
+        SafeClick(perdorLocator);
 
-        Log("Assert Title");
-        IWebElement Step1Title = wait.Until(ExpectedConditions.ElementIsVisible(
-            By.CssSelector("h4.text-uppercase")));
-        Assert.That(Step1Title.Text.Trim().ToUpperInvariant(),
-            Is.EqualTo("EKSTRAKTI NGA INSTITUTI I SIGURIMEVE SHOQËRORE"));
+        Log("Kliko Aplikim i ri");
+        By aplikimIRiLocator = By.XPath(
+            "//div[contains(@class,'mbx-content') and @role='button'][.//h6[contains(@class,'mbx-title') and normalize-space()='Aplikim i ri']]");
+        IWebElement aplikimIRi = wait.Until(ExpectedConditions.ElementIsVisible(aplikimIRiLocator));
+        Assert.That(aplikimIRi.Displayed, Is.True, "Karta Aplikim i ri nuk eshte visible");
+        IWebElement aplikimIRiTitle = aplikimIRi.FindElement(By.CssSelector("h6.mbx-title"));
+        Assert.That(aplikimIRiTitle.Text.Trim(), Is.EqualTo("Aplikim i ri"),
+            "Titulli i kartes nuk eshte Aplikim i ri");
+        SafeClick(aplikimIRiLocator);
+        Thread.Sleep(1500);
 
         Log("Assert kohëzgjatja");
         IWebElement durationBtn = wait.Until(ExpectedConditions.ElementIsVisible(
             By.CssSelector("button.ealb-btn-5minutes")));
-        Assert.That(durationBtn.Text.Trim(), Does.Contain("5 minuta punë"));
+        Assert.That(durationBtn.Text.Trim(), Does.Contain("1 minut kohëzgjatje"));
 
         Log("Assert nje hap aktiv");
         var steps = driver.FindElements(By.CssSelector(".ealb-step"));
@@ -34,10 +59,11 @@ public class _381_ : QytetarNidF602TestBase
         Assert.That(steps[0].GetAttribute("class"), Does.Contain("active"));
         Assert.That(steps[0].GetAttribute("class"), Does.Contain("no-click"));
 
-        Log("Assert seksioni i te dhenave te pensionistit");
-        IWebElement sectionTitle = wait.Until(ExpectedConditions.ElementIsVisible(
-            By.CssSelector("p.px-4.pb-4.fs-5")));
-        Assert.That(sectionTitle.Text.Trim(), Is.EqualTo("Të dhënat e pensionistit"));
+        Log("Assert Title");
+        IWebElement Step1Title = wait.Until(ExpectedConditions.ElementIsVisible(
+            By.CssSelector("h4.text-uppercase")));
+        Assert.That(Step1Title.Text.Trim().ToUpperInvariant(),
+            Is.EqualTo("EKSTRAKTI NGA INSTITUTI I SIGURIMEVE SHOQËRORE"));
 
         Log("Assert label-at e pensionistit");
         AssertLabel("nid", "Numri Personal:");
@@ -47,9 +73,9 @@ public class _381_ : QytetarNidF602TestBase
 
         Log("Assert te dhenat e pensionistit");
         AssertReadonlyField("nid", CitizenNid);
-        AssertReadonlyField("firstName", "MERSIN");
-        AssertReadonlyField("fatherName", "MUSTAFA");
-        AssertReadonlyField("lastName", "MEMA");
+        AssertReadonlyField("firstName", "KADRI");
+        AssertReadonlyField("fatherName", "DELI");
+        AssertReadonlyField("lastName", "KUKAJ");
 
         Log("Wait qe te dhenat e tabeles te ngarkohen");
         WaitForPensionTable();
@@ -73,24 +99,18 @@ public class _381_ : QytetarNidF602TestBase
             By.XPath("//div[contains(@class,'rdt_TableCol') and normalize-space()='Vjetërsia']")).Displayed, Is.True);
 
         var rows = driver.FindElements(By.CssSelector(".rdt_TableRow"));
-        Assert.That(rows.Count, Is.EqualTo(2));
+        Assert.That(rows.Count, Is.EqualTo(1));
 
-        Log("Assert rreshtat e pensioneve");
-        AssertTableRow(0, "1", "Suplementar Urban", "PPP0003502", "Tirane", "7,276", "A/Kavaje (KJ)", "14.02.2021", "8vjet");
-        AssertTableRow(1, "2", "Pleqerie Urban", "P0045090", "Tirane", "20,633", "A/Kavaje (KJ)", "14.02.2021", "27.1vjet");
+        Log("Assert rreshtin e pensionit");
+        AssertTableRow(0, "1", "Pleqerie Urban", "132655", "Shkoder", "55,369", "FI Bank (SH)", "12.02.2022", "43.8vjet");
 
-        Log("Assert butonat Shkarko");
+        Log("Assert butoni Shkarko");
         var shkarkoButtons = driver.FindElements(By.CssSelector("button.btn-next"));
-        Assert.That(shkarkoButtons.Count, Is.EqualTo(2));
+        Assert.That(shkarkoButtons.Count, Is.EqualTo(1));
         Assert.That(shkarkoButtons[0].Text.Trim(), Does.Contain("Shkarko"));
-        Assert.That(shkarkoButtons[1].Text.Trim(), Does.Contain("Shkarko"));
 
-        Log("Kliko butonin shkarko per pensionin suplementar");
+        Log("Kliko butonin shkarko");
         SafeClick(By.CssSelector("#row-0 button.btn-next"));
-        Thread.Sleep(2000);
-
-        Log("Kliko butonin shkarko per pensionin e pleqerise");
-        SafeClick(By.CssSelector("#row-1 button.btn-next"));
         Thread.Sleep(2000);
 
         Log("Assert nuk ka buton Vazhdo");
@@ -99,6 +119,7 @@ public class _381_ : QytetarNidF602TestBase
         Log("Assert butoni Kthehu");
         IWebElement backBtn = wait.Until(ExpectedConditions.ElementIsVisible(
             By.CssSelector("button.ealb-btn-back")));
+        Assert.That(backBtn.Displayed, Is.True, "Butoni Kthehu nuk eshte visible");
         Assert.That(backBtn.Text.Trim(), Is.EqualTo("Kthehu"));
 
         Log("Kliko butonin Kthehu");
@@ -110,13 +131,11 @@ public class _381_ : QytetarNidF602TestBase
 
     private IWebElement FindFieldById(string id)
     {
-
         return wait.Until(ExpectedConditions.ElementIsVisible(By.Id(id)));
     }
 
     private void AssertReadonlyField(string id, string expectedValue)
     {
-
         IWebElement input = FindFieldById(id);
         Assert.That(input.GetAttribute("readonly"), Is.Not.Null);
         Assert.That(input.GetAttribute("value").Trim(), Is.EqualTo(expectedValue));
@@ -124,7 +143,6 @@ public class _381_ : QytetarNidF602TestBase
 
     private void AssertLabel(string forId, string expectedLabel)
     {
-
         IWebElement label = wait.Until(ExpectedConditions.ElementIsVisible(
             By.CssSelector($"label[for='{forId}']")));
         Assert.That(label.Text.Trim(), Is.EqualTo(expectedLabel));
@@ -132,7 +150,6 @@ public class _381_ : QytetarNidF602TestBase
 
     private void WaitForPensionTable()
     {
-
         var dataWait = new WebDriverWait(driver, TimeSpan.FromSeconds(40));
         dataWait.Until(d =>
         {
@@ -158,7 +175,6 @@ public class _381_ : QytetarNidF602TestBase
         string dtFillimit,
         string vjetersia)
     {
-
         IWebElement row = wait.Until(ExpectedConditions.ElementIsVisible(By.Id($"row-{rowIndex}")));
         var cells = row.FindElements(By.CssSelector("[role='cell']"));
 

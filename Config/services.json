@@ -2260,6 +2260,26 @@
         "sourceFile":  "MSHMS\\_15128_FailCase_.cs"
     },
     {
+        "code":  "15129",
+        "title":  "NdryshimRegjistrimiPajisjeMjekesore",
+        "institution":  "MSHMS",
+        "profileType":  "Organisation",
+        "loginProfile":  "Biznes",
+        "search":  "15129",
+        "startMode":  "NewApplication",
+        "sourceFile":  "MSHMS\\_15129_.cs"
+    },
+    {
+        "code":  "15129",
+        "title":  "NdryshimRegjistrimiPajisjeMjekesore_FailCase_ReturnsUiMessage",
+        "institution":  "MSHMS",
+        "profileType":  "Organisation",
+        "loginProfile":  "Biznes",
+        "search":  "15129",
+        "startMode":  "NewApplication",
+        "sourceFile":  "MSHMS\\_15129_FailCase_.cs"
+    },
+    {
         "code":  "15191",
         "title":  "NenaMeShumeFemije",
         "institution":  "MSHMS",
@@ -2320,6 +2340,16 @@
         "sourceFile":  "MSHMS\\_4701_.cs"
     },
     {
+        "code":  "4705",
+        "title":  "ListaESemundjeveKronike",
+        "institution":  "MSHMS",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "4705",
+        "startMode":  "NewApplication",
+        "sourceFile":  "MSHMS\\_4705_.cs"
+    },
+    {
         "code":  "4707",
         "title":  "ListaBarnaveTeRimbursueshme",
         "institution":  "MSHMS",
@@ -2338,5 +2368,15 @@
         "search":  "9224",
         "startMode":  "NewApplication",
         "sourceFile":  "MSHMS\\_9224_.cs"
+    },
+    {
+        "code":  "7178",
+        "title":  "KartaEShendetit",
+        "institution":  "MSHMS",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "7178",
+        "startMode":  "NewApplication",
+        "sourceFile":  "MSHMS\\_7178_.cs"
     }
 ]

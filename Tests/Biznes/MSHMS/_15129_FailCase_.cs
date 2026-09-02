@@ -3,98 +3,55 @@ using AKSHI.Test.Core;
 namespace AKSHI.Test.Tests.Biznes.MSHMS;
 
 [Category("MSHMS")]
-[Category("15128")]
+[Category("15129")]
 [Category("FailCase")]
-public class _15128_FailCase_ : BiznesTestBase
+public class _15129_FailCase_ : BiznesTestBase
 {
-    protected override string ServiceCode => "15128";
-    protected override string? ServiceTitle => "RegjistrimPajisjeMjekesore_FailCase_ReturnsUiMessage";
+    protected override string ServiceCode => "15129";
+    protected override string? ServiceTitle => "NdryshimRegjistrimiPajisjeMjekesore_FailCase_ReturnsUiMessage";
     protected override ServiceStartMode StartMode => ServiceStartMode.NewApplication;
     protected override bool StartServiceOnSetup => false;
 
-    private const string ExpectedServiceName = "Aplikim për regjistrim pajisje mjekësore";
+    private const string ExpectedServiceName = "Aplikim për ndryshim regjistrimi pajisje mjekësore";
 
     [Test]
-    public void RegjistrimPajisjeMjekesore_FailCase_ReturnsUiMessage()
+    public void NdryshimRegjistrimiPajisjeMjekesore_FailCase_ReturnsUiMessage()
     {
         OpenNewApplicationFromServicePage();
 
-        Log("Assert Step 1 Title");
-        WaitForStepTitle("INFORMACION MBI APLIKUESIN");
-
-        Log("Zgjidh Përfaqësues");
-        new SelectElement(wait.Until(ExpectedConditions.ElementIsVisible(
-            By.Id("applicantType")))).SelectByValue("AUTHP");
-        Thread.Sleep(1500);
-
-        Log("Ploteso fushat e detyrueshme");
-        FillByName("cityState", "test123");
-        FillByName("manufacturerAddress", "test123");
-        FillByName("manufacturer", "test123");
-        new SelectElement(wait.Until(ExpectedConditions.ElementIsVisible(
-            By.Id("deviceCategoryRepresentative")))).SelectByValue("100");
-        FillByName("representedManufacturerCity", "test");
-        FillByName("representedManufacturerTel", "+35544200600");
-        FillByName("manufacturerAndAddress", "test", isTextarea: true);
-
-        Log("Kliko Vazhdo Step 1");
-        SafeClick(By.CssSelector("button.ealb-btn-continue"));
-        Thread.Sleep(3000);
+        Log("Kliko Zgjidh ne tabelen e regjistrit");
+        wait.Until(ExpectedConditions.ElementIsVisible(By.Id("section-a-form")));
+        SafeClick(By.XPath("//table//button[normalize-space()='Zgjidh']"));
+        Thread.Sleep(2500);
 
         Log("Assert Step 2 title");
-        WaitForStepTitle("INFORMACION MBI PAJISJET MJEKËSORE");
+        WaitForStepTitle("INFORMACION MBI PËRFAQËSUESIN");
 
-        Log("Kliko Plotëso manualisht");
-        SafeClick(By.XPath("//button[contains(@class,'ealb-button-open-modal')][.//b[contains(.,'Plotëso manualisht')]]"));
-        WaitForModalTitle("Shto pajisje");
-
-        Log("Ploteso pajisjen");
-        FindModalInput("Emri/Modeli i pajisjes").SendKeys("test");
-        new SelectElement(FindModalSelect("Klasa")).SelectByValue("II");
-        FindModalInput("Kodi").SendKeys("test");
-        FindModalInput("Përshkrimi").SendKeys("test");
-
-        Log("Kliko Ruaj ne modalin e pajisjes");
-        ClickModalFooter("Ruaj");
-        WaitForModalClosed();
-
-        Log("Kliko Standartet");
-        SafeClick(By.CssSelector("span[title='Standartet']"));
-        Thread.Sleep(1000);
-
-        Log("Kliko Shto standart");
-        SafeClick(By.XPath("//button[contains(@class,'ealb-button-open-modal')][.//b[contains(.,'Shto standart')]]"));
-        WaitForModalTitle("+ Shto standart");
-
-        Log("Ploteso standartin");
-        FindModalInput("Emri i standartit").SendKeys("test");
-        FindModalInput("Kodi").SendKeys("test");
-
-        Log("Kliko Ruaj ne modalin e standartit");
-        ClickModalFooter("Ruaj");
-        WaitForModalClosed();
+        Log("Ploteso fushat e detyrueshme");
+        FillControl(FindControlByLabelContains("Prodhuesi dhe adresa"), "test");
+        new SelectElement(FindControlByLabelContains("Kategoria")).SelectByValue("100");
 
         Log("Kliko Vazhdo Step 2");
         SafeClick(By.CssSelector("button.ealb-btn-continue"));
         Thread.Sleep(3000);
 
         Log("Assert Step 3 title");
-        WaitForStepTitle("INFORMACION MBI ORGANIN E MIRATUAR");
-
-        Log("Ploteso organin e miratuar");
-        FillByName("name", "test");
-        FillByName("numriTrupit", "123");
-        FillByName("numriCertifikates", "CE-123");
-        FillByName("dataLeshimit", "01.01.2024");
-        FillByName("dataSkadences", "01.01.2027");
+        WaitForStepTitle("INFORMACION MBI PAJISJEN MJEKËSORE");
 
         Log("Kliko Vazhdo Step 3");
         SafeClick(By.CssSelector("button.ealb-btn-continue"));
         Thread.Sleep(3000);
 
-        Log("Assert Step 4 Title");
-        IWebElement Step4Title = WaitForStepTitle("DOKUMENTACIONI");
-        Assert.That(Step4Title.Text.Trim().ToUpperInvariant(), Does.Contain("DOKUMENTACIONI"));
+        Log("Assert Step 4 title");
+        WaitForStepTitle("INFORMACION MBI ORGANIN E MIRATUAR");
+
+        Log("Kliko Vazhdo Step 4");
+        SafeClick(By.CssSelector("button.ealb-btn-continue"));
+        Thread.Sleep(3000);
+
+        Log("Assert Step 5 Title");
+        IWebElement step5Title = WaitForStepTitle("DOKUMENTACIONI");
+        Assert.That(step5Title.Text.Trim().ToUpperInvariant(), Does.Contain("DOKUMENTACIONI"));
 
         Log("STIMULIM FAIL: nuk ngarkohen dokumente (qëllimisht).");
         Thread.Sleep(1000);
@@ -163,11 +120,16 @@ public class _15128_FailCase_ : BiznesTestBase
         });
     }
 
-    private void FillByName(string name, string value, bool isTextarea = false)
+    private IWebElement FindControlByLabelContains(string labelPart)
     {
-        string tag = isTextarea ? "textarea" : "input";
-        IWebElement input = wait.Until(ExpectedConditions.ElementIsVisible(
-            By.CssSelector($"{tag}[name='{name}']")));
+        IWebElement labelEl = wait.Until(ExpectedConditions.ElementIsVisible(
+            By.XPath($"//label[contains(@class,'form-label') and contains(normalize-space(),'{labelPart}')]")));
+        return labelEl.FindElement(By.XPath(
+            "./following-sibling::*[self::input or self::textarea or self::select] | ./following-sibling::div//*[self::input or self::textarea or self::select][1]"));
+    }
+
+    private void FillControl(IWebElement input, string value)
+    {
         ((IJavaScriptExecutor)driver).ExecuteScript(
             "arguments[0].scrollIntoView({block:'center'});",
             input);
@@ -186,38 +148,6 @@ public class _15128_FailCase_ : BiznesTestBase
             input.SendKeys(value);
         }
         Thread.Sleep(200);
-    }
-
-    private IWebElement FindModalInput(string labelPart)
-    {
-        return wait.Until(ExpectedConditions.ElementIsVisible(
-            By.XPath($"//div[contains(@class,'custom-modal-content')]//label[contains(.,'{labelPart}')]/following::input[contains(@class,'custom-modal-input')][1]")));
-    }
-
-    private IWebElement FindModalSelect(string labelPart)
-    {
-        return wait.Until(ExpectedConditions.ElementExists(
-            By.XPath($"//div[contains(@class,'custom-modal-content')]//label[contains(.,'{labelPart}')]/following::select[contains(@class,'custom-modal-select')][1]")));
-    }
-
-    private void WaitForModalTitle(string title)
-    {
-        IWebElement modalTitle = wait.Until(ExpectedConditions.ElementIsVisible(
-            By.CssSelector(".custom-modal-title")));
-        Assert.That(modalTitle.Text.Trim(), Is.EqualTo(title));
-    }
-
-    private void ClickModalFooter(string buttonText)
-    {
-        SafeClick(By.XPath(
-            $"//div[contains(@class,'custom-modal-footer')]//button[contains(.,'{buttonText}')]"));
-        Thread.Sleep(800);
-    }
-
-    private void WaitForModalClosed()
-    {
-        wait.Until(ExpectedConditions.InvisibilityOfElementLocated(
-            By.CssSelector(".custom-modal-content")));
     }
 
     private IWebElement FindDerghoButtonInMain()

@@ -104,7 +104,20 @@ public sealed class WebEl : ISearchContext
 
     public bool Displayed => PwSync.Run(() => Locator.IsVisibleAsync());
     public bool Enabled => PwSync.Run(() => Locator.IsEnabledAsync());
-    public bool Selected => string.Equals(GetAttribute("selected"), "true", StringComparison.OrdinalIgnoreCase);
+    public bool Selected
+    {
+        get
+        {
+            try
+            {
+                return PwSync.Run(() => Locator.IsCheckedAsync());
+            }
+            catch (PlaywrightException)
+            {
+                return PwSync.Run(() => Locator.GetAttributeAsync("selected")) != null;
+            }
+        }
+    }
 
     public string GetAttribute(string name)
     {
@@ -154,6 +167,13 @@ public sealed class WebEl : ISearchContext
         if (keys == Keys.Enter)
         {
             PwSync.Run(() => Locator.PressAsync("Enter"));
+            return;
+        }
+
+        string? inputType = PwSync.Run(() => Locator.GetAttributeAsync("type"));
+        if (string.Equals(inputType, "file", StringComparison.OrdinalIgnoreCase))
+        {
+            PwSync.Run(() => Locator.SetInputFilesAsync(keys));
             return;
         }
 

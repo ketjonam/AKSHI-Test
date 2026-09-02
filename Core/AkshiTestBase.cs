@@ -18,6 +18,7 @@ public abstract class AkshiTestBase : PageTest
     protected abstract string ServiceCode { get; }
     protected virtual string? ServiceTitle => null;
     protected virtual ServiceStartMode StartMode => ServiceStartMode.NewApplication;
+    protected virtual bool StartServiceOnSetup => true;
 
     public override BrowserNewContextOptions ContextOptions()
     {
@@ -81,7 +82,7 @@ public abstract class AkshiTestBase : PageTest
         service.LoginProfile = Profile.ToString();
 
         var portal = new ServicePortalPage(Page, Settings);
-        await portal.OpenServiceAsync(service);
+        await portal.OpenServiceAsync(service, StartServiceOnSetup);
     }
 
     [TearDown]
@@ -163,6 +164,18 @@ public abstract class AkshiTestBase : PageTest
         {
             ((IJavaScriptExecutor)driver).ExecuteScript("arguments[0].click();", element);
         }
+    }
+
+    protected void DismissCookieBannerIfPresent()
+    {
+        var acceptButtons = driver.FindElements(By.CssSelector("#cookieConsent.show button.cookie-btn.accept"));
+        if (acceptButtons.Count == 0 || !acceptButtons[0].Displayed)
+            return;
+
+        Log("Prano cookies");
+        SafeClick(By.CssSelector("#cookieConsent.show button.cookie-btn.accept"));
+        wait.Until(ExpectedConditions.InvisibilityOfElementLocated(
+            By.CssSelector("#cookieConsent.show")));
     }
 
     protected void SafeClick(By locator)

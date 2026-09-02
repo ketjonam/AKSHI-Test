@@ -20,7 +20,7 @@ public sealed class ServicePortalPage
         return $"{baseUrl.TrimEnd('/')}/{path.Trim('/')}/{Uri.EscapeDataString(serviceCode)}";
     }
 
-    public async Task OpenServiceAsync(ServiceInfo service)
+    public async Task OpenServiceAsync(ServiceInfo service, bool startService = true)
     {
         string url = ServiceDetailsUrl(_settings.Portal.BaseUrl, service.Code);
         TestContext.Progress.WriteLine(
@@ -34,6 +34,9 @@ public sealed class ServicePortalPage
         await _page.WaitForLoadStateAsync(LoadState.DOMContentLoaded);
 
         AssertNotRedirectedToLogin(url);
+
+        if (!startService)
+            return;
 
         await UseServiceAsync();
 
