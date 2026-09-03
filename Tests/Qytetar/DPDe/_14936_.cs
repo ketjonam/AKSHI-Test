@@ -9,13 +9,18 @@ public class _14936_ : QytetarNidJ557TestBase
     protected override string ServiceCode => "14936";
     protected override string? ServiceTitle => "CertifikateSipasKonventes";
     protected override ServiceStartMode StartMode => ServiceStartMode.NewApplication;
+    protected override bool StartServiceOnSetup => false;
+
+    private const string ExpectedServiceName =
+        "Aplikim për paisjen e anijes me çertifikatë sipas konventës";
+    private const string ExpectedAddress =
+        "FROSINA PLAKU; Nd. 88; H. 2; Ap. 9; NJËSIA ADMINISTRATIVE NR. 7; NJËSIA BASHKIAKE NR. 7; 1023; TIRANË";
+    private const string DocumentPath = @"C:\Users\Kreatx\Downloads\Test Dokument.pdf.pdf";
 
     [Test]
     public void CertifikateSipasKonventes()
     {
-
-
-
+        OpenNewApplicationFromServicePage();
 
         Log("Assert Title Step 1");
         IWebElement Step1Title = WaitForStepTitle("TË DHËNAT E APLIKANTIT");
@@ -63,30 +68,29 @@ public class _14936_ : QytetarNidJ557TestBase
         Log("Assert te dhenat e aplikantit te para-plotesuara dhe disabled");
         AssertDisabledValue("Nid", Settings.Qytetar.Username);
         Assert.That(FindInputByName("nid").GetAttribute("name"), Is.EqualTo("nid"));
-        AssertDisabledValue("Emri", "Ketjona");
+        AssertDisabledValue("Emri", "Katerina");
         Assert.That(FindInputByName("emri").GetAttribute("name"), Is.EqualTo("emri"));
-        AssertDisabledValue("Mbiemri", "Mema");
+        AssertDisabledValue("Mbiemri", "Jançe");
         Assert.That(FindInputByName("mbiemri").GetAttribute("name"), Is.EqualTo("mbiemri"));
         AssertDisabledValue("Gjinia", "Femër");
         Assert.That(FindInputByName("gjinia").GetAttribute("type"), Is.EqualTo("text"));
-        AssertDisabledValue("Rrethi", "KAVAJË");
+        AssertDisabledValue("Rrethi", "TIRANË");
         Assert.That(FindInputByName("emRrethi").GetAttribute("name"), Is.EqualTo("emRrethi"));
-        AssertDisabledValue("Datëlindja", "28.07.1995");
+        AssertDisabledValue("Datëlindja", "13.04.1993");
         Assert.That(FindInputByName("datelindja").GetAttribute("name"), Is.EqualTo("datelindja"));
         AssertDisabledValue("Shtetësia", "Shqiptare");
         Assert.That(FindInputByName("shtetesia").GetAttribute("name"), Is.EqualTo("shtetesia"));
-        AssertDisabledValue("Qyteti", "KAVAJË");
+        AssertDisabledValue("Qyteti", "TIRANË");
         Assert.That(FindInputByName("bashkia").GetAttribute("name"), Is.EqualTo("bashkia"));
-        AssertDisabledValue("Vendlindja", "Kavajë");
+        AssertDisabledValue("Vendlindja", "Korçë");
         Assert.That(FindInputByName("vendlindja").GetAttribute("name"), Is.EqualTo("vendlindja"));
-        AssertDisabledValue("Atësia", "Mersin");
+        AssertDisabledValue("Atësia", "Foti");
         Assert.That(FindInputByName("atesia").GetAttribute("name"), Is.EqualTo("atesia"));
-        AssertDisabledValue("Nr. Tel. Cel.", "0676041404");
+        AssertDisabledValue("Nr. Tel. Cel.", "+355697008820");
         Assert.That(FindInputByName("telCel").GetAttribute("name"), Is.EqualTo("telCel"));
-        AssertDisabledValue("Email", "ketjona.mema@kreatx.com");
+        AssertDisabledValue("Email", "katerina.jance@kreatx.com");
         Assert.That(FindInputByLabel("Email").GetAttribute("type"), Is.EqualTo("email"));
-        AssertDisabledValue("Adresa",
-            "THABIT REXHA 04040156; Nd. 6; H. 2; ; KAVAJË; KAVAJË; 2501; KAVAJË");
+        AssertDisabledValue("Adresa", ExpectedAddress);
         Assert.That(FindInputByName("adresa").TagName, Is.EqualTo("textarea"));
 
         Log("Assert Kodi Postar dhe Nr.Tel Fiks jane te editueshme");
@@ -104,10 +108,10 @@ public class _14936_ : QytetarNidJ557TestBase
         Assert.That(telFiks.GetAttribute("value").Trim(), Is.EqualTo(string.Empty));
 
         Log("Ploteso Kodi Postar dhe Nr.Tel Fiks");
-        FillInput(FindInputByName("postalCode"), "2501");
-        FillInput(FindInputByName("telFiks"), "055220000");
-        Assert.That(FindInputByName("postalCode").GetAttribute("value").Trim(), Is.EqualTo("2501"));
-        Assert.That(FindInputByName("telFiks").GetAttribute("value").Trim(), Is.EqualTo("055220000"));
+        FillInput(FindInputByName("postalCode"), "1023");
+        FillInput(FindInputByName("telFiks"), "042200000");
+        Assert.That(FindInputByName("postalCode").GetAttribute("value").Trim(), Is.EqualTo("1023"));
+        Assert.That(FindInputByName("telFiks").GetAttribute("value").Trim(), Is.EqualTo("042200000"));
 
         Log("Assert butonat e navigimit");
         IWebElement backBtn = wait.Until(ExpectedConditions.ElementIsVisible(
@@ -292,10 +296,8 @@ public class _14936_ : QytetarNidJ557TestBase
         Assert.That(WaitForStepTitle("DOKUMENTACIONI").Text.Trim().ToUpperInvariant(),
             Is.EqualTo("DOKUMENTACIONI"));
 
-        string documentPath = @"C:\Users\Kreatx\Downloads\Test Dokument.pdf.pdf";
-
         Log("Ngarko dokumentet e detyrueshme");
-        UploadDocument("certifikate_siguracioni_Upload", documentPath);
+        UploadDocument("certifikate_siguracioni_Upload", DocumentPath);
 
         Log("Zgjidh pranimin e kushteve");
         ClickCheckbox("consentCheckbox");
@@ -306,6 +308,45 @@ public class _14936_ : QytetarNidJ557TestBase
         //Thread.Sleep(5000);
 
         Log("TEST PASSED");
+    }
+
+    private void OpenNewApplicationFromServicePage()
+    {
+        Log("Assert page header");
+        IWebElement headerContainer = wait.Until(ExpectedConditions.ElementIsVisible(
+            By.CssSelector("div.page-header-container")));
+        Assert.That(headerContainer.Displayed, Is.True, "Page header nuk eshte visible");
+
+        IWebElement serviceName = wait.Until(ExpectedConditions.ElementIsVisible(
+            By.Id("serviceNameBreadcrumb")));
+        Assert.That(serviceName.Displayed, Is.True, "Breadcrumb i sherbimit nuk eshte visible");
+        Assert.That(serviceName.Text.Replace('\u00A0', ' ').Trim(), Is.EqualTo(ExpectedServiceName),
+            "Emri i sherbimit nuk eshte i sakte");
+
+        Log("Scroll deri sa butoni Perdor te jete i dukshem");
+        By perdorLocator = By.CssSelector("button.use-service-button");
+        IWebElement perdorBtn = wait.Until(ExpectedConditions.ElementExists(perdorLocator));
+        ((IJavaScriptExecutor)driver).ExecuteScript(
+            "arguments[0].scrollIntoView({block:'center', inline:'nearest'});",
+            perdorBtn);
+        Thread.Sleep(500);
+        perdorBtn = wait.Until(ExpectedConditions.ElementToBeClickable(perdorLocator));
+        Assert.That(perdorBtn.Displayed, Is.True, "Butoni Perdor nuk eshte visible per tu klikuar");
+        Assert.That(perdorBtn.Text.Trim(), Is.EqualTo("Përdor"), "Butoni nuk eshte Përdor");
+
+        Log("Kliko butonin Perdor");
+        SafeClick(perdorLocator);
+
+        Log("Kliko Aplikim i ri");
+        By aplikimIRiLocator = By.CssSelector("button[aria-label='Aplikim i ri']");
+        IWebElement aplikimIRi = wait.Until(ExpectedConditions.ElementIsVisible(aplikimIRiLocator));
+        Assert.That(aplikimIRi.Displayed, Is.True, "Karta Aplikim i ri nuk eshte visible");
+        IWebElement aplikimIRiTitle = aplikimIRi.FindElement(By.CssSelector("h6.mbx-title"));
+        Assert.That(aplikimIRiTitle.Text.Trim(), Is.EqualTo("Aplikim i ri"),
+            "Titulli i kartes nuk eshte Aplikim i ri");
+        SafeClick(aplikimIRiLocator);
+        Thread.Sleep(1500);
+        DismissCookieBannerIfPresent();
     }
 
     private void SelectRadioById(string radioId)
@@ -455,7 +496,7 @@ public class _14936_ : QytetarNidJ557TestBase
         Assert.That(shadow.FindElement(By.CssSelector("[data-role='dropzone-text']")).Text.Trim(),
             Is.EqualTo("Kliko për të ngarkuar dokument"));
         Assert.That(shadow.FindElement(By.CssSelector("[data-role='hint']")).Text.Trim(),
-            Is.EqualTo("Formatet e lejuara: PDF, JPG, JPEG, PNG. Madhesia maksimale: 5MB."));
+            Is.EqualTo("Formatet e lejuara: PDF, JPG, JPEG, PNG. Madhësia maksimale: 5MB."));
     }
 
     private void UploadDocument(string uploadId, string filePath)

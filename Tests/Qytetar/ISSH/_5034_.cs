@@ -9,13 +9,45 @@ public class _5034_ : QytetarNidJ557TestBase
     protected override string ServiceCode => "5034";
     protected override string? ServiceTitle => "KontributetSigurimeveShoqerore";
     protected override ServiceStartMode StartMode => ServiceStartMode.NewApplication;
+    protected override bool StartServiceOnSetup => false;
 
     [Test]
     public void KontributetSigurimeveShoqerore()
     {
+        Log("Assert page header");
+        IWebElement headerContainer = wait.Until(ExpectedConditions.ElementIsVisible(
+            By.CssSelector("div.page-header-container")));
+        Assert.That(headerContainer.Displayed, Is.True, "Page header nuk eshte visible");
 
+        IWebElement serviceName = wait.Until(ExpectedConditions.ElementIsVisible(
+            By.Id("serviceNameBreadcrumb")));
+        Assert.That(serviceName.Displayed, Is.True, "Breadcrumb i sherbimit nuk eshte visible");
+        Assert.That(serviceName.Text.Trim(), Is.EqualTo("Kontributet për sigurimet shoqërore"),
+            "Emri i sherbimit nuk eshte i sakte");
 
+        Log("Scroll deri sa butoni Perdor te jete i dukshem");
+        By perdorLocator = By.CssSelector("button.use-service-button");
+        IWebElement perdorBtn = wait.Until(ExpectedConditions.ElementExists(perdorLocator));
+        ((IJavaScriptExecutor)driver).ExecuteScript(
+            "arguments[0].scrollIntoView({block:'center', inline:'nearest'});",
+            perdorBtn);
+        Thread.Sleep(500);
+        perdorBtn = wait.Until(ExpectedConditions.ElementToBeClickable(perdorLocator));
+        Assert.That(perdorBtn.Displayed, Is.True, "Butoni Perdor nuk eshte visible per tu klikuar");
 
+        Log("Kliko butonin Perdor");
+        SafeClick(perdorLocator);
+
+        Log("Kliko Aplikim i ri");
+        By aplikimIRiLocator = By.XPath(
+            "//div[contains(@class,'mbx-content') and @role='button'][.//h6[contains(@class,'mbx-title') and normalize-space()='Aplikim i ri']]");
+        IWebElement aplikimIRi = wait.Until(ExpectedConditions.ElementIsVisible(aplikimIRiLocator));
+        Assert.That(aplikimIRi.Displayed, Is.True, "Karta Aplikim i ri nuk eshte visible");
+        IWebElement aplikimIRiTitle = aplikimIRi.FindElement(By.CssSelector("h6.mbx-title"));
+        Assert.That(aplikimIRiTitle.Text.Trim(), Is.EqualTo("Aplikim i ri"),
+            "Titulli i kartes nuk eshte Aplikim i ri");
+        SafeClick(aplikimIRiLocator);
+        Thread.Sleep(1500);
 
         Log("Assert Title");
         IWebElement Step1Title = wait.Until(ExpectedConditions.ElementIsVisible(
@@ -55,16 +87,16 @@ public class _5034_ : QytetarNidJ557TestBase
         Log("Assert rreshtat e kontributeve");
         Assert.That(GetTableRowCount(), Is.EqualTo(10));
         AssertTableContains(
-            "KETJONA|MEMA|230824|0|7|2026|Urban",
-            "KETJONA|MEMA|185064|0|7|2026|Urban",
-            "KETJONA|MEMA|185064|0|6|2026|Urban",
-            "KETJONA|MEMA|230823|0|6|2026|Urban",
-            "KETJONA|MEMA|209849|0|5|2026|Urban",
-            "KETJONA|MEMA|230823|0|5|2026|Urban",
-            "KETJONA|MEMA|185064|0|4|2026|Urban",
-            "KETJONA|MEMA|230823|0|4|2026|Urban",
-            "KETJONA|MEMA|230823|0|3|2026|Urban",
-            "KETJONA|MEMA|185064|0|3|2026|Urban"
+            "KATERINA|JANÇE|135700|0|7|2026|Urban",
+            "KATERINA|JANÇE|121942|0|6|2026|Urban",
+            "KATERINA|JANÇE|121942|0|5|2026|Urban",
+            "KATERINA|JANÇE|121942|0|4|2026|Urban",
+            "KATERINA|JANÇE|121942|0|3|2026|Urban",
+            "KATERINA|JANÇE|121942|0|2|2026|Urban",
+            "KATERINA|JANÇE|121942|0|1|2026|Urban",
+            "KATERINA|JANÇE|299464|0|12|2025|Urban",
+            "KATERINA|JANÇE|121942|0|11|2025|Urban",
+            "KATERINA|JANÇE|121942|0|10|2025|Urban"
         );
 
         Log("Assert paginimi");
@@ -90,10 +122,10 @@ public class _5034_ : QytetarNidJ557TestBase
         FillSearch(string.Empty);
         wait.Until(d => d.FindElements(By.CssSelector("table tbody tr")).Count == 10);
 
-        Log("Kerko me Paga Bruto 230824");
-        FillSearch("230824");
+        Log("Kerko me Paga Bruto 135700");
+        FillSearch("135700");
         wait.Until(d => d.FindElements(By.CssSelector("table tbody tr")).Count == 1);
-        AssertTableRow(0, "KETJONA", "MEMA", "230824", "0", "7", "2026", "Urban");
+        AssertTableRow(0, "KATERINA", "JANÇE", "135700", "0", "7", "2026", "Urban");
 
         Log("Pastro kerkimin perseri");
         FillSearch(string.Empty);

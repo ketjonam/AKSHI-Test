@@ -9,19 +9,45 @@ public class _6166_ : QytetarNidF602TestBase
     protected override string ServiceCode => "6166";
     protected override string? ServiceTitle => "PensionPleqerie";
     protected override ServiceStartMode StartMode => ServiceStartMode.NewApplication;
+    protected override bool StartServiceOnSetup => false;
 
     [Test]
     public void PensionPleqerie()
     {
+        Log("Assert page header");
+        IWebElement headerContainer = wait.Until(ExpectedConditions.ElementIsVisible(
+            By.CssSelector("div.page-header-container")));
+        Assert.That(headerContainer.Displayed, Is.True, "Page header nuk eshte visible");
 
+        IWebElement serviceName = wait.Until(ExpectedConditions.ElementIsVisible(
+            By.Id("serviceNameBreadcrumb")));
+        Assert.That(serviceName.Displayed, Is.True, "Breadcrumb i sherbimit nuk eshte visible");
+        Assert.That(serviceName.Text.Trim(), Is.EqualTo("Pensioni i pleqërisë"),
+            "Emri i sherbimit nuk eshte i sakte");
 
+        Log("Scroll deri sa butoni Perdor te jete i dukshem");
+        By perdorLocator = By.CssSelector("button.use-service-button");
+        IWebElement perdorBtn = wait.Until(ExpectedConditions.ElementExists(perdorLocator));
+        ((IJavaScriptExecutor)driver).ExecuteScript(
+            "arguments[0].scrollIntoView({block:'center', inline:'nearest'});",
+            perdorBtn);
+        Thread.Sleep(500);
+        perdorBtn = wait.Until(ExpectedConditions.ElementToBeClickable(perdorLocator));
+        Assert.That(perdorBtn.Displayed, Is.True, "Butoni Perdor nuk eshte visible per tu klikuar");
 
+        Log("Kliko butonin Perdor");
+        SafeClick(perdorLocator);
 
-        Log("Assert Title");
-        IWebElement Step1Title = wait.Until(ExpectedConditions.ElementIsVisible(
-            By.CssSelector("h4.text-uppercase")));
-        Assert.That(Step1Title.Text.Trim().ToUpperInvariant(),
-            Is.EqualTo("PUBLIKIMI I TË DHËNAVE"));
+        Log("Kliko Aplikim i ri");
+        By aplikimIRiLocator = By.XPath(
+            "//div[contains(@class,'mbx-content') and @role='button'][.//h6[contains(@class,'mbx-title') and normalize-space()='Aplikim i ri']]");
+        IWebElement aplikimIRi = wait.Until(ExpectedConditions.ElementIsVisible(aplikimIRiLocator));
+        Assert.That(aplikimIRi.Displayed, Is.True, "Karta Aplikim i ri nuk eshte visible");
+        IWebElement aplikimIRiTitle = aplikimIRi.FindElement(By.CssSelector("h6.mbx-title"));
+        Assert.That(aplikimIRiTitle.Text.Trim(), Is.EqualTo("Aplikim i ri"),
+            "Titulli i kartes nuk eshte Aplikim i ri");
+        SafeClick(aplikimIRiLocator);
+        Thread.Sleep(1500);
 
         Log("Assert kohëzgjatja");
         IWebElement durationBtn = wait.Until(ExpectedConditions.ElementIsVisible(
@@ -33,6 +59,12 @@ public class _6166_ : QytetarNidF602TestBase
         Assert.That(steps.Count, Is.EqualTo(1));
         Assert.That(steps[0].GetAttribute("class"), Does.Contain("active"));
         Assert.That(steps[0].GetAttribute("class"), Does.Contain("no-click"));
+
+        Log("Assert Title");
+        IWebElement Step1Title = wait.Until(ExpectedConditions.ElementIsVisible(
+            By.CssSelector("h4.px-4.pb-4.text-uppercase")));
+        Assert.That(Step1Title.Text.Trim().ToUpperInvariant(),
+            Is.EqualTo("PUBLIKIMI I TË DHËNAVE"));
 
         Log("Wait qe te dhenat e tabeles te ngarkohen");
         WaitForPensionTable();
@@ -69,14 +101,14 @@ public class _6166_ : QytetarNidF602TestBase
 
         Log("Assert rreshtin e pensionit te pleqerise");
         AssertTableRow(0,
-            "MERSIN",
-            "MUSTAFA",
-            "MEMA",
-            "PPP0003502",
-            "Kavaje",
-            "A/Kavaje (KJ)",
-            "Suplementar Urban",
-            "7 276,00");
+            "KADRI",
+            "DELI",
+            "KUKAJ",
+            "132655",
+            "Shkoder",
+            "FI Bank (SH)",
+            "Pleqerie Urban",
+            "55 369,00");
 
         Log("Assert paginimi");
         IWebElement pageNumber = wait.Until(ExpectedConditions.ElementIsVisible(
@@ -93,25 +125,25 @@ public class _6166_ : QytetarNidF602TestBase
         FillSearch("test");
 
         Log("Assert no results");
-        wait.Until(d => d.FindElements(By.XPath("//div[@id='row-0']//div[normalize-space()='MERSIN']")).Count == 0);
-        Assert.That(driver.FindElements(By.XPath("//div[@id='row-0']//div[normalize-space()='MERSIN']")).Count, Is.EqualTo(0));
+        wait.Until(d => d.FindElements(By.XPath("//div[@id='row-0']//div[normalize-space()='KADRI']")).Count == 0);
+        Assert.That(driver.FindElements(By.XPath("//div[@id='row-0']//div[normalize-space()='KADRI']")).Count, Is.EqualTo(0));
 
         Log("Pastro kerkimin");
         FillSearch(string.Empty);
         wait.Until(d => d.FindElements(By.CssSelector(".rdt_TableRow")).Count == 1);
 
-        Log("Kerko me Nr. Dosje PPP0003502");
-        FillSearch("PPP0003502");
+        Log("Kerko me Nr. Dosje 132655");
+        FillSearch("132655");
         wait.Until(d => d.FindElements(By.CssSelector(".rdt_TableRow")).Count == 1);
         AssertTableRow(0,
-            "MERSIN",
-            "MUSTAFA",
-            "MEMA",
-            "PPP0003502",
-            "Kavaje",
-            "A/Kavaje (KJ)",
-            "Suplementar Urban",
-            "7 276,00");
+            "KADRI",
+            "DELI",
+            "KUKAJ",
+            "132655",
+            "Shkoder",
+            "FI Bank (SH)",
+            "Pleqerie Urban",
+            "55 369,00");
 
         Log("Pastro kerkimin perseri");
         FillSearch(string.Empty);
@@ -123,6 +155,7 @@ public class _6166_ : QytetarNidF602TestBase
         Log("Assert butoni Kthehu");
         IWebElement backBtn = wait.Until(ExpectedConditions.ElementIsVisible(
             By.CssSelector("button.ealb-btn-back")));
+        Assert.That(backBtn.Displayed, Is.True, "Butoni Kthehu nuk eshte visible");
         Assert.That(backBtn.Text.Trim(), Is.EqualTo("Kthehu"));
 
         Log("Kliko butonin Kthehu");
@@ -134,7 +167,6 @@ public class _6166_ : QytetarNidF602TestBase
 
     private void WaitForPensionTable()
     {
-
         var dataWait = new WebDriverWait(driver, TimeSpan.FromSeconds(40));
         dataWait.Until(d =>
         {
@@ -152,14 +184,12 @@ public class _6166_ : QytetarNidF602TestBase
 
     private IWebElement FindSearchInput()
     {
-
         return wait.Until(ExpectedConditions.ElementIsVisible(
             By.CssSelector("input[placeholder='Kërko']")));
     }
 
     private void FillSearch(string value)
     {
-
         IWebElement input = FindSearchInput();
 
         ((IJavaScriptExecutor)driver).ExecuteScript(
@@ -184,7 +214,6 @@ public class _6166_ : QytetarNidF602TestBase
 
     private string NormalizeText(string text)
     {
-
         return string.Join(" ", (text ?? string.Empty)
             .Replace('\u00a0', ' ')
             .Split((char[]?)null, StringSplitOptions.RemoveEmptyEntries));
@@ -200,7 +229,6 @@ public class _6166_ : QytetarNidF602TestBase
         string lloji,
         string shuma)
     {
-
         IWebElement row = wait.Until(ExpectedConditions.ElementIsVisible(By.Id($"row-{rowIndex}")));
         var cells = row.FindElements(By.CssSelector("[role='cell']"));
 

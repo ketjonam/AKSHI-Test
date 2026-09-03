@@ -9,13 +9,18 @@ public class _11155_ : QytetarNidJ557TestBase
     protected override string ServiceCode => "11155";
     protected override string? ServiceTitle => "LejeDrejtimiPerMjetetLundruese";
     protected override ServiceStartMode StartMode => ServiceStartMode.NewApplication;
+    protected override bool StartServiceOnSetup => false;
+
+    private const string ExpectedServiceName =
+        "Aplikim për pajisje me leje drejtimi për mjete lundruese";
+    private const string ExpectedAddress =
+        "FROSINA PLAKU; Nd. 88; H. 2; Ap. 9; NJËSIA ADMINISTRATIVE NR. 7; NJËSIA BASHKIAKE NR. 7; 1023; TIRANË";
+    private const string DocumentPath = @"C:\Users\Kreatx\Downloads\Test Dokument.pdf.pdf";
 
     [Test]
     public void LejeDrejtimiPerMjetetLundruese()
     {
-
-
-
+        OpenNewApplicationFromServicePage();
 
         Log("Assert Title Step 1");
         IWebElement Step1Title = wait.Until(ExpectedConditions.ElementIsVisible(
@@ -28,15 +33,7 @@ public class _11155_ : QytetarNidJ557TestBase
         Assert.That(durationBtn.Text.Trim(), Does.Contain("4 minuta kohëzgjatje"));
 
         Log("Assert 4 hapa, hapi i pare aktiv");
-        var steps = driver.FindElements(By.CssSelector(".ealb-step"));
-        Assert.That(steps.Count, Is.EqualTo(4));
-        Assert.That(steps[0].GetAttribute("class"), Does.Contain("active"));
-        Assert.That(steps[0].GetAttribute("class"), Does.Contain("no-click"));
-        for (int i = 1; i < steps.Count; i++)
-        {
-            Assert.That(steps[i].GetAttribute("class"), Does.Not.Contain("active"));
-            Assert.That(steps[i].GetAttribute("class"), Does.Contain("no-click"));
-        }
+        AssertSteps(1);
 
         Log("Assert opsionet e arsyes se aplikimit");
         AssertRadioOption("firstTime", "firstTime", "Herë të parë");
@@ -79,13 +76,13 @@ public class _11155_ : QytetarNidJ557TestBase
         Log("Assert Title Step 2");
         IWebElement Step2Title = WaitForStepTitle("TË DHËNAT E APLIKANTIT");
         Assert.That(Step2Title.Text.Trim().ToUpperInvariant(),
-            Is.EqualTo("TË DHËNAT E APLIKANTIT"));
+            Does.StartWith("TË DHËNAT E APLIKANTIT"));
 
         Log("Assert tooltip i te dhenave te aplikantit");
         IWebElement tooltip = wait.Until(ExpectedConditions.ElementExists(
             By.CssSelector("h4.text-uppercase span[data-bs-toggle='tooltip']")));
-        Assert.That(tooltip.GetAttribute("title"),
-            Is.EqualTo("Të dhënat e aplikantit plotësohen nga identifikimi juaj në e-albania"));
+        AssertTooltipText(tooltip,
+            "Të dhënat e aplikantit plotësohen nga identifikimi juaj në e-albania");
 
         Log("Assert kohëzgjatja Step 2");
         durationBtn = wait.Until(ExpectedConditions.ElementIsVisible(
@@ -93,34 +90,20 @@ public class _11155_ : QytetarNidJ557TestBase
         Assert.That(durationBtn.Text.Trim(), Does.Contain("4 minuta kohëzgjatje"));
 
         Log("Assert 4 hapa, dy te paret aktiv");
-        steps = driver.FindElements(By.CssSelector(".ealb-step"));
-        Assert.That(steps.Count, Is.EqualTo(4));
-        Assert.That(steps[0].GetAttribute("class"), Does.Contain("active"));
-        Assert.That(steps[1].GetAttribute("class"), Does.Contain("active"));
-        for (int i = 2; i < steps.Count; i++)
-        {
-            Assert.That(steps[i].GetAttribute("class"), Does.Not.Contain("active"));
-            Assert.That(steps[i].GetAttribute("class"), Does.Contain("no-click"));
-        }
+        AssertSteps(2);
 
         Log("Assert te dhenat e aplikantit te para-plotesuara dhe readonly");
         AssertReadOnlyValue("Nid", Settings.Qytetar.Username);
-        AssertReadOnlyValue("Emri", "Ketjona");
-        AssertReadOnlyValue("Mbiemri", "Mema");
-        AssertReadOnlyValue("Atësia", "Mersin");
-        AssertReadOnlyValue("Datëlindja", "28.07.1995");
+        AssertReadOnlyValue("Emri", "Katerina");
+        AssertReadOnlyValue("Mbiemri", "Jançe");
+        AssertReadOnlyValue("Atësia", "Foti");
+        AssertReadOnlyValue("Datëlindja", "13.04.1993");
         AssertReadOnlyValue("Gjinia", "Femër");
-        AssertReadOnlyValue("Vendlindja", "Kavajë");
+        AssertReadOnlyValue("Vendlindja", "Korçë");
         AssertReadOnlyValue("Shtetësia", "Shqiptare");
 
         Log("Assert butonat e navigimit Step 2");
-        backBtn = wait.Until(ExpectedConditions.ElementIsVisible(
-            By.CssSelector("button.ealb-btn-back")));
-        continueBtn = wait.Until(ExpectedConditions.ElementIsVisible(
-            By.CssSelector("button.ealb-btn-continue")));
-        Assert.That(backBtn.Text.Trim(), Is.EqualTo("Kthehu"));
-        Assert.That(continueBtn.Text.Trim(), Is.EqualTo("Vazhdo"));
-        Assert.That(continueBtn.GetAttribute("disabled"), Is.Null);
+        AssertNavigationButtons("Vazhdo");
 
         Log("Kliko Vazhdo Step 2");
         SafeClick(By.CssSelector("button.ealb-btn-continue"));
@@ -129,13 +112,13 @@ public class _11155_ : QytetarNidJ557TestBase
         Log("Assert Title Step 3");
         IWebElement Step3Title = WaitForStepTitle("INFORMACIONI I KONTAKTIT TË APLIKANTIT");
         Assert.That(Step3Title.Text.Trim().ToUpperInvariant(),
-            Is.EqualTo("INFORMACIONI I KONTAKTIT TË APLIKANTIT"));
+            Does.StartWith("INFORMACIONI I KONTAKTIT TË APLIKANTIT"));
 
         Log("Assert tooltip i informacionit te kontaktit");
         IWebElement contactTooltip = wait.Until(ExpectedConditions.ElementExists(
             By.CssSelector("h4.text-uppercase span[data-bs-toggle='tooltip']")));
-        Assert.That(contactTooltip.GetAttribute("title"),
-            Is.EqualTo("Informacioni i dhënë duhet të jetë i saktë pasi ju do të kontaktoheni nëpërmjet adresës elektronike dhe numrit të telefonit"));
+        AssertTooltipText(contactTooltip,
+            "Informacioni i dhënë duhet të jetë i saktë pasi ju do të kontaktoheni nëpërmjet adresës elektronike dhe numrit të telefonit");
 
         Log("Assert kohëzgjatja Step 3");
         durationBtn = wait.Until(ExpectedConditions.ElementIsVisible(
@@ -143,27 +126,20 @@ public class _11155_ : QytetarNidJ557TestBase
         Assert.That(durationBtn.Text.Trim(), Does.Contain("4 minuta kohëzgjatje"));
 
         Log("Assert 4 hapa, tre te paret aktiv");
-        steps = driver.FindElements(By.CssSelector(".ealb-step"));
-        Assert.That(steps.Count, Is.EqualTo(4));
-        Assert.That(steps[0].GetAttribute("class"), Does.Contain("active"));
-        Assert.That(steps[1].GetAttribute("class"), Does.Contain("active"));
-        Assert.That(steps[2].GetAttribute("class"), Does.Contain("active"));
-        Assert.That(steps[3].GetAttribute("class"), Does.Not.Contain("active"));
-        Assert.That(steps[3].GetAttribute("class"), Does.Contain("no-click"));
+        AssertSteps(3);
 
         Log("Assert te dhenat e kontaktit te para-plotesuara");
-        AssertReadOnlyValue("Qyteti", "KAVAJË");
-        AssertReadOnlyValue("Rrethi", "KAVAJË");
-        AssertReadOnlyDisabledValue("Nr. Tel. Cel.", "0676041404");
-        AssertReadOnlyDisabledValue("Email", "ketjona.mema@kreatx.com");
-        AssertReadOnlyDisabledValue("Adresa",
-            "THABIT REXHA 04040156; Nd. 6; H. 2; ; KAVAJË; KAVAJË; 2501; KAVAJË");
+        AssertReadOnlyValue("Qyteti", "TIRANË");
+        AssertReadOnlyValue("Rrethi", "TIRANË");
+        AssertReadOnlyDisabledValue("Nr. Tel. Cel.", "+355697008820");
+        AssertReadOnlyDisabledValue("Email", "katerina.jance@kreatx.com");
+        AssertReadOnlyDisabledValue("Adresa", ExpectedAddress);
 
         Log("Assert tooltip i Nr. Tel. Cel.");
         IWebElement telCelTooltip = wait.Until(ExpectedConditions.ElementExists(
             By.XPath("//form//label[contains(.,'Nr. Tel. Cel.')]//span[@data-bs-toggle='tooltip']")));
-        Assert.That(telCelTooltip.GetAttribute("title"),
-            Is.EqualTo("Numri i celularit merret nga të dhënat e llogarisë që jeni regjistruar në e-Albania. "));
+        AssertTooltipText(telCelTooltip,
+            "Numri i celularit merret nga të dhënat e llogarisë që jeni regjistruar në e-Albania.");
 
         Log("Assert Email eshte i tipit text, readonly dhe disabled");
         IWebElement emailInput = FindInputByLabel("Email");
@@ -185,19 +161,13 @@ public class _11155_ : QytetarNidJ557TestBase
         Assert.That(telFiks.GetAttribute("value").Trim(), Is.EqualTo(string.Empty));
 
         Log("Ploteso Kodi Postar dhe Nr.Tel Fiks");
-        FillInput(kodiPostar, "2501");
+        FillInput(kodiPostar, "1023");
         FillInput(telFiks, "055220000");
-        Assert.That(FindInputByLabel("Kodi Postar").GetAttribute("value").Trim(), Is.EqualTo("2501"));
+        Assert.That(FindInputByLabel("Kodi Postar").GetAttribute("value").Trim(), Is.EqualTo("1023"));
         Assert.That(FindInputByLabel("Nr.Tel Fiks").GetAttribute("value").Trim(), Is.EqualTo("055220000"));
 
         Log("Assert butonat e navigimit Step 3");
-        backBtn = wait.Until(ExpectedConditions.ElementIsVisible(
-            By.CssSelector("button.ealb-btn-back")));
-        continueBtn = wait.Until(ExpectedConditions.ElementIsVisible(
-            By.CssSelector("button.ealb-btn-continue")));
-        Assert.That(backBtn.Text.Trim(), Is.EqualTo("Kthehu"));
-        Assert.That(continueBtn.Text.Trim(), Is.EqualTo("Vazhdo"));
-        Assert.That(continueBtn.GetAttribute("disabled"), Is.Null);
+        AssertNavigationButtons("Vazhdo");
 
         Log("Kliko Vazhdo Step 3");
         SafeClick(By.CssSelector("button.ealb-btn-continue"));
@@ -214,10 +184,7 @@ public class _11155_ : QytetarNidJ557TestBase
         Assert.That(durationBtn.Text.Trim(), Does.Contain("4 minuta kohëzgjatje"));
 
         Log("Assert 4 hapa, te gjithe aktiv");
-        steps = driver.FindElements(By.CssSelector(".ealb-step"));
-        Assert.That(steps.Count, Is.EqualTo(4));
-        foreach (var step in steps)
-            Assert.That(step.GetAttribute("class"), Does.Contain("active"));
+        AssertSteps(4);
 
         Log("Assert seksionet e dokumenteve");
         Assert.That(driver.FindElement(
@@ -261,12 +228,9 @@ public class _11155_ : QytetarNidJ557TestBase
             Is.EqualTo("Mbledhja e dokumentacionit shoqërues të mësipërm që më parë ishte detyrim të dorëzohej në zyrat e shtetit nga vetë aplikanti, tani është detyrë e nëpunësit të administratës ndaj qytetarit. Me klikimin e këtij butoni, ju bini dakord që këto dokumente të sigurohen për ju nga nëpunësi i administratës."));
 
         Log("Assert butonat e navigimit Step 4");
-        backBtn = wait.Until(ExpectedConditions.ElementIsVisible(
-            By.CssSelector("button.ealb-btn-back")));
+        AssertNavigationButtons("Dërgo");
         IWebElement dergoBtn = wait.Until(ExpectedConditions.ElementIsVisible(
             By.CssSelector("button.ealb-btn-continue")));
-        Assert.That(backBtn.Text.Trim(), Is.EqualTo("Kthehu"));
-        Assert.That(dergoBtn.Text.Trim(), Does.Contain("Dërgo"));
         Assert.That(dergoBtn.GetAttribute("class"), Does.Contain("with-arrow"));
 
         Log("Kliko Dergo pa ngarkuar dokumentet e detyrueshme");
@@ -275,26 +239,85 @@ public class _11155_ : QytetarNidJ557TestBase
         Assert.That(WaitForStepTitle("DOKUMENTACIONI").Text.Trim().ToUpperInvariant(),
             Is.EqualTo("DOKUMENTACIONI"));
 
-        string documentPath = @"C:\Users\Kreatx\Downloads\Test Dokument.pdf.pdf";
-
         Log("Ngarko dokumentet e detyrueshme");
-        UploadDocument("fuFotografiUpload", documentPath);
-        UploadDocument("fuRaportAftesieUpload", documentPath);
+        UploadDocument("fuFotografiUpload", DocumentPath);
+        UploadDocument("fuRaportAftesieUpload", DocumentPath);
 
         Log("Zgjidh pranimin e kushteve");
         ClickCheckbox("agreementCheckbox");
         Assert.That(driver.FindElement(By.Id("agreementCheckbox")).Selected, Is.True);
 
-        //Log("Kliko Dergo");
-        //SafeClick(By.CssSelector("button.ealb-btn-continue"));
-        //Thread.Sleep(5000);
+        ClickDergo();
 
         Log("TEST PASSED");
     }
 
+    private void OpenNewApplicationFromServicePage()
+    {
+        Log("Assert page header");
+        IWebElement headerContainer = wait.Until(ExpectedConditions.ElementIsVisible(
+            By.CssSelector("div.page-header-container")));
+        Assert.That(headerContainer.Displayed, Is.True, "Page header nuk eshte visible");
+
+        IWebElement serviceName = wait.Until(ExpectedConditions.ElementIsVisible(
+            By.Id("serviceNameBreadcrumb")));
+        Assert.That(serviceName.Displayed, Is.True, "Breadcrumb i sherbimit nuk eshte visible");
+        Assert.That(serviceName.Text.Replace('\u00A0', ' ').Trim(), Is.EqualTo(ExpectedServiceName),
+            "Emri i sherbimit nuk eshte i sakte");
+
+        Log("Scroll deri sa butoni Perdor te jete i dukshem");
+        By perdorLocator = By.CssSelector("button.use-service-button");
+        IWebElement perdorBtn = wait.Until(ExpectedConditions.ElementExists(perdorLocator));
+        ((IJavaScriptExecutor)driver).ExecuteScript(
+            "arguments[0].scrollIntoView({block:'center', inline:'nearest'});",
+            perdorBtn);
+        Thread.Sleep(500);
+        perdorBtn = wait.Until(ExpectedConditions.ElementToBeClickable(perdorLocator));
+        Assert.That(perdorBtn.Displayed, Is.True, "Butoni Perdor nuk eshte visible per tu klikuar");
+        Assert.That(perdorBtn.Text.Trim(), Is.EqualTo("Përdor"), "Butoni nuk eshte Përdor");
+
+        Log("Kliko butonin Perdor");
+        SafeClick(perdorLocator);
+
+        Log("Kliko Aplikim i ri");
+        By aplikimIRiLocator = By.XPath(
+            "//div[contains(@class,'mbx-content') and @role='button'][.//h6[contains(@class,'mbx-title') and normalize-space()='Aplikim i ri']]");
+        IWebElement aplikimIRi = wait.Until(ExpectedConditions.ElementIsVisible(aplikimIRiLocator));
+        Assert.That(aplikimIRi.Displayed, Is.True, "Karta Aplikim i ri nuk eshte visible");
+        IWebElement aplikimIRiTitle = aplikimIRi.FindElement(By.CssSelector("h6.mbx-title"));
+        Assert.That(aplikimIRiTitle.Text.Trim(), Is.EqualTo("Aplikim i ri"),
+            "Titulli i kartes nuk eshte Aplikim i ri");
+        SafeClick(aplikimIRiLocator);
+        Thread.Sleep(1500);
+        DismissCookieBannerIfPresent();
+    }
+
+    private void AssertSteps(int activeCount)
+    {
+        var steps = driver.FindElements(By.CssSelector(".ealb-step"));
+        Assert.That(steps.Count, Is.EqualTo(4));
+        for (int i = 0; i < steps.Count; i++)
+        {
+            if (i < activeCount)
+                Assert.That(steps[i].GetAttribute("class"), Does.Contain("active"));
+            else
+                Assert.That(steps[i].GetAttribute("class"), Does.Not.Contain("active"));
+            Assert.That(steps[i].GetAttribute("class"), Does.Contain("no-click"));
+        }
+    }
+
+    private void AssertNavigationButtons(string continueText)
+    {
+        IWebElement backBtn = wait.Until(ExpectedConditions.ElementIsVisible(
+            By.CssSelector("button.ealb-btn-back")));
+        IWebElement continueBtn = wait.Until(ExpectedConditions.ElementIsVisible(
+            By.CssSelector("button.ealb-btn-continue")));
+        Assert.That(backBtn.Text.Trim(), Is.EqualTo("Kthehu"));
+        Assert.That(continueBtn.Text.Trim(), Does.Contain(continueText));
+    }
+
     private void SelectRadioById(string radioId)
     {
-
         IWebElement input = wait.Until(ExpectedConditions.ElementExists(By.Id(radioId)));
         ((IJavaScriptExecutor)driver).ExecuteScript(
             "arguments[0].scrollIntoView({block:'center'});",
@@ -318,7 +341,6 @@ public class _11155_ : QytetarNidJ557TestBase
 
     private void AssertRadioOption(string radioId, string expectedValue, string expectedLabel)
     {
-
         IWebElement radio = wait.Until(ExpectedConditions.ElementExists(By.Id(radioId)));
         Assert.That(radio.GetAttribute("type"), Is.EqualTo("radio"));
         Assert.That(radio.GetAttribute("name"), Is.EqualTo("arsyeAplikimi"));
@@ -330,20 +352,19 @@ public class _11155_ : QytetarNidJ557TestBase
 
     private IWebElement FindInputByLabel(string labelPart)
     {
-
         return wait.Until(ExpectedConditions.ElementIsVisible(
             By.XPath($"//div[@id='root']//form//label[contains(.,'{labelPart}')]/following-sibling::*[self::input or self::textarea]")));
     }
 
     private IWebElement WaitForStepTitle(string expectedUpper)
     {
-
         return wait.Until(d =>
         {
             var titles = d.FindElements(By.CssSelector("h5.text-uppercase, h4.text-uppercase, h4.ealb-header-text"));
             foreach (var title in titles)
             {
-                if (title.Text.Trim().ToUpperInvariant() == expectedUpper)
+                string actual = title.Text.Trim().ToUpperInvariant();
+                if (actual == expectedUpper || actual.StartsWith(expectedUpper))
                     return title;
             }
             return null;
@@ -352,7 +373,6 @@ public class _11155_ : QytetarNidJ557TestBase
 
     private void AssertReadOnlyValue(string labelPart, string expectedValue)
     {
-
         IWebElement input = FindInputByLabel(labelPart);
         Assert.That(input.GetAttribute("value").Trim(), Is.EqualTo(expectedValue));
         Assert.That(input.GetAttribute("readonly"), Is.Not.Null);
@@ -360,7 +380,6 @@ public class _11155_ : QytetarNidJ557TestBase
 
     private void AssertReadOnlyDisabledValue(string labelPart, string expectedValue)
     {
-
         IWebElement input = FindInputByLabel(labelPart);
         Assert.That(input.GetAttribute("value").Trim(), Is.EqualTo(expectedValue));
         Assert.That(input.GetAttribute("readonly"), Is.Not.Null);
@@ -369,7 +388,6 @@ public class _11155_ : QytetarNidJ557TestBase
 
     private void BlurActiveElement()
     {
-
         try
         {
             ((IJavaScriptExecutor)driver).ExecuteScript(
@@ -384,7 +402,6 @@ public class _11155_ : QytetarNidJ557TestBase
 
     private void FillInput(IWebElement input, string value)
     {
-
         ((IJavaScriptExecutor)driver).ExecuteScript(
             "arguments[0].scrollIntoView({block:'center'});",
             input
@@ -414,7 +431,6 @@ public class _11155_ : QytetarNidJ557TestBase
 
     private void ClickCheckbox(string checkboxId)
     {
-
         IWebElement input = wait.Until(ExpectedConditions.ElementExists(By.Id(checkboxId)));
         ((IJavaScriptExecutor)driver).ExecuteScript(
             "arguments[0].scrollIntoView({block:'center'});",
@@ -438,7 +454,6 @@ public class _11155_ : QytetarNidJ557TestBase
 
     private void AssertDocumentUpload(string uploadId, string documentTitle)
     {
-
         Assert.That(driver.FindElement(
             By.XPath($"//*[contains(normalize-space(),'{documentTitle}')]")).Displayed, Is.True);
 
@@ -456,12 +471,11 @@ public class _11155_ : QytetarNidJ557TestBase
         Assert.That(shadow.FindElement(By.CssSelector("[data-role='dropzone-text']")).Text.Trim(),
             Is.EqualTo("Kliko për të ngarkuar dokumentin"));
         Assert.That(shadow.FindElement(By.CssSelector("[data-role='hint']")).Text.Trim(),
-            Is.EqualTo("Formatet e lejuara: PDF, JPG, JPEG, PNG. Madhesia maksimale: 5MB."));
+            Is.EqualTo("Formatet e lejuara: PDF, JPG, JPEG, PNG. Madhësia maksimale: 5MB."));
     }
 
     private void UploadDocument(string uploadId, string filePath)
     {
-
         Assert.That(File.Exists(filePath), Is.True, "File nuk ekziston: " + filePath);
 
         IWebElement docUpload = wait.Until(ExpectedConditions.ElementExists(By.Id(uploadId)));

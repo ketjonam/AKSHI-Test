@@ -58,6 +58,27 @@ public static class SettingsLoader
         if (!string.IsNullOrWhiteSpace(envPass))
             settings.Biznes.Password = envPass;
 
+        MergeCsv(settings.Commands.Run, Environment.GetEnvironmentVariable("AKSHI_COMMANDS_RUN"));
+        MergeCsv(settings.Commands.Skip, Environment.GetEnvironmentVariable("AKSHI_COMMANDS_SKIP"));
+        MergeCsv(settings.Commands.StepRun, Environment.GetEnvironmentVariable("AKSHI_COMMANDS_STEP_RUN"));
+        MergeCsv(settings.Commands.StepSkip, Environment.GetEnvironmentVariable("AKSHI_COMMANDS_STEP_SKIP"));
+
+        string? runScript = Environment.GetEnvironmentVariable("AKSHI_TESTRUN_SCRIPT");
+        if (!string.IsNullOrWhiteSpace(runScript))
+            CommandScript.Apply(settings.Commands, runScript.Replace('\u001f', '\n'));
+
         return settings;
+    }
+
+    private static void MergeCsv(List<string> target, string? csv)
+    {
+        if (string.IsNullOrWhiteSpace(csv))
+            return;
+
+        foreach (string token in csv.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries))
+        {
+            if (!target.Contains(token, StringComparer.OrdinalIgnoreCase))
+                target.Add(token);
+        }
     }
 }

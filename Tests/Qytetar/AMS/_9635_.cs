@@ -9,613 +9,539 @@ public class _9635_ : QytetarNidJ557TestBase
     protected override string ServiceCode => "9635";
     protected override string? ServiceTitle => "KerkesePerLenieShtetesie";
     protected override ServiceStartMode StartMode => ServiceStartMode.NewApplication;
+    protected override bool StartServiceOnSetup => false;
+
+    private const string ExpectedServiceName = "Kërkesë për lënie shtetësie";
+    private const string ApplicationTypeOver18 =
+        "Kërkesë për heqjen dorë nga shtetësia shqiptare për personat mbi 18 vjeç";
+    private const string ApplicationType14To18 =
+        "Kërkesë për heqjen dorë nga shtetësia shqiptare për personat nga 14 - 18 vjeç";
+    private const string ApplicationTypeUnder14 =
+        "Kërkesë për heqjen dorë nga shtetësia shqiptare për personat nën 14 vjeç";
+    private const string AlbaniaOption = "SHQIPËRI (AL) - AL";
+    private const string ExpectedAddress =
+        "FROSINA PLAKU; Nd. 88; H. 2; Ap. 9; NJËSIA ADMINISTRATIVE NR. 7; NJËSIA BASHKIAKE NR. 7; 1023; TIRANË";
+    private const string DocumentPath = @"C:\Users\Kreatx\Downloads\Test Dokument.pdf.pdf";
 
     [Test]
     public void KerkesePerLenieShtetesie()
     {
+        OpenNewApplicationFromServicePage();
 
+        Log("Assert kohëzgjatja");
+        IWebElement durationBtn = wait.Until(ExpectedConditions.ElementIsVisible(
+            By.CssSelector("button.ealb-btn-5minutes")));
+        Assert.That(durationBtn.Text.Trim(), Does.Contain("5 minuta kohëzgjatje"));
 
-
+        Log("Assert 4 hapa, hapi i pare aktiv");
+        AssertSteps(1);
 
         Log("Assert Step 1 Title");
-        IWebElement step2Title = wait.Until(ExpectedConditions.ElementIsVisible(By.XPath("/html/body/div/main/div[3]/div/div/div/div/h5")));
-        Assert.That(step2Title.Text.Trim(), Is.EqualTo("TIPI I APLIKIMIT"));
-        Thread.Sleep(4000);
+        IWebElement Step1Title = WaitForStepTitle("TIPI I APLIKIMIT");
+        Assert.That(Step1Title.Text.Trim().ToUpperInvariant(),
+            Is.EqualTo("TIPI I APLIKIMIT"));
 
+        Log("Assert fusha Tipi i Aplikimit");
+        IWebElement tipiLabel = wait.Until(ExpectedConditions.ElementIsVisible(
+            By.XPath("//form//label[contains(.,'Tipi i Aplikimit')]")));
+        Assert.That(tipiLabel.Text, Does.Contain("Tipi i Aplikimit"));
+        Assert.That(tipiLabel.Text, Does.Contain("*"));
+        Assert.That(tipiLabel.GetAttribute("class"), Does.Contain("required-name"));
+
+        IWebElement tipiSelect = FindSelectByLabel("Tipi i Aplikimit");
+        var tipi = new SelectElement(tipiSelect);
+        Assert.That(tipi.SelectedOption.GetAttribute("value"), Is.EqualTo(string.Empty));
+        Assert.That(tipi.Options.Count, Is.EqualTo(4));
+        Assert.That(tipi.Options[1].GetAttribute("value"), Is.EqualTo(ApplicationTypeOver18));
+        Assert.That(tipi.Options[1].Text.Trim(), Is.EqualTo(ApplicationTypeOver18));
+        Assert.That(tipi.Options[2].GetAttribute("value"), Is.EqualTo(ApplicationType14To18));
+        Assert.That(tipi.Options[2].Text.Trim(), Is.EqualTo(ApplicationType14To18));
+        Assert.That(tipi.Options[3].GetAttribute("value"), Is.EqualTo(ApplicationTypeUnder14));
+        Assert.That(tipi.Options[3].Text.Trim(), Is.EqualTo(ApplicationTypeUnder14));
+
+        Log("Assert butonat e navigimit Step 1");
+        AssertNavigationButtons("Vazhdo");
 
         Log("Zgjidh Tipi i Aplikimit");
-        new SelectElement(wait.Until(ExpectedConditions.ElementIsVisible(By.XPath("/html/body/div/main/div[3]/div/div/div/div/form/div[1]/div[1]/select"))))
-            .SelectByValue("Kërkesë për heqjen dorë nga shtetësia shqiptare për personat mbi 18 vjeç");
+        SelectDropdownByValue(tipiSelect, ApplicationTypeOver18);
 
+        Log("Assert fusha Aplikuesi");
+        IWebElement aplikuesiLabel = wait.Until(ExpectedConditions.ElementIsVisible(
+            By.XPath("//form//label[contains(.,'Aplikuesi')]")));
+        Assert.That(aplikuesiLabel.Text, Does.Contain("Aplikuesi"));
+        Assert.That(aplikuesiLabel.Text, Does.Contain("*"));
+        Assert.That(aplikuesiLabel.GetAttribute("class"), Does.Contain("required-name"));
+
+        IWebElement aplikuesiSelect = FindSelectByLabel("Aplikuesi");
+        var aplikuesi = new SelectElement(aplikuesiSelect);
+        Assert.That(aplikuesi.SelectedOption.GetAttribute("value"), Is.EqualTo(string.Empty));
+        Assert.That(aplikuesi.Options.Count, Is.EqualTo(3));
+        Assert.That(aplikuesi.Options[1].GetAttribute("value"), Is.EqualTo("Vetë personi"));
+        Assert.That(aplikuesi.Options[1].Text.Trim(), Is.EqualTo("Vetë personi"));
+        Assert.That(aplikuesi.Options[2].GetAttribute("value"), Is.EqualTo("Autorizuar me prokurë"));
+        Assert.That(aplikuesi.Options[2].Text.Trim(), Is.EqualTo("Autorizuar me prokurë"));
+
+        Log("Kliko Vazhdo pa zgjedhur Aplikuesi");
+        SafeClick(By.CssSelector("button.ealb-btn-continue"));
+
+        Log("Assert error message per Aplikuesi");
+        aplikuesiSelect = FindSelectByLabel("Aplikuesi");
+        Assert.That(aplikuesiSelect.GetAttribute("class"), Does.Contain("is-invalid"));
+        IWebElement aplikuesiError = wait.Until(ExpectedConditions.ElementIsVisible(
+            By.XPath("//form//label[contains(.,'Aplikuesi')]/following-sibling::div[contains(@class,'error-message')]")));
+        Assert.That(aplikuesiError.Text.Trim(), Is.EqualTo("Përzgjidhni një vlerë për të vazhduar"));
+        Assert.That(WaitForStepTitle("TIPI I APLIKIMIT").Text.Trim().ToUpperInvariant(),
+            Is.EqualTo("TIPI I APLIKIMIT"));
+
+        Log("Zgjidh Aplikuesi Vetë personi");
+        SelectDropdownByValue(FindSelectByLabel("Aplikuesi"), "Vetë personi");
+
+        Log("Kliko Vazhdo Step 1");
+        SafeClick(By.CssSelector("button.ealb-btn-continue"));
         Thread.Sleep(3000);
 
-        new SelectElement(wait.Until(ExpectedConditions.ElementIsVisible(By.XPath("/html/body/div/main/div[3]/div/div/div/div/form/div[1]/div[2]/select"))))
-            .SelectByValue("Vetë personi");
+        Log("Assert Step 2 Title");
+        IWebElement Step2Title = WaitForStepTitle("TË DHËNAT E APLIKANTIT");
+        Assert.That(Step2Title.Text.Trim().ToUpperInvariant(),
+            Does.StartWith("TË DHËNAT E APLIKANTIT"));
 
-        Log("Kliko Vazhdo buton");
-        SafeClick(By.XPath("/html/body/div/main/div[3]/div/div/div/div/form/div[2]/div/button[2]"));
+        Log("Assert kohëzgjatja Step 2");
+        durationBtn = wait.Until(ExpectedConditions.ElementIsVisible(
+            By.CssSelector("button.ealb-btn-5minutes")));
+        Assert.That(durationBtn.Text.Trim(), Does.Contain("5 minuta kohëzgjatje"));
 
-        Thread.Sleep(3000);
+        Log("Assert 4 hapa, dy te paret aktiv");
+        AssertSteps(2);
 
-        Log("Assert Step2 title");
-        IWebElement Step2Title = wait.Until(ExpectedConditions.ElementIsVisible(By.XPath("/html/body/div/main/div[3]/div/div/div/div/h5")));
-        Assert.That(Step2Title.Text.Trim(), Is.EqualTo("TË DHËNAT E APLIKANTIT"));
+        Log("Assert te dhenat e aplikantit te para-plotesuara");
+        AssertReadonlyField("Nid", Settings.Qytetar.Username);
+        AssertReadonlyField("Emri", "Katerina");
+        AssertReadonlyField("Mbiemri", "Jançe");
+        AssertReadonlyField("Atësia", "Foti");
+        AssertReadonlyField("Amësia", "Manushaqe");
+        AssertReadonlyField("Datëlindja", "13.04.1993");
+        AssertReadonlyField("Gjinia", "Femër");
 
-        Log("Assert te dhenat personale");
-        IWebElement NID = wait.Until(ExpectedConditions.ElementIsVisible(By.XPath("/html/body/div/main/div[3]/div/div/div/div/form/div[1]/div[1]/input")));
-        Assert.That(NID.GetAttribute("value").Trim(), Is.EqualTo(Settings.Qytetar.Username));
+        IWebElement vendiLindjes = FindNamed("vendlindja");
+        Assert.That(vendiLindjes.GetAttribute("value").Trim(), Is.EqualTo("Korçë"));
+        Assert.That(vendiLindjes.GetAttribute("readonly"), Is.Null);
 
-        IWebElement Emri = wait.Until(ExpectedConditions.ElementIsVisible(By.XPath("/html/body/div/main/div[3]/div/div/div/div/form/div[1]/div[2]/input")));
-        Assert.That(Emri.GetAttribute("value").Trim(), Is.EqualTo("Ketjona"));
+        IWebElement shtetiLindjes = FindNamed("vendlindjaShteti");
+        Assert.That(new SelectElement(shtetiLindjes).SelectedOption.GetAttribute("value"),
+            Is.EqualTo(string.Empty));
+        Assert.That(FindLabelFor("vendlindjaShteti").Text, Does.Contain("*"));
 
-        IWebElement Mbiemri = wait.Until(ExpectedConditions.ElementIsVisible(By.XPath("/html/body/div/main/div[3]/div/div/div/div/form/div[1]/div[3]/input")));
-        Assert.That(Mbiemri.GetAttribute("value").Trim(), Is.EqualTo("Mema"));
+        IWebElement shtetesia = FindNamed("shtetesia");
+        Assert.That(new SelectElement(shtetesia).SelectedOption.GetAttribute("value"),
+            Is.EqualTo(string.Empty));
+        Assert.That(FindLabelFor("shtetesia").Text, Does.Contain("*"));
 
-        IWebElement Atesia = wait.Until(ExpectedConditions.ElementIsVisible(By.XPath("/html/body/div/main/div[3]/div/div/div/div/form/div[1]/div[4]/input")));
-        Assert.That(Atesia.GetAttribute("value").Trim(), Is.EqualTo("Mersin"));
+        IWebElement gjuhaMeme = FindNamed("gjuhaMeme");
+        Assert.That(gjuhaMeme.GetAttribute("value").Trim(), Is.EqualTo(string.Empty));
 
-        IWebElement Datelindja = wait.Until(ExpectedConditions.ElementIsVisible(By.XPath("/html/body/div/main/div[3]/div/div/div/div/form/div[1]/div[6]/input")));
-        Assert.That(Datelindja.GetAttribute("value").Trim(), Is.EqualTo("28.07.1995"));
+        IWebElement gjendjaCivile = FindNamed("gjendjaCivile");
+        var gjendja = new SelectElement(gjendjaCivile);
+        Assert.That(gjendja.SelectedOption.GetAttribute("value"), Is.EqualTo(string.Empty));
+        Assert.That(gjendja.Options[1].GetAttribute("value"), Is.EqualTo("Beqar"));
+        Assert.That(gjendja.Options[2].GetAttribute("value"), Is.EqualTo("Martuar"));
+        Assert.That(gjendja.Options[3].GetAttribute("value"), Is.EqualTo("Divorcuar"));
+        Assert.That(gjendja.Options[4].GetAttribute("value"), Is.EqualTo("I/e ve"));
+        Assert.That(gjendja.Options[5].GetAttribute("value"), Is.EqualTo("Partner civil"));
+        Assert.That(FindLabelFor("gjendjaCivile").Text, Does.Contain("*"));
 
-        IWebElement Vendlindja = wait.Until(ExpectedConditions.ElementIsVisible(By.XPath("/html/body/div/main/div[3]/div/div/div/div/form/div[1]/div[9]/input")));
-        Assert.That(Vendlindja.GetAttribute("value").Trim(), Is.EqualTo("Kavajë"));
+        IWebElement profesioni = FindNamed("profesioni");
+        Assert.That(profesioni.GetAttribute("value").Trim(), Is.EqualTo(string.Empty));
 
-        Log("Kliko Vazhdo buton pa plotesuar fushat e detyrueshme");
-        SafeClick(By.XPath("/html/body/div/main/div[3]/div/div/div/div/form/div[2]/div/button[2]"));
+        Log("Assert butonat e navigimit Step 2");
+        AssertNavigationButtons("Vazhdo");
 
-        Log("Assert error message per fushat e detyrueshme");
-        IWebElement msgErrorRequired = wait.Until(ExpectedConditions.ElementIsVisible(By.XPath("/html/body/div/main/div[3]/div/div/div/div/form/div[1]/div[8]/div")));
-        Assert.That(msgErrorRequired.Text.Trim(), Is.EqualTo("Përzgjidhni një vlerë për të vazhduar"));
+        Log("Kliko Vazhdo pa plotesuar fushat e detyrueshme");
+        SafeClick(By.CssSelector("button.ealb-btn-continue"));
+        Assert.That(WaitForStepTitle("TË DHËNAT E APLIKANTIT").Text.Trim().ToUpperInvariant(),
+            Does.StartWith("TË DHËNAT E APLIKANTIT"));
 
         Log("Ploteso fushat e detyrueshme");
-        new SelectElement(wait.Until(ExpectedConditions.ElementIsVisible(By.XPath("/html/body/div/main/div[3]/div/div/div/div/form/div[1]/div[8]/select"))))
-            .SelectByValue("PANJOHUR");
+        SelectDropdownByValue(FindNamed("vendlindjaShteti"), AlbaniaOption);
+        SelectDropdownByValue(FindNamed("shtetesia"), AlbaniaOption);
+        FillInput(FindNamed("gjuhaMeme"), "Shqip");
+        SelectDropdownByValue(FindNamed("gjendjaCivile"), "Martuar");
 
-        new SelectElement(wait.Until(ExpectedConditions.ElementIsVisible(By.XPath("/html/body/div/main/div[3]/div/div/div/div/form/div[1]/div[10]/select"))))
-            .SelectByValue("PANJOHUR");
+        Log("Kliko Vazhdo Step 2");
+        SafeClick(By.CssSelector("button.ealb-btn-continue"));
+        Thread.Sleep(3000);
 
-        Log("Kliko Vazhdo buton");
-        SafeClick(By.XPath("/html/body/div/main/div[3]/div/div/div/div/form/div[2]/div/button[2]"));
+        Log("Assert Step 3 Title");
+        IWebElement Step3Title = WaitForStepTitle("INFORMACIONI I KONTAKTIT TË APLIKANTIT");
+        Assert.That(Step3Title.Text.Trim().ToUpperInvariant(),
+            Does.StartWith("INFORMACIONI I KONTAKTIT TË APLIKANTIT"));
 
+        Log("Assert kohëzgjatja Step 3");
+        durationBtn = wait.Until(ExpectedConditions.ElementIsVisible(
+            By.CssSelector("button.ealb-btn-5minutes")));
+        Assert.That(durationBtn.Text.Trim(), Does.Contain("5 minuta kohëzgjatje"));
 
-        Log("Assert Step3 title");
-        IWebElement Step3Title = wait.Until(ExpectedConditions.ElementIsVisible(By.XPath("/html/body/div/main/div[3]/div/div/div/div/h5")));
-        Assert.That(Step3Title.Text.Trim(), Is.EqualTo("INFORMACIONI I KONTAKTIT TË APLIKANTIT"));
+        Log("Assert 4 hapa, tre te paret aktiv");
+        AssertSteps(3);
 
         Log("Assert te dhenat e kontaktit");
-        IWebElement Fshati_Qyteti = wait.Until(ExpectedConditions.ElementIsVisible(By.XPath("/html/body/div/main/div[3]/div/div/div/div/form/div[1]/div[1]/input")));
-        Assert.That(Fshati_Qyteti.GetAttribute("value").Trim(), Is.EqualTo("KAVAJË, TIRANË"));
+        IWebElement qytetFshat = FindNamed("qytetFshat");
+        Assert.That(qytetFshat.GetAttribute("value").Trim(), Is.EqualTo("TIRANË, TIRANË"));
+        Assert.That(qytetFshat.GetAttribute("readonly"), Is.Not.Null);
 
-        IWebElement Email = wait.Until(ExpectedConditions.ElementIsVisible(By.XPath("/html/body/div/main/div[3]/div/div/div/div/form/div[1]/div[2]/input")));
-        Assert.That(Email.GetAttribute("value").Trim(), Is.EqualTo("ketjona.mema@kreatx.com"));
+        IWebElement email = FindNamed("email");
+        Assert.That(email.GetAttribute("type"), Is.EqualTo("email"));
+        Assert.That(email.GetAttribute("value").Trim(), Is.EqualTo("katerina.jance@kreatx.com"));
+        Assert.That(email.GetAttribute("readonly"), Is.Not.Null);
+        Assert.That(FindLabelFor("email").Text, Does.Contain("*"));
 
-        IWebElement Telefon = wait.Until(ExpectedConditions.ElementIsVisible(By.XPath("/html/body/div/main/div[3]/div/div/div/div/form/div[1]/div[4]/input")));
-        Assert.That(Telefon.GetAttribute("value").Trim(), Is.EqualTo("0676041404"));
+        IWebElement telefonFiks = FindNamed("telefonFiks");
+        Assert.That(telefonFiks.GetAttribute("type"), Is.EqualTo("tel"));
+        Assert.That(telefonFiks.GetAttribute("value").Trim(), Is.EqualTo(string.Empty));
+        Assert.That(telefonFiks.GetAttribute("readonly"), Is.Null);
 
+        IWebElement telefonCelular = FindNamed("telefonCelular");
+        Assert.That(telefonCelular.GetAttribute("type"), Is.EqualTo("tel"));
+        Assert.That(telefonCelular.GetAttribute("value").Trim(), Is.EqualTo("+355697008820"));
+        Assert.That(telefonCelular.GetAttribute("readonly"), Is.Not.Null);
 
-        Log("Kliko Vazhdo buton pa plotesuar fushat e detyrueshme");
-        SafeClick(By.XPath("/html/body/div/main/div[3]/div/div/div/div/form/div[2]/div/button[2]"));
+        IWebElement bashkia = FindNamed("bashkia");
+        var bashkiaSelect = new SelectElement(bashkia);
+        Assert.That(bashkiaSelect.SelectedOption.GetAttribute("value"), Is.EqualTo(string.Empty));
+        Assert.That(bashkiaSelect.Options.Any(o => o.GetAttribute("value") == "Tiranë"), Is.True);
+        Assert.That(FindLabelFor("bashkia").Text, Does.Contain("*"));
 
-        IWebElement msgErrorDekl = wait.Until(ExpectedConditions.ElementIsVisible(By.XPath("/html/body/div/main/div[3]/div/div/div/div/form/div[1]/div[5]/div")));
-        Assert.That(msgErrorDekl.Text.Trim(), Is.EqualTo("Përzgjidhni një vlerë për të vazhduar"));
+        IWebElement njesiAdministrative = FindNamed("njesiAdministrative");
+        Assert.That(new SelectElement(njesiAdministrative).Options.Count, Is.EqualTo(1));
+        Assert.That(FindLabelFor("njesiAdministrative").Text, Does.Contain("*"));
 
-        Log("Ploteso fushat per bashkine");
-        new SelectElement(wait.Until(ExpectedConditions.ElementIsVisible(By.XPath("/html/body/div/main/div[3]/div/div/div/div/form/div[1]/div[5]/select"))))
-            .SelectByValue("Tiranë");
+        IWebElement komisariati = FindNamed("komisariati");
+        Assert.That(new SelectElement(komisariati).Options.Count, Is.EqualTo(1));
+        Assert.That(FindLabelFor("komisariati").Text, Does.Contain("*"));
 
-        Thread.Sleep(3000);
+        IWebElement rruga = FindNamed("rruga");
+        Assert.That(rruga.GetAttribute("value").Trim(), Is.EqualTo(ExpectedAddress));
+        Assert.That(rruga.GetAttribute("readonly"), Is.Not.Null);
+        Assert.That(rruga.GetAttribute("disabled"), Is.Not.Null);
+        Assert.That(FindLabelFor("rruga").Text, Does.Contain("*"));
 
-        new SelectElement(wait.Until(ExpectedConditions.ElementIsVisible(By.XPath("/html/body/div/main/div[3]/div/div/div/div/form/div[1]/div[6]/select"))))
-            .SelectByValue("1");
+        Log("Assert butonat e navigimit Step 3");
+        AssertNavigationButtons("Vazhdo");
 
-        Thread.Sleep(3000);
+        Log("Kliko Vazhdo pa zgjedhur Bashkine dhe Komisariatin");
+        SafeClick(By.CssSelector("button.ealb-btn-continue"));
+        Assert.That(WaitForStepTitle("INFORMACIONI I KONTAKTIT TË APLIKANTIT")
+            .Text.Trim().ToUpperInvariant(),
+            Does.StartWith("INFORMACIONI I KONTAKTIT TË APLIKANTIT"));
 
-        new SelectElement(wait.Until(ExpectedConditions.ElementIsVisible(By.XPath("/html/body/div/main/div[3]/div/div/div/div/form/div[1]/div[7]/select"))))
-            .SelectByValue("Kom Pol Nr.1");
+        Log("Zgjidh Bashkia Tiranë");
+        SelectDropdownByValue(FindNamed("bashkia"), "Tiranë");
 
-
-        Log("Kliko Vazhdo buton");
-        SafeClick(By.XPath("/html/body/div/main/div[3]/div/div/div/div/form/div[2]/div/button[2]"));
-
-        Log("Assert Step4 Title ");
-        IWebElement Step4Title = wait.Until(ExpectedConditions.ElementIsVisible(By.XPath("/html/body/div/main/div[3]/div/div/div/div/h4")));
-        Assert.That(Step4Title.Text.Trim(), Is.EqualTo("DOKUMENTACIONI"));
-
-        Log("Kliko Dergo buton pa ngarkuar dokumentin");
-        SafeClick(By.XPath("/html/body/div/main/div[3]/div/div/div/div/div[3]/div/button[2]"));
-
-        IWebElement msgError = wait.Until(ExpectedConditions.ElementIsVisible(By.XPath("/html/body/div/main/div[3]/div/div/div/div/div[2]/div[1]/div[1]/div/div[2]")));
-        Assert.That(msgError.Text.Trim(), Is.EqualTo("Ju lutemi ngarkoni dokumentin e kërkuar."));
-
-        Log("Ngarko dok jo te sakte");
-
-        string KopjeID = @"C:\Users\Kreatx\Downloads\Kthim Alfis test(1).pdf";
-        string Kerkesa = @"C:\Users\Kreatx\Downloads\png-transparent-visual-studio-logo-vs-brand-3d-icon.png";
-        string KonfirmimiShtetesise = @"C:\Users\Kreatx\Downloads\E88.30_CheckPointVPN.msi";
-
-        Assert.That(File.Exists(KopjeID), Is.True, "File KopjeID nuk ekziston.");
-        Assert.That(File.Exists(Kerkesa), Is.True, "File Kerkesa nuk ekziston.");
-        Assert.That(File.Exists(KonfirmimiShtetesise), Is.True, "File Konfirmimi Shtetesise nuk ekziston.");  
-        
-        IWebElement kopjeIDInputWrong = wait.Until(
-            ExpectedConditions.ElementExists(
-                By.XPath("//div[contains(.,'Kopje të dokumentit të identifikimit')]/following::input[@type='file'][1]"))
-        );
-        kopjeIDInputWrong.SendKeys(KopjeID);
-
-        IWebElement KerkesaInputWrong = wait.Until(
-            ExpectedConditions.ElementExists(
-                By.XPath("//div[contains(.,'Kërkesë e shtetasit të huaj drejtuar Presidentit të Republikës')]/following::input[@type='file'][1]"))
-        );
-        KerkesaInputWrong.SendKeys(Kerkesa);
-
-        IWebElement KonfirmimiShtetesiseInputWrong = wait.Until(
-            ExpectedConditions.ElementExists(
-                By.XPath("//div[contains(.,'Premtimi nga autoriteti kompetent i vendit të shtetësisë tjetër, ose dokumenti në origjinal ku konfirmohet shtetësia tjetër')]/following::input[@type='file'][1]"))
-        );
-        KonfirmimiShtetesiseInputWrong.SendKeys(KonfirmimiShtetesise);
-
-        Log("Assert uncorrect doc name");
-        IWebElement fileDocNameError = wait.Until(
-            ExpectedConditions.ElementIsVisible(
-                By.XPath("//div[contains(@class,'text-danger') and contains(text(),'Emri i dokumentit është i pavlefshëm')]"))
-        );
-        Assert.That(fileDocNameError.Displayed, Is.True);
-        Assert.That(
-            fileDocNameError.Text.Trim(),
-            Does.Contain("Emri i dokumentit është i pavlefshëm")
-        );
-
-        Log("Assert uncorrect doc size");
-        IWebElement fileDocSizeError = wait.Until(
-            ExpectedConditions.ElementIsVisible(
-                By.XPath("//div[contains(@class,'text-danger') and contains(text(),'Madhësia e dokumentit nuk duhet të jetë më shumë se  5MB')]"))
-        );
-        Assert.That(fileDocSizeError.Displayed, Is.True);
-        Assert.That(
-            fileDocSizeError.Text.Trim(),
-            Does.Contain("Madhësia e dokumentit nuk duhet të jetë më shumë se 5MB")
-        );
-
-        Log("Remove uncorrect docs");
-        RemoveAllUploadedDocs();
-        Thread.Sleep(1500);
-
-        Log("Prit 1 minutë para ngarkimit të dokumentit të saktë…");
-        Thread.Sleep(TimeSpan.FromMinutes(1));
-
-        Log("Ngarko dok e sakte");
-        KopjeID = @"C:\Users\Kreatx\Downloads\Signed_TEST_signed.pdf";
-        Kerkesa = @"C:\Users\Kreatx\Downloads\Signed_TEST_signed.pdf";
-        KonfirmimiShtetesise = @"C:\Users\Kreatx\Downloads\Signed_TEST_signed.pdf";
-        string VertetimiRezidences = @"C:\Users\Kreatx\Downloads\Signed_TEST_signed.pdf";
-        string VertetimiGjykates = @"C:\Users\Kreatx\Downloads\Signed_TEST_signed.pdf";
-        string VertetimiProkurorise = @"C:\Users\Kreatx\Downloads\Signed_TEST_signed.pdf";
-        string Fotografia = @"C:\Users\Kreatx\Downloads\Signed_TEST_signed.pdf";
-
-        Assert.That(File.Exists(KopjeID), Is.True, "File KopjeID nuk ekziston.");
-        Assert.That(File.Exists(Kerkesa), Is.True, "File Kerkesa nuk ekziston.");
-        Assert.That(File.Exists(KonfirmimiShtetesise), Is.True, "File KonfirmimiShtetesise nuk ekziston.");
-        Assert.That(File.Exists(VertetimiRezidences), Is.True, "File VertetimiRezidences nuk ekziston.");
-        Assert.That(File.Exists(VertetimiGjykates), Is.True, "File VertetimiGjykates nuk ekziston.");
-        Assert.That(File.Exists(VertetimiProkurorise), Is.True, "File VertetimiProkurorise nuk ekziston.");
-        Assert.That(File.Exists(Fotografia), Is.True, "File Fotografia nuk ekziston.");
-
-        IWebElement KopjaIDInput = wait.Until(
-            ExpectedConditions.ElementExists(
-                By.XPath("//div[contains(.,'Kopje të dokumentit të identifikimit')]/following::input[@type='file'][1]"))
-        );
-        KopjaIDInput.SendKeys(KopjeID);
-
-        IWebElement KerkesaInput = wait.Until(
-            ExpectedConditions.ElementExists(
-                By.XPath("//div[contains(.,'Kërkesë e shtetasit të huaj drejtuar Presidentit të Republikës')]/following::input[@type='file'][1]"))
-        );
-        KerkesaInput.SendKeys(Kerkesa);
-
-        IWebElement KonfirmimiShtetesiseInput = wait.Until(
-            ExpectedConditions.ElementExists(
-                By.XPath("//div[contains(.,'Premtimi nga autoriteti kompetent i vendit të shtetësisë tjetër, ose dokumenti në origjinal ku konfirmohet shtetësia tjetër')]/following::input[@type='file'][1]"))
-        );
-        KonfirmimiShtetesiseInput.SendKeys(KonfirmimiShtetesise);
-
-        IWebElement VertetimiRezidencesInput = wait.Until(
-            ExpectedConditions.ElementExists(
-                By.XPath("//div[contains(.,'Dokumenti që vërteton rezidencën, vendbanimin e tij në shtetin nga i cili është premtuar shtetësia tjetër')]/following::input[@type='file'][1]"))
-        );
-        VertetimiRezidencesInput.SendKeys(VertetimiRezidences);
-
-        IWebElement VertetimiGjykatesInput = wait.Until(
-            ExpectedConditions.ElementExists(
-                By.XPath("//div[contains(.,'Vërtetim i lëshuar nga Gjykata e rrethit')]/following::input[@type='file'][1]"))
-        );
-        VertetimiGjykatesInput.SendKeys(VertetimiGjykates);
-
-        IWebElement VertetimiProkuroriseInput = wait.Until(
-            ExpectedConditions.ElementExists(
-                By.XPath("//div[contains(.,'Vërtetim i lëshuar nga Prokuroria e rrethit')]/following::input[@type='file'][1]"))
-        );
-        VertetimiProkuroriseInput.SendKeys(VertetimiProkurorise);
-
-        IWebElement FotografiaInput = wait.Until(
-            ExpectedConditions.ElementExists(
-                By.XPath("//div[contains(.,'Fotografi e aplikantit')]/following::input[@type='file'][1]"))
-        );
-        FotografiaInput.SendKeys(Fotografia);
-
-        Log("Kliko checkbox e autotirimit");
-        SafeClick(By.XPath("/html/body/div/main/div[3]/div/div/div/div/div[2]/div[3]/div[1]/span"));
-        SafeClick(By.XPath("/html/body/div/main/div[3]/div/div/div/div/div[2]/div[3]/div[2]/span"));
-
-        Thread.Sleep(1500);
-
-        Log("Kliko Dergo Button");
-        ClickDerghoAfterDocumentationReady();
-
-        const string successHeadline = "APLIKIMI JUAJ U DËRGUA ME SUKSES";
-        const string alertExpectedTitle = "Kujdes";
-        const string alertExpectedDescription =
-            "Ekzistojne aplikime te pa perfunduara per kete mjet.";
-
-        By successHeadlineBy = By.XPath(
-            "//h5[contains(normalize-space(.),'APLIKIMI JUAJ U DËRGUA ME SUKSES')] | //h5/b[contains(normalize-space(.),'APLIKIMI JUAJ U DËRGUA ME SUKSES')]");
-        By alertModalBy = By.CssSelector(".alert-modal-container");
-
-        string? outcome = null;
-        try
+        Log("Wait qe Njësia administrative te mbushen opsionet");
+        wait.Until(d =>
         {
-            outcome = new WebDriverWait(driver, TimeSpan.FromSeconds(20)).Until(drv =>
-            {
-                try
-                {
-                    var successEls = drv.FindElements(successHeadlineBy);
-                    if (successEls.Any(e =>
-                    {
-                        try { return e.Displayed; }
-                        catch (StaleElementReferenceException) { return false; }
-                    }))
-                        return "success";
-                }
-                catch (StaleElementReferenceException)
-                {
-                }
-
-                try
-                {
-                    var alertEls = drv.FindElements(alertModalBy);
-                    if (alertEls.Any(e =>
-                    {
-                        try { return e.Displayed; }
-                        catch (StaleElementReferenceException) { return false; }
-                    }))
-                        return "alert";
-                }
-                catch (StaleElementReferenceException)
-                {
-                }
-
-                return null;
-            });
-        }
-        catch (WebDriverTimeoutException)
-        {
-        }
-
-        if (outcome == "success")
-        {
-            Log("Pas 'Dërgo' u shfaq ekrani i suksesit.");
-            IWebElement headline = wait.Until(ExpectedConditions.ElementIsVisible(successHeadlineBy));
-            Assert.That(headline.Text.Trim(), Does.Contain(successHeadline).IgnoreCase);
-
-            var refEls = driver.FindElements(
-                By.XPath("//h6[contains(normalize-space(.),'Numri referencë i aplikimit')]"));
-            var trackEls = driver.FindElements(
-                By.XPath("//button[contains(normalize-space(.),'GJURMO APLIKIMIN')]"));
-            bool hasRef = refEls.Any(e =>
-            {
-                try { return e.Displayed; }
-                catch (StaleElementReferenceException) { return false; }
-            });
-            bool hasTrack = trackEls.Any(e =>
-            {
-                try { return e.Displayed; }
-                catch (StaleElementReferenceException) { return false; }
-            });
-
-            if (hasRef && hasTrack)
-            {
-                IWebElement referenceLine = refEls.First(e =>
-                {
-                    try { return e.Displayed; }
-                    catch (StaleElementReferenceException) { return false; }
-                });
-                Assert.That(
-                    referenceLine.Text.Trim(),
-                    Does.Contain("Numri referencë i aplikimit është:").IgnoreCase);
-                Assert.That(
-                    referenceLine.Text.Trim(),
-                    Does.Match("(?i)eALB-\\d+"));
-
-                IWebElement trackBtn = trackEls.First(e =>
-                {
-                    try { return e.Displayed; }
-                    catch (StaleElementReferenceException) { return false; }
-                });
-                Assert.That(trackBtn.Displayed, Is.True);
-                Log("Sukses i verifikuar: headline, referenca eALB dhe butoni GJURMO APLIKIMIN.");
-            }
-            else
-            {
-                Log("Sukses i verifikuar: headline (eALB/GJURMO nuk u gjetën — mjafton për AQTN).");
-            }
-        }
-        else if (outcome == "alert")
-        {
-            Log("Aplikimi u dërgua: sistemi u përgjigj dhe u shfaq modal paralajmërimi 'Kujdes'.");
-            IWebElement alertModal = driver.FindElement(alertModalBy);
-            IWebElement modalTitle = alertModal.FindElement(By.CssSelector("h2.alert-modal-title"));
-            Assert.That(modalTitle.Text.Trim(), Is.EqualTo(alertExpectedTitle));
-
-            var descEls = alertModal.FindElements(By.CssSelector(".alert-modal-description"));
-            if (descEls.Count > 0)
-            {
-                Assert.That(descEls[0].Text.Trim(), Is.EqualTo(alertExpectedDescription));
-            }
-
-            IWebElement mbyllBtn = alertModal.FindElement(
-                By.CssSelector("button.alert-modal-button--primary"));
-            ((IJavaScriptExecutor)driver).ExecuteScript(
-                "arguments[0].scrollIntoView({block:'center'});",
-                mbyllBtn);
-            Thread.Sleep(300);
             try
             {
-                mbyllBtn.Click();
+                return new SelectElement(d.FindElement(By.CssSelector("select[name='njesiAdministrative']")))
+                    .Options.Count > 1;
             }
-            catch (ElementClickInterceptedException)
+            catch (StaleElementReferenceException)
             {
-                ((IJavaScriptExecutor)driver).ExecuteScript("arguments[0].click();", mbyllBtn);
+                return false;
             }
-        }
-        else
+        });
+
+        Log("Zgjidh Njësia administrative");
+        SelectFirstAvailableOption(FindNamed("njesiAdministrative"));
+
+        Log("Wait qe Komisariati te mbushen opsionet");
+        wait.Until(d =>
         {
-            Assert.Fail(
-                "Pas 'Dërgo' nuk u shfaq as ekrani i suksesit ('APLIKIMI JUAJ U DËRGUA ME SUKSES') " +
-                "as modal paralajmërimi 'Kujdes' (.alert-modal-container).");
-        }
+            try
+            {
+                return new SelectElement(d.FindElement(By.CssSelector("select[name='komisariati']")))
+                    .Options.Count > 1;
+            }
+            catch (StaleElementReferenceException)
+            {
+                return false;
+            }
+        });
+
+        Log("Zgjidh Komisariati");
+        SelectFirstAvailableOption(FindNamed("komisariati"));
+
+        Log("Kliko Vazhdo Step 3");
+        SafeClick(By.CssSelector("button.ealb-btn-continue"));
+        Thread.Sleep(3000);
+
+        Log("Assert Step 4 Title");
+        IWebElement Step4Title = WaitForStepTitle("DOKUMENTACIONI");
+        Assert.That(Step4Title.Text.Trim().ToUpperInvariant(), Does.StartWith("DOKUMENTACIONI"));
+
+        Log("Assert kohëzgjatja Step 4");
+        durationBtn = wait.Until(ExpectedConditions.ElementIsVisible(
+            By.CssSelector("button.ealb-btn-5minutes")));
+        Assert.That(durationBtn.Text.Trim(), Does.Contain("5 minuta kohëzgjatje"));
+
+        Log("Assert 4 hapa, te gjithe aktiv");
+        AssertSteps(4);
+
+        Log("Assert seksionet e dokumenteve");
+        Assert.That(driver.FindElement(
+            By.XPath("//h5[contains(.,'Dokumenta që ngarkohen nga Aplikanti')]")).Displayed, Is.True);
+        Assert.That(driver.FindElement(
+            By.XPath("//h5[contains(.,'Dokumenta që ngarkohen nga nëpunësit e administratës publike')]"))
+            .Displayed, Is.True);
+
+        Log("Assert document-upload");
+        AssertDocumentUpload("doc_0Upload", "Kopje të dokumentit të identifikimit");
+        AssertDocumentUpload("doc_1Upload",
+            "Kërkesë e shtetasit të huaj drejtuar Presidentit të Republikës");
+        AssertDocumentUpload("doc_2Upload",
+            "Premtimi nga autoriteti kompetent i vendit të shtetësisë tjetër, ose dokumenti në origjinal ku konfirmohet shtetësia tjetër");
+        AssertDocumentUpload("doc_3Upload",
+            "Dokumenti që vërteton rezidencën, vendbanimin e tij në shtetin nga i cili është premtuar shtetësia tjetër");
+        AssertDocumentUpload("doc_4Upload", "Vërtetim i lëshuar nga Gjykata e rrethit");
+        AssertDocumentUpload("doc_5Upload", "Vërtetim i lëshuar nga Prokuroria e rrethit");
+        AssertDocumentUpload("doc_6Upload", "Fotografi e aplikantit");
+
+        Log("Assert dokumentet e administrates");
+        Assert.That(driver.FindElement(By.XPath(
+            "//p[contains(.,'Certifikata elektronike e gjendjes gjyqësore e Rupublikës së Shqipërisë')]"))
+            .Displayed, Is.True);
+        Assert.That(driver.FindElement(By.XPath("//p[contains(.,'Certifikata e lindjes')]"))
+            .Displayed, Is.True);
+        Assert.That(driver.FindElement(By.XPath("//p[contains(.,'Certifikata familjare')]"))
+            .Displayed, Is.True);
+
+        Log("Assert checkboxet e autorizimit");
+        IWebElement authorizeEmployee = wait.Until(ExpectedConditions.ElementExists(
+            By.Id("authorizeEmployee")));
+        IWebElement agreeToDocCollection = wait.Until(ExpectedConditions.ElementExists(
+            By.Id("agreeToDocCollection")));
+        Assert.That(authorizeEmployee.GetAttribute("type"), Is.EqualTo("checkbox"));
+        Assert.That(agreeToDocCollection.GetAttribute("type"), Is.EqualTo("checkbox"));
+        Assert.That(authorizeEmployee.Selected, Is.False);
+        Assert.That(agreeToDocCollection.Selected, Is.False);
+        Assert.That(driver.FindElement(By.CssSelector("label[for='authorizeEmployee']")).Text.Trim(),
+            Does.Contain("Autorizoj nëpunësin e administratës"));
+        Assert.That(driver.FindElement(By.CssSelector("label[for='agreeToDocCollection']")).Text.Trim(),
+            Does.Contain("Mbledhja e dokumentacionit shoqërues"));
+
+        Log("Assert butonat e navigimit Step 4");
+        AssertNavigationButtons("Dërgo");
+        IWebElement dergoBtn = wait.Until(ExpectedConditions.ElementIsVisible(
+            By.CssSelector("button.ealb-btn-continue")));
+        Assert.That(dergoBtn.GetAttribute("class"), Does.Contain("with-arrow"));
+
+        Log("Kliko Dergo pa ngarkuar dokumentin");
+        SafeClick(By.CssSelector("button.ealb-btn-continue"));
+        Thread.Sleep(1000);
+        Assert.That(WaitForStepTitle("DOKUMENTACIONI").Text.Trim().ToUpperInvariant(),
+            Does.StartWith("DOKUMENTACIONI"));
+
+        Log("Ngarko dokumentet");
+        UploadDocument("doc_0Upload", DocumentPath);
+        UploadDocument("doc_1Upload", DocumentPath);
+        UploadDocument("doc_2Upload", DocumentPath);
+        UploadDocument("doc_3Upload", DocumentPath);
+        UploadDocument("doc_4Upload", DocumentPath);
+        UploadDocument("doc_5Upload", DocumentPath);
+        UploadDocument("doc_6Upload", DocumentPath);
+
+        Log("Kliko checkboxet e autorizimit");
+        SafeClick(By.CssSelector("label[for='authorizeEmployee']"));
+        SafeClick(By.CssSelector("label[for='agreeToDocCollection']"));
+        Thread.Sleep(500);
+
+        ClickDergo();
+        AssertDergoOutcome();
 
         Log("TEST PASSED");
     }
 
-    private void BlurActiveElement()
+    private void OpenNewApplicationFromServicePage()
     {
+        Log("Assert page header");
+        IWebElement headerContainer = wait.Until(ExpectedConditions.ElementIsVisible(
+            By.CssSelector("div.page-header-container")));
+        Assert.That(headerContainer.Displayed, Is.True, "Page header nuk eshte visible");
 
-        try
-        {
-            ((IJavaScriptExecutor)driver).ExecuteScript(
-                "if(document.activeElement){document.activeElement.blur();}"
-            );
-        }
-        catch (Exception ex)
-        {
-            Log("BlurActiveElement error: " + ex.Message);
-        }
-    }
+        IWebElement serviceName = wait.Until(ExpectedConditions.ElementIsVisible(
+            By.Id("serviceNameBreadcrumb")));
+        Assert.That(serviceName.Displayed, Is.True, "Breadcrumb i sherbimit nuk eshte visible");
+        Assert.That(serviceName.Text.Trim(), Is.EqualTo(ExpectedServiceName),
+            "Emri i sherbimit nuk eshte i sakte");
 
-    private void ClearFilterInput(By locator)
-    {
-
-        Log("Clear filter input with Ctrl+A + Delete");
-        IWebElement input = wait.Until(ExpectedConditions.ElementIsVisible(locator));
-
-        ((IJavaScriptExecutor)driver).ExecuteScript(
-            "arguments[0].scrollIntoView({block:'center'});",
-            input
-        );
-
-        input.Click();
-        Thread.Sleep(300);
-
-        input.SendKeys(Keys.Control + "a");
-        Thread.Sleep(200);
-        input.SendKeys(Keys.Delete);
-        Thread.Sleep(500);
-
-        string currentValue = input.GetAttribute("value") ?? string.Empty;
-        Log("Filter value after keyboard clear: '" + currentValue + "'");
-
-        if (!string.IsNullOrEmpty(currentValue))
-        {
-            Log("Keyboard clear nuk mjaftoi, provoj me JS");
-            ((IJavaScriptExecutor)driver).ExecuteScript(@"
-                const el = arguments[0];
-                el.value = '';
-                el.dispatchEvent(new Event('input', { bubbles: true }));
-                el.dispatchEvent(new Event('change', { bubbles: true }));
-            ", input);
-
-            Thread.Sleep(500);
-        }
-
-        BlurActiveElement();
-        Thread.Sleep(800);
-
-        input = wait.Until(ExpectedConditions.ElementIsVisible(locator));
-        currentValue = input.GetAttribute("value") ?? string.Empty;
-        Log("Filter value final: '" + currentValue + "'");
-    }
-
-    private void WaitUntilOptionExists(By selectLocator, string optionValue)
-    {
-
-        wait.Until(driver =>
-        {
-            try
-            {
-                var selectElement = new SelectElement(driver.FindElement(selectLocator));
-                return selectElement.Options.Any(o =>
-                    string.Equals(
-                        (o.GetAttribute("value") ?? string.Empty).Trim(),
-                        optionValue,
-                        StringComparison.OrdinalIgnoreCase
-                    ));
-            }
-            catch
-            {
-                return false;
-            }
-        });
-    }
-
-    private void SelectByValueSafe(By selectLocator, string optionValue)
-    {
-
-        WaitUntilOptionExists(selectLocator, optionValue);
-
-        IWebElement dropdown = wait.Until(ExpectedConditions.ElementIsVisible(selectLocator));
-
-        ((IJavaScriptExecutor)driver).ExecuteScript(
-            "arguments[0].scrollIntoView({block:'center'});",
-            dropdown
-        );
-
-        Thread.Sleep(500);
-
-        var select = new SelectElement(dropdown);
-
-        Log($"Po zgjedh value '{optionValue}' tek {selectLocator}");
-        foreach (var option in select.Options)
-        {
-            Log($"Option Text = '{option.Text.Trim()}', Value = '{option.GetAttribute("value")}'");
-        }
-
-        select.SelectByValue(optionValue);
-        Thread.Sleep(1000);
-    }
-
-    private void RemoveAllUploadedDocs()
-    {
-
-        Log("Hiq dok jo te sakta");
-
-        int safetyCounter = 0;
-
-        while (true)
-        {
-            var deleteButtons = driver.FindElements(By.CssSelector("button[aria-label='Delete file']"));
-
-            Log("Nr. i butonave Delete file: " + deleteButtons.Count);
-
-            var deleteBtn = deleteButtons.FirstOrDefault(b =>
-            {
-                try
-                {
-                    return b.Displayed && b.Enabled;
-                }
-                catch
-                {
-                    return false;
-                }
-            });
-
-            if (deleteBtn == null)
-            {
-                Log("Nuk ka me dokumente per te hequr");
-                break;
-            }
-
-            try
-            {
-                ((IJavaScriptExecutor)driver).ExecuteScript(
-                    "arguments[0].scrollIntoView({ block: 'center' });",
-                    deleteBtn
-                );
-
-                Thread.Sleep(300);
-
-                try
-                {
-                    deleteBtn.Click();
-                }
-                catch
-                {
-                    ((IJavaScriptExecutor)driver).ExecuteScript("arguments[0].click();", deleteBtn);
-                }
-
-                Log("U hoq nje dokument jo i sakte");
-                Thread.Sleep(1000);
-            }
-            catch (StaleElementReferenceException)
-            {
-                Thread.Sleep(500);
-            }
-            catch (Exception ex)
-            {
-                Log("Gabim gjate heqjes se dokumentit: " + ex.Message);
-                break;
-            }
-
-            safetyCounter++;
-            if (safetyCounter >= 10)
-            {
-                Log("Ndalo heqjen e dokumenteve per shkak te safetyCounter");
-                break;
-            }
-        }
-
-        Log("Te gjitha dok jo te sakta u hoqen");
-    }
-
-    private IWebElement FindDerghoButtonInMain()
-    {
-
-        var candidates = driver.FindElements(
-            By.XPath("//main//button[contains(normalize-space(.), 'Dërgo') or contains(normalize-space(.), 'Dergo')]"));
-        IWebElement? pick = candidates.LastOrDefault(e =>
-        {
-            try
-            {
-                return e.Displayed;
-            }
-            catch (StaleElementReferenceException)
-            {
-                return false;
-            }
-        });
-        if (pick is null && candidates.Count > 0)
-            pick = candidates[^1];
-        if (pick is null)
-            throw new NoSuchElementException("Nuk u gjet butoni 'Dërgo' brenda main.");
-        return pick;
-    }
-
-    private void ClickDerghoAfterDocumentationReady()
-    {
-
-        var sendWait = new WebDriverWait(driver, TimeSpan.FromSeconds(45));
-        sendWait.Until(drv =>
-        {
-            try
-            {
-                var b = FindDerghoButtonInMain();
-                return b.Displayed && b.Enabled;
-            }
-            catch (StaleElementReferenceException)
-            {
-                return false;
-            }
-            catch (NoSuchElementException)
-            {
-                return false;
-            }
-        });
-
-        IWebElement dergo = FindDerghoButtonInMain();
+        Log("Scroll deri sa butoni Perdor te jete i dukshem");
+        By perdorLocator = By.CssSelector("button.use-service-button");
+        IWebElement perdorBtn = wait.Until(ExpectedConditions.ElementExists(perdorLocator));
         ((IJavaScriptExecutor)driver).ExecuteScript(
             "arguments[0].scrollIntoView({block:'center', inline:'nearest'});",
-            dergo);
-        Thread.Sleep(400);
-        ((IJavaScriptExecutor)driver).ExecuteScript("arguments[0].click();", dergo);
-        Log("Klikuar butoni 'Dërgo' (JavaScript click pasi u aktivizua).");
+            perdorBtn);
+        Thread.Sleep(500);
+        perdorBtn = wait.Until(ExpectedConditions.ElementToBeClickable(perdorLocator));
+        Assert.That(perdorBtn.Displayed, Is.True, "Butoni Perdor nuk eshte visible per tu klikuar");
+        Assert.That(perdorBtn.Text.Trim(), Is.EqualTo("Përdor"), "Butoni nuk eshte Përdor");
+
+        Log("Kliko butonin Perdor");
+        SafeClick(perdorLocator);
+
+        Log("Kliko Aplikim i ri");
+        By aplikimIRiLocator = By.XPath(
+            "//div[contains(@class,'mbx-content') and @role='button'][.//h6[contains(@class,'mbx-title') and normalize-space()='Aplikim i ri']]");
+        IWebElement aplikimIRi = wait.Until(ExpectedConditions.ElementIsVisible(aplikimIRiLocator));
+        Assert.That(aplikimIRi.Displayed, Is.True, "Karta Aplikim i ri nuk eshte visible");
+        IWebElement aplikimIRiTitle = aplikimIRi.FindElement(By.CssSelector("h6.mbx-title"));
+        Assert.That(aplikimIRiTitle.Text.Trim(), Is.EqualTo("Aplikim i ri"),
+            "Titulli i kartes nuk eshte Aplikim i ri");
+        SafeClick(aplikimIRiLocator);
+        Thread.Sleep(1500);
+        DismissCookieBannerIfPresent();
+    }
+
+    private void AssertSteps(int activeCount)
+    {
+        var steps = driver.FindElements(By.CssSelector(".ealb-step"));
+        Assert.That(steps.Count, Is.EqualTo(4));
+        for (int i = 0; i < steps.Count; i++)
+        {
+            if (i < activeCount)
+                Assert.That(steps[i].GetAttribute("class"), Does.Contain("active"));
+            else
+                Assert.That(steps[i].GetAttribute("class"), Does.Not.Contain("active"));
+            Assert.That(steps[i].GetAttribute("class"), Does.Contain("no-click"));
+        }
+    }
+
+    private void AssertNavigationButtons(string continueText)
+    {
+        IWebElement backBtn = wait.Until(ExpectedConditions.ElementIsVisible(
+            By.CssSelector("button.ealb-btn-back")));
+        IWebElement continueBtn = wait.Until(ExpectedConditions.ElementIsVisible(
+            By.CssSelector("button.ealb-btn-continue")));
+        Assert.That(backBtn.Text.Trim(), Is.EqualTo("Kthehu"));
+        Assert.That(continueBtn.Text.Trim(), Does.Contain(continueText));
+    }
+
+    private IWebElement WaitForStepTitle(string expectedUpper)
+    {
+        return wait.Until(d =>
+        {
+            var titles = d.FindElements(By.CssSelector(
+                "h5.px-4.my-2.text-uppercase, h4.px-4.my-2.text-uppercase, h4.px-4.pb-4, h4.text-uppercase, h5.text-uppercase"));
+            foreach (var title in titles)
+            {
+                string actual = title.Text.Trim().ToUpperInvariant();
+                if (actual == expectedUpper || actual.StartsWith(expectedUpper))
+                    return title;
+            }
+            return null;
+        });
+    }
+
+    private IWebElement FindSelectByLabel(string labelPart)
+    {
+        return wait.Until(ExpectedConditions.ElementExists(
+            By.XPath($"//form//label[contains(.,'{labelPart}')]/following-sibling::select")));
+    }
+
+    private IWebElement FindNamed(string name)
+    {
+        return wait.Until(ExpectedConditions.ElementExists(
+            By.CssSelector($"[name='{name}']")));
+    }
+
+    private IWebElement FindLabelFor(string name)
+    {
+        return wait.Until(ExpectedConditions.ElementIsVisible(
+            By.XPath($"//*[@name='{name}']/preceding-sibling::label")));
+    }
+
+    private void AssertReadonlyField(string labelText, string expectedValue)
+    {
+        IWebElement field = wait.Until(ExpectedConditions.ElementIsVisible(
+            By.XPath($"//form//label[normalize-space()='{labelText}']/following-sibling::input")));
+        Assert.That(field.GetAttribute("value").Trim(), Is.EqualTo(expectedValue));
+        Assert.That(field.GetAttribute("readonly"), Is.Not.Null);
+    }
+
+    private void SelectDropdownByValue(IWebElement select, string value)
+    {
+        ((IJavaScriptExecutor)driver).ExecuteScript(
+            "arguments[0].scrollIntoView({block:'center'});",
+            select);
+        Thread.Sleep(300);
+        new SelectElement(select).SelectByValue(value);
+        Thread.Sleep(500);
+    }
+
+    private void SelectFirstAvailableOption(IWebElement select)
+    {
+        ((IJavaScriptExecutor)driver).ExecuteScript(
+            "arguments[0].scrollIntoView({block:'center'});",
+            select);
+        Thread.Sleep(300);
+
+        var dropdown = new SelectElement(select);
+        var option = dropdown.Options.FirstOrDefault(o =>
+            !string.IsNullOrWhiteSpace(o.GetAttribute("value")));
+        Assert.That(option, Is.Not.Null, "Komisariati nuk ka opsione te disponueshme");
+        dropdown.SelectByValue(option!.GetAttribute("value"));
+        Thread.Sleep(500);
+    }
+
+    private void AssertDocumentUpload(string uploadId, string documentTitle)
+    {
+        Assert.That(driver.FindElement(
+            By.XPath($"//label[contains(normalize-space(),'{documentTitle}')]")).Displayed, Is.True);
+
+        IWebElement docUpload = wait.Until(ExpectedConditions.ElementExists(By.Id(uploadId)));
+        Assert.That(docUpload.GetAttribute("application-reference"), Is.EqualTo("docstreamv2-9635"));
+        Assert.That(docUpload.GetAttribute("selection-mode"), Is.EqualTo("single"));
+        Assert.That(docUpload.GetAttribute("max-single-file-mb"), Is.EqualTo("5"));
+        Assert.That(docUpload.GetAttribute("max-total-files-mb"), Is.EqualTo("50"));
+        Assert.That(docUpload.GetAttribute("file-types"), Is.EqualTo(".pdf,.jpg,.jpeg,.png"));
+        Assert.That(docUpload.GetAttribute("button-label"), Is.EqualTo("Kliko për të ngarkuar dokument"));
+
+        ISearchContext shadow = docUpload.GetShadowRoot();
+        Assert.That(shadow.FindElement(By.CssSelector("[data-role='label']")).Text.Trim(),
+            Is.EqualTo("Ju lutemi ngarkoni dokumentin!"));
+        Assert.That(shadow.FindElement(By.CssSelector("[data-role='dropzone-text']")).Text.Trim(),
+            Is.EqualTo("Kliko për të ngarkuar dokument"));
+        Assert.That(shadow.FindElement(By.CssSelector("[data-role='hint']")).Text.Trim(),
+            Is.EqualTo("Formatet e lejuara: PDF, JPG, JPEG, PNG. Madhësia maksimale: 5MB."));
+    }
+
+    private void UploadDocument(string uploadId, string filePath)
+    {
+        Assert.That(File.Exists(filePath), Is.True, "File nuk ekziston: " + filePath);
+
+        IWebElement docUpload = wait.Until(ExpectedConditions.ElementExists(By.Id(uploadId)));
+        ((IJavaScriptExecutor)driver).ExecuteScript(
+            "arguments[0].scrollIntoView({block:'center'});",
+            docUpload);
+        Thread.Sleep(300);
+
+        ISearchContext shadow = docUpload.GetShadowRoot();
+        IWebElement fileInput = shadow.FindElement(By.CssSelector("[data-role='file-input']"));
+        fileInput.SendKeys(filePath);
+
+        var uploadWait = new WebDriverWait(driver, TimeSpan.FromSeconds(40));
+        uploadWait.Until(d =>
+        {
+            try
+            {
+                var root = d.FindElement(By.Id(uploadId)).GetShadowRoot();
+                var fileRow = root.FindElement(By.CssSelector("[data-role='single-file']"));
+                string cssClass = fileRow.GetAttribute("class") ?? string.Empty;
+                string fileName = root.FindElement(By.CssSelector("[data-role='sf-name']")).Text.Trim();
+                return cssClass.Contains("completed") || fileName.Length > 0;
+            }
+            catch (StaleElementReferenceException)
+            {
+                return false;
+            }
+        });
     }
 }

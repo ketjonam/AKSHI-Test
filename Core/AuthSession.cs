@@ -60,4 +60,26 @@ public static class AuthSession
         await context.StorageStateAsync(new BrowserContextStorageStateOptions { Path = statePath });
         TestContext.Progress.WriteLine($"{DateTime.Now:HH:mm:ss} | Storage state u ruajt: {statePath}");
     }
+
+    public static async Task LoginInCurrentPageAsync(IPage page, LoginProfile profile)
+    {
+        Directory.CreateDirectory(SettingsLoader.AuthStateDirectory);
+        string statePath = SettingsLoader.AuthStatePath(profile);
+        AccountSettings account = SettingsLoader.AccountFor(profile);
+
+        if (string.IsNullOrWhiteSpace(account.Username) || string.IsNullOrWhiteSpace(account.Password))
+        {
+            Assert.Fail(
+                $"Kredencialet e qytetarit mungojne per {profile} ({account.Username}). " +
+                "Vendos Username / Password ne appsettings.Local.json.");
+        }
+
+        TestContext.Progress.WriteLine(
+            $"{DateTime.Now:HH:mm:ss} | Login {profile} me user {account.Username} ne te njejtin browser me testin");
+
+        var login = new LoginPage(page, SettingsLoader.Current);
+        await login.LoginAsync(profile);
+        await page.Context.StorageStateAsync(new BrowserContextStorageStateOptions { Path = statePath });
+        TestContext.Progress.WriteLine($"{DateTime.Now:HH:mm:ss} | Storage state u ruajt: {statePath}");
+    }
 }

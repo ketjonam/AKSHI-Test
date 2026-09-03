@@ -7,22 +7,22 @@ namespace AKSHI.Test.Tests.Qytetar;
 public sealed class QytetarAssemblySetup
 {
     [OneTimeSetUp]
-    [Timeout(900000)]
-    public async Task LoginThenRunQytetarTests()
+    public void PrepareQytetarAuth()
     {
+        Directory.CreateDirectory(SettingsLoader.AuthStateDirectory);
         IReadOnlyList<LoginProfile> profiles = QytetarLoginPlanner.Resolve();
         TestContext.Progress.WriteLine(
-            $"{DateTime.Now:HH:mm:ss} | === QYTETAR: login per {string.Join(", ", profiles.Select(p => SettingsLoader.AccountFor(p).Username))} ===");
+            $"{DateTime.Now:HH:mm:ss} | === QYTETAR: login ne te njejtin browser me testin per {string.Join(", ", profiles.Select(p => SettingsLoader.AccountFor(p).Username))} ===");
 
         foreach (LoginProfile profile in profiles)
         {
+            string statePath = SettingsLoader.AuthStatePath(profile);
+            if (File.Exists(statePath))
+                File.Delete(statePath);
+
             string nid = SettingsLoader.AccountFor(profile).Username;
             TestContext.Progress.WriteLine(
-                $"{DateTime.Now:HH:mm:ss} | === QYTETAR: login nje here me {nid} ===");
-            await AuthSession.EnsureAsync(profile);
+                $"{DateTime.Now:HH:mm:ss} | === QYTETAR: {nid} — login do te kryhet ne browserin e testit (OTP), jo ne nje shfletues te vecante ===");
         }
-
-        TestContext.Progress.WriteLine(
-            $"{DateTime.Now:HH:mm:ss} | === QYTETAR: sesionet u ruajten, nisin testet ===");
     }
 }

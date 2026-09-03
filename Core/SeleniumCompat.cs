@@ -91,6 +91,11 @@ public static class Keys
 
 public sealed class WebEl : ISearchContext
 {
+    private static readonly HashSet<string> BooleanAttributeNames = new(StringComparer.OrdinalIgnoreCase)
+    {
+        "readonly", "disabled", "checked", "selected", "required", "multiple", "hidden"
+    };
+
     internal ILocator Locator { get; }
     private readonly IPage _page;
 
@@ -119,7 +124,7 @@ public sealed class WebEl : ISearchContext
         }
     }
 
-    public string GetAttribute(string name)
+    public string? GetAttribute(string name)
     {
         if (string.Equals(name, "value", StringComparison.OrdinalIgnoreCase))
         {
@@ -133,10 +138,15 @@ public sealed class WebEl : ISearchContext
             }
         }
 
-        return PwSync.Run(() => Locator.GetAttributeAsync(name)) ?? string.Empty;
+        string? value = PwSync.Run(() => Locator.GetAttributeAsync(name));
+        if (value == null)
+            return null;
+        if (BooleanAttributeNames.Contains(name) && value.Length == 0)
+            return "true";
+        return value;
     }
 
-    public string GetDomProperty(string name) => GetAttribute(name);
+    public string GetDomProperty(string name) => GetAttribute(name) ?? string.Empty;
 
     public void Click()
     {
@@ -252,13 +262,27 @@ public sealed class PwDriver : IJavaScriptExecutor, ITakesScreenshot, ISearchCon
 
     public object? ExecuteScript(string script, params object[] args)
     {
+        if (args.Length == 0)
+            return PwSync.Run(() => Page.EvaluateAsync<object>("(() => { " + script + " })()"));
+
         if (args.Length == 1 && args[0] is WebEl el)
         {
             return PwSync.Run(() => el.Locator.EvaluateAsync<object>(
                 "(element) => { const arguments = [element]; " + script + " }"));
         }
 
-        return PwSync.Run(() => Page.EvaluateAsync<object>(script));
+        if (args[0] is WebEl first)
+        {
+            object extra = args.Length == 2 ? args[1]! : args.Skip(1).ToArray();
+            return PwSync.Run(() => first.Locator.EvaluateAsync<object>(
+                "(element, extra) => { const arguments = Array.isArray(extra) ? [element, ...extra] : [element, extra]; " + script + " }",
+                extra));
+        }
+
+        object payload = args.Length == 1 ? args[0]! : args;
+        return PwSync.Run(() => Page.EvaluateAsync<object>(
+            "(args) => { const arguments = Array.isArray(args) ? args : [args]; " + script + " }",
+            payload));
     }
 
     public Screenshot GetScreenshot()

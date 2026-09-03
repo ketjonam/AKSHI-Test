@@ -9,6 +9,15 @@ public sealed class TestSettings
     public AccountSettings QytetarJ70903019W { get; set; } = new();
     public AccountSettings QytetarF60416142P { get; set; } = new();
     public AccountSettings Biznes { get; set; } = new();
+    public CommandFilterSettings Commands { get; set; } = new();
+}
+
+public sealed class CommandFilterSettings
+{
+    public List<string> Run { get; set; } = new();
+    public List<string> Skip { get; set; } = new();
+    public List<string> StepRun { get; set; } = new();
+    public List<string> StepSkip { get; set; } = new();
 }
 
 public sealed class PortalSettings

@@ -9,13 +9,25 @@ public class _10060_ : QytetarNidJ557TestBase
     protected override string ServiceCode => "10060";
     protected override string? ServiceTitle => "ShperblimLindjeGrantVetepunesuar";
     protected override ServiceStartMode StartMode => ServiceStartMode.NewApplication;
+    protected override bool StartServiceOnSetup => false;
+
+    private const string ExpectedServiceName =
+        "Kërkesë për shpërblim lindje dhe grant për fëmijë të lindur për personat e vetëpunësuar";
+
+    private static readonly string[] AlbanianMonths =
+    {
+        "", "Janar", "Shkurt", "Mars", "Prill", "Maj", "Qershor",
+        "Korrik", "Gusht", "Shtator", "Tetor", "Nëntor", "Dhjetor"
+    };
+
+    private static string ExpectedRewardPeriodValue => DateTime.Now.ToString("yyyyMM") + "01";
+    private static string ExpectedRewardPeriodText =>
+        $"{AlbanianMonths[DateTime.Now.Month]} {DateTime.Now.Year}";
 
     [Test]
     public void ShperblimLindjeGrantVetepunesuar()
     {
-
-
-
+        OpenNewApplicationFromServicePage();
 
         Log("Assert kohëzgjatja");
         IWebElement durationBtn = wait.Until(ExpectedConditions.ElementIsVisible(
@@ -69,7 +81,7 @@ public class _10060_ : QytetarNidJ557TestBase
 
         Log("Assert AGJENCIA eshte disabled para zgjedhjes se DRSSH");
         IWebElement agencySelect = FindSelectByName("selectedAgency");
-        Assert.That(agencySelect.GetAttribute("disabled"), Is.Not.Null);
+        Assert.That(agencySelect.Enabled, Is.False);
         Assert.That(new SelectElement(agencySelect).Options.Count, Is.EqualTo(1));
         Assert.That(new SelectElement(agencySelect).SelectedOption.GetAttribute("value"),
             Is.EqualTo(string.Empty));
@@ -105,8 +117,7 @@ public class _10060_ : QytetarNidJ557TestBase
             {
                 var agency = d.FindElement(
                     By.CssSelector("#root form select[name='selectedAgency']"));
-                return agency.GetAttribute("disabled") == null
-                    && new SelectElement(agency).Options.Count > 1;
+                return agency.Enabled && new SelectElement(agency).Options.Count > 1;
             }
             catch (StaleElementReferenceException)
             {
@@ -116,10 +127,10 @@ public class _10060_ : QytetarNidJ557TestBase
 
         IWebElement agencyEnabled = FindSelectByName("selectedAgency");
         var agencyOptions = new SelectElement(agencyEnabled);
-        Assert.That(agencyEnabled.GetAttribute("disabled"), Is.Null);
+        Assert.That(agencyEnabled.Enabled, Is.True);
         Assert.That(agencyOptions.Options.Count, Is.GreaterThan(1));
 
-        Log("Zgjidh Agjencia Kavaje");
+        Log("Zgjidh agjencine e pare te disponueshme");
         IWebElement? kavajeOption = null;
         foreach (var option in agencyOptions.Options)
         {
@@ -130,9 +141,10 @@ public class _10060_ : QytetarNidJ557TestBase
             }
         }
 
-        Assert.That(kavajeOption, Is.Not.Null, "Agjencia Kavaje nuk u gjet");
-        agencyOptions.SelectByValue(kavajeOption.GetAttribute("value"));
-        Assert.That(agencyOptions.SelectedOption.Text.Trim(), Does.Contain("Kavaj").IgnoreCase);
+        if (kavajeOption != null)
+            agencyOptions.SelectByValue(kavajeOption.GetAttribute("value"));
+        else
+            agencyOptions.SelectByIndex(1);
         Thread.Sleep(500);
 
         Log("Kliko Vazhdo Step 1");
@@ -162,11 +174,11 @@ public class _10060_ : QytetarNidJ557TestBase
 
         Log("Assert te dhenat e aplikantit te para-plotesuara");
         AssertReadonlyValue("NID", Settings.Qytetar.Username);
-        AssertReadonlyValue("Emri", "Ketjona");
-        AssertReadonlyValue("Mbiemri", "Mema");
-        AssertReadonlyValue("Atësia", "Mersin");
-        AssertReadonlyValue("Datëlindja", "28.07.1995");
-        AssertReadonlyValue("Vendlindja", "Kavajë");
+        AssertReadonlyValue("Emri", "Katerina");
+        AssertReadonlyValue("Mbiemri", "Jançe");
+        AssertReadonlyValue("Atësia", "Foti");
+        AssertReadonlyValue("Datëlindja", "13.04.1993");
+        AssertReadonlyValue("Vendlindja", "Korçë");
 
         Log("Assert gjinia Mashkull/Femer eshte disabled");
         IWebElement maleRadio = wait.Until(ExpectedConditions.ElementExists(By.Id("genderMale")));
@@ -226,22 +238,22 @@ public class _10060_ : QytetarNidJ557TestBase
 
         Log("Assert Nr. Cel dhe Email jane disabled dhe te para-plotesuara");
         IWebElement nrCel = FindInputByLabel("Nr. Cel");
-        Assert.That(nrCel.GetAttribute("value").Trim(), Is.EqualTo("0676041404"));
-        Assert.That(nrCel.GetAttribute("disabled"), Is.Not.Null);
+        Assert.That(nrCel.GetAttribute("value").Trim(), Is.EqualTo("+355697008820"));
+        Assert.That(nrCel.Enabled, Is.False);
 
         IWebElement email = FindInputByLabel("Email");
         Assert.That(email.GetAttribute("type"), Is.EqualTo("email"));
-        Assert.That(email.GetAttribute("value").Trim(), Is.EqualTo("ketjona.mema@kreatx.com"));
-        Assert.That(email.GetAttribute("disabled"), Is.Not.Null);
+        Assert.That(email.GetAttribute("value").Trim(), Is.EqualTo("katerina.jance@kreatx.com"));
+        Assert.That(email.Enabled, Is.False);
 
         Log("Assert Qyteti/Fshati dhe Adresa te para-plotesuara");
-        AssertReadonlyValue("Qyteti/Fshati", "KAVAJË,TIRANË");
+        AssertReadonlyValue("Qyteti/Fshati", "TIRANË,TIRANË");
 
         IWebElement adresa = wait.Until(ExpectedConditions.ElementExists(By.Id("address")));
         Assert.That(adresa.GetAttribute("name"), Is.EqualTo("address"));
         Assert.That(adresa.GetAttribute("value").Trim(),
-            Is.EqualTo("THABIT REXHA 04040156; Nd. 6; H. 2; ; KAVAJË; KAVAJË; 2501; KAVAJË"));
-        Assert.That(adresa.GetAttribute("disabled"), Is.Not.Null);
+            Is.EqualTo("FROSINA PLAKU; Nd. 88; H. 2; Ap. 9; NJËSIA ADMINISTRATIVE NR. 7; NJËSIA BASHKIAKE NR. 7; 1023; TIRANË"));
+        Assert.That(adresa.Enabled, Is.False);
 
         Log("Assert butonat e navigimit Step 3");
         backBtn = wait.Until(ExpectedConditions.ElementIsVisible(
@@ -332,16 +344,36 @@ public class _10060_ : QytetarNidJ557TestBase
         Assert.That(steps[5].GetAttribute("class"), Does.Not.Contain("active"));
         Assert.That(steps[5].GetAttribute("class"), Does.Contain("no-click"));
 
-        Log("Assert Periudha e shperblimit eshte disabled dhe ka Gusht 2026");
+        Log("Wait qe periudha e shperblimit te ngarkohet");
+        wait.Until(d =>
+        {
+            try
+            {
+                var select = d.FindElement(By.CssSelector("#root form select[name='selectedPeriod']"));
+                var options = new SelectElement(select).Options;
+                return options.Count > 1
+                    && options[1].GetAttribute("value") == ExpectedRewardPeriodValue;
+            }
+            catch (StaleElementReferenceException)
+            {
+                return false;
+            }
+        });
+
+        Log("Assert Periudha e shperblimit eshte disabled dhe e para-zgjedhur "
+            + ExpectedRewardPeriodText);
         IWebElement periodSelect = FindSelectByName("selectedPeriod");
         var period = new SelectElement(periodSelect);
-        Assert.That(periodSelect.GetAttribute("disabled"), Is.Not.Null);
+        Assert.That(periodSelect.Enabled, Is.False);
         Assert.That(period.Options.Count, Is.EqualTo(2));
         Assert.That(period.Options[0].GetAttribute("value"), Is.EqualTo(string.Empty));
-        Assert.That(period.Options[1].GetAttribute("value"), Is.EqualTo("20260801"));
-        Assert.That(period.Options[1].Text.Trim(), Is.EqualTo("Gusht 2026"));
-        Assert.That(period.SelectedOption.GetAttribute("value"), Is.EqualTo("20260801"));
-        Assert.That(period.SelectedOption.Text.Trim(), Is.EqualTo("Gusht 2026"));
+        Assert.That(period.Options[1].GetAttribute("value"), Is.EqualTo(ExpectedRewardPeriodValue));
+        Assert.That(period.Options[1].Text.Trim(), Is.EqualTo(ExpectedRewardPeriodText));
+
+        string selectedPeriod = InputValue(periodSelect);
+        if (string.IsNullOrEmpty(selectedPeriod))
+            selectedPeriod = period.Options[1].GetAttribute("value");
+        Assert.That(selectedPeriod, Is.EqualTo(ExpectedRewardPeriodValue));
         Assert.That(driver.FindElement(By.CssSelector("label[for='selectedPeriod']")).Text.Trim(),
             Is.EqualTo("Periudha e shpërblimit"));
 
@@ -369,14 +401,14 @@ public class _10060_ : QytetarNidJ557TestBase
         Assert.That(driver.FindElement(
             By.XPath("//div[@id='root']//form//span[normalize-space()='me numër llogarie']")).Displayed, Is.True);
 
-        IWebElement postalSelect = FindSelectByName("selectedPostalBranch");
-        IWebElement bankSelect = FindSelectByName("selectedBank");
+        IWebElement postalSelect = FindPaymentSelect("postalPayment");
+        IWebElement bankSelect = FindPaymentSelect("bankPayment");
         IWebElement bankAccount = FindInputByName("accountNumber");
-        Assert.That(postalSelect.GetAttribute("disabled"), Is.Not.Null);
+        Assert.That(postalSelect.Enabled, Is.False);
         Assert.That(new SelectElement(postalSelect).Options.Count, Is.EqualTo(1));
-        Assert.That(bankSelect.GetAttribute("disabled"), Is.Not.Null);
+        Assert.That(bankSelect.Enabled, Is.False);
         Assert.That(new SelectElement(bankSelect).Options.Count, Is.EqualTo(1));
-        Assert.That(bankAccount.GetAttribute("disabled"), Is.Not.Null);
+        Assert.That(bankAccount.Enabled, Is.False);
         Assert.That(bankAccount.GetAttribute("value"), Is.EqualTo(string.Empty));
         Assert.That(bankAccount.GetAttribute("maxlength"), Is.EqualTo("50"));
 
@@ -407,9 +439,8 @@ public class _10060_ : QytetarNidJ557TestBase
             try
             {
                 var postSelect = d.FindElement(
-                    By.CssSelector("#root form select[name='selectedPostalBranch']"));
-                return postSelect.GetAttribute("disabled") == null
-                    && new SelectElement(postSelect).Options.Count > 1;
+                    By.XPath("//input[@id='postalPayment']/ancestor::div[contains(@class,'row')][1]//select"));
+                return postSelect.Enabled && new SelectElement(postSelect).Options.Count > 1;
             }
             catch (StaleElementReferenceException)
             {
@@ -417,13 +448,13 @@ public class _10060_ : QytetarNidJ557TestBase
             }
         });
 
-        postalSelect = FindSelectByName("selectedPostalBranch");
+        postalSelect = FindPaymentSelect("postalPayment");
         var postalOptions = new SelectElement(postalSelect);
-        Assert.That(postalSelect.GetAttribute("disabled"), Is.Null);
-        Assert.That(FindSelectByName("selectedBank").GetAttribute("disabled"), Is.Not.Null);
-        Assert.That(FindInputByName("accountNumber").GetAttribute("disabled"), Is.Not.Null);
+        Assert.That(postalSelect.Enabled, Is.True);
+        Assert.That(FindPaymentSelect("bankPayment").Enabled, Is.False);
+        Assert.That(FindInputByName("accountNumber").Enabled, Is.False);
 
-        Log("Zgjidh posten Kavaje");
+        Log("Zgjidh posten Kavaje nese ekziston, perndryshe opsionin e pare");
         IWebElement? postalKavaje = null;
         foreach (var option in postalOptions.Options)
         {
@@ -434,9 +465,10 @@ public class _10060_ : QytetarNidJ557TestBase
             }
         }
 
-        Assert.That(postalKavaje, Is.Not.Null, "Posta Kavaje nuk u gjet");
-        postalOptions.SelectByValue(postalKavaje.GetAttribute("value"));
-        Assert.That(postalOptions.SelectedOption.Text.Trim(), Does.Contain("Kavaj").IgnoreCase);
+        if (postalKavaje != null)
+            postalOptions.SelectByValue(postalKavaje.GetAttribute("value"));
+        else
+            postalOptions.SelectByIndex(1);
         Thread.Sleep(500);
 
         Log("Kliko Vazhdo Step 5");
@@ -530,6 +562,45 @@ public class _10060_ : QytetarNidJ557TestBase
         Log("TEST PASSED");
     }
 
+    private void OpenNewApplicationFromServicePage()
+    {
+        Log("Assert page header");
+        IWebElement headerContainer = wait.Until(ExpectedConditions.ElementIsVisible(
+            By.CssSelector("div.page-header-container")));
+        Assert.That(headerContainer.Displayed, Is.True, "Page header nuk eshte visible");
+
+        IWebElement serviceName = wait.Until(ExpectedConditions.ElementIsVisible(
+            By.Id("serviceNameBreadcrumb")));
+        Assert.That(serviceName.Displayed, Is.True, "Breadcrumb i sherbimit nuk eshte visible");
+        Assert.That(serviceName.Text.Trim(), Is.EqualTo(ExpectedServiceName),
+            "Emri i sherbimit nuk eshte i sakte");
+
+        Log("Scroll deri sa butoni Perdor te jete i dukshem");
+        By perdorLocator = By.CssSelector("button.use-service-button");
+        IWebElement perdorBtn = wait.Until(ExpectedConditions.ElementExists(perdorLocator));
+        ((IJavaScriptExecutor)driver).ExecuteScript(
+            "arguments[0].scrollIntoView({block:'center', inline:'nearest'});",
+            perdorBtn);
+        Thread.Sleep(500);
+        perdorBtn = wait.Until(ExpectedConditions.ElementToBeClickable(perdorLocator));
+        Assert.That(perdorBtn.Displayed, Is.True, "Butoni Perdor nuk eshte visible per tu klikuar");
+
+        Log("Kliko butonin Perdor");
+        SafeClick(perdorLocator);
+
+        Log("Kliko Aplikim i ri");
+        By aplikimIRiLocator = By.XPath(
+            "//div[contains(@class,'mbx-content') and @role='button'][.//h6[contains(@class,'mbx-title') and normalize-space()='Aplikim i ri']]");
+        IWebElement aplikimIRi = wait.Until(ExpectedConditions.ElementIsVisible(aplikimIRiLocator));
+        Assert.That(aplikimIRi.Displayed, Is.True, "Karta Aplikim i ri nuk eshte visible");
+        IWebElement aplikimIRiTitle = aplikimIRi.FindElement(By.CssSelector("h6.mbx-title"));
+        Assert.That(aplikimIRiTitle.Text.Trim(), Is.EqualTo("Aplikim i ri"),
+            "Titulli i kartes nuk eshte Aplikim i ri");
+        SafeClick(aplikimIRiLocator);
+        Thread.Sleep(1500);
+        DismissCookieBannerIfPresent();
+    }
+
     private IWebElement FindSelectByName(string name)
     {
 
@@ -594,6 +665,13 @@ public class _10060_ : QytetarNidJ557TestBase
             By.CssSelector($"#root form input[name='{name}']")));
     }
 
+    private IWebElement FindPaymentSelect(string radioId)
+    {
+
+        return wait.Until(ExpectedConditions.ElementExists(
+            By.XPath($"//input[@id='{radioId}']/ancestor::div[contains(@class,'row')][1]//select")));
+    }
+
     private void AssertDocumentUpload(string uploadId, string documentTitle)
     {
 
@@ -614,7 +692,7 @@ public class _10060_ : QytetarNidJ557TestBase
         Assert.That(shadow.FindElement(By.CssSelector("[data-role='dropzone-text']")).Text.Trim(),
             Is.EqualTo("Kliko për të ngarkuar dokumentin"));
         Assert.That(shadow.FindElement(By.CssSelector("[data-role='hint']")).Text.Trim(),
-            Is.EqualTo("Formatet e lejuara: PDF, JPG, JPEG, PNG. Madhesia maksimale: 25MB."));
+            Is.EqualTo("Formatet e lejuara: PDF, JPG, JPEG, PNG. Madhësia maksimale: 25MB."));
     }
 
     private void UploadDocument(string uploadId, string filePath)

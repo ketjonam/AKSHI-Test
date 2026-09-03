@@ -3,6 +3,7 @@ namespace AKSHI.Test.Core;
 [Category("Qytetar")]
 [Category("Individual")]
 [NonParallelizable]
+[Timeout(900000)]
 public abstract class QytetarTestBase : AkshiTestBase
 {
     protected override LoginProfile Profile => LoginProfile.Qytetar;

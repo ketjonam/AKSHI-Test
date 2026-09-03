@@ -18,5 +18,11 @@
   "Biznes": {
     "Username": "M53330201S",
     "Password": "FJALEKALIMI"
+  },
+  "Commands": {
+    "Run": [],
+    "Skip": [],
+    "StepRun": [],
+    "StepSkip": []
   }
 }

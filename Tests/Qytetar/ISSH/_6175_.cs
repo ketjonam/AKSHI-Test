@@ -9,19 +9,45 @@ public class _6175_ : QytetarNidF602TestBase
     protected override string ServiceCode => "6175";
     protected override string? ServiceTitle => "MasatPaterhequraPensioniVdekjes";
     protected override ServiceStartMode StartMode => ServiceStartMode.NewApplication;
+    protected override bool StartServiceOnSetup => false;
 
     [Test]
     public void MasatPaterhequraPensioniVdekjes()
     {
+        Log("Assert page header");
+        IWebElement headerContainer = wait.Until(ExpectedConditions.ElementIsVisible(
+            By.CssSelector("div.page-header-container")));
+        Assert.That(headerContainer.Displayed, Is.True, "Page header nuk eshte visible");
 
+        IWebElement serviceName = wait.Until(ExpectedConditions.ElementIsVisible(
+            By.Id("serviceNameBreadcrumb")));
+        Assert.That(serviceName.Displayed, Is.True, "Breadcrumb i sherbimit nuk eshte visible");
+        Assert.That(serviceName.Text.Trim(), Is.EqualTo("Masat e patërhequra të pensionit të vdekjes"),
+            "Emri i sherbimit nuk eshte i sakte");
 
+        Log("Scroll deri sa butoni Perdor te jete i dukshem");
+        By perdorLocator = By.CssSelector("button.use-service-button");
+        IWebElement perdorBtn = wait.Until(ExpectedConditions.ElementExists(perdorLocator));
+        ((IJavaScriptExecutor)driver).ExecuteScript(
+            "arguments[0].scrollIntoView({block:'center', inline:'nearest'});",
+            perdorBtn);
+        Thread.Sleep(500);
+        perdorBtn = wait.Until(ExpectedConditions.ElementToBeClickable(perdorLocator));
+        Assert.That(perdorBtn.Displayed, Is.True, "Butoni Perdor nuk eshte visible per tu klikuar");
 
+        Log("Kliko butonin Perdor");
+        SafeClick(perdorLocator);
 
-        Log("Assert Title");
-        IWebElement Step1Title = wait.Until(ExpectedConditions.ElementIsVisible(
-            By.CssSelector("h4.text-uppercase")));
-        Assert.That(Step1Title.Text.Trim().ToUpperInvariant(),
-            Is.EqualTo("PUBLIKIMI I MASAVE"));
+        Log("Kliko Aplikim i ri");
+        By aplikimIRiLocator = By.XPath(
+            "//div[contains(@class,'mbx-content') and @role='button'][.//h6[contains(@class,'mbx-title') and normalize-space()='Aplikim i ri']]");
+        IWebElement aplikimIRi = wait.Until(ExpectedConditions.ElementIsVisible(aplikimIRiLocator));
+        Assert.That(aplikimIRi.Displayed, Is.True, "Karta Aplikim i ri nuk eshte visible");
+        IWebElement aplikimIRiTitle = aplikimIRi.FindElement(By.CssSelector("h6.mbx-title"));
+        Assert.That(aplikimIRiTitle.Text.Trim(), Is.EqualTo("Aplikim i ri"),
+            "Titulli i kartes nuk eshte Aplikim i ri");
+        SafeClick(aplikimIRiLocator);
+        Thread.Sleep(1500);
 
         Log("Assert kohëzgjatja");
         IWebElement durationBtn = wait.Until(ExpectedConditions.ElementIsVisible(
@@ -34,60 +60,18 @@ public class _6175_ : QytetarNidF602TestBase
         Assert.That(steps[0].GetAttribute("class"), Does.Contain("active"));
         Assert.That(steps[0].GetAttribute("class"), Does.Contain("no-click"));
 
-        Log("Wait qe te dhenat e tabeles te ngarkohen");
-        WaitForPensionTable();
+        Log("Assert Title");
+        IWebElement Step1Title = wait.Until(ExpectedConditions.ElementIsVisible(
+            By.CssSelector("h4.px-4.pb-4.text-uppercase")));
+        Assert.That(Step1Title.Text.Trim().ToUpperInvariant(),
+            Is.EqualTo("PUBLIKIMI I MASAVE"));
 
-        Log("Assert fusha Kerko");
-        IWebElement searchInput = FindSearchInput();
-        Assert.That(searchInput.Displayed, Is.True);
-        Assert.That(searchInput.GetAttribute("placeholder"), Is.EqualTo("Kërko"));
-        Assert.That(searchInput.GetAttribute("value"), Is.EqualTo(string.Empty));
-
-        Log("Assert kolonat e tabeles");
-        Assert.That(driver.FindElement(By.XPath("//th[normalize-space()='NID']")).Displayed, Is.True);
-        Assert.That(driver.FindElement(By.XPath("//th[normalize-space()='Periudha']")).Displayed, Is.True);
-        Assert.That(driver.FindElement(By.XPath("//th[normalize-space()='Statusi']")).Displayed, Is.True);
-        Assert.That(driver.FindElement(By.XPath("//th[normalize-space()='Shuma']")).Displayed, Is.True);
-
-        Log("Assert rreshtat e masave");
-        Assert.That(GetTableRowCount(), Is.EqualTo(5));
-        AssertTableRow(0, CitizenNid, "Gusht 2026", "Pa Konfirmuar", "20633");
-        AssertTableRow(1, CitizenNid, "Gusht 2026", "Pa Konfirmuar", "7276");
-        AssertTableRow(2, CitizenNid, "Korrik 2026/2", "Pa Konfirmuar", "5000");
-        AssertTableRow(3, CitizenNid, "Korrik 2026", "Pa Konfirmuar", "20633");
-        AssertTableRow(4, CitizenNid, "Korrik 2026", "Pa Konfirmuar", "7276");
-
-        Log("Assert paginimi");
-        IWebElement pageNumber = wait.Until(ExpectedConditions.ElementIsVisible(
-            By.XPath("//div[contains(@style,'border-radius: 100px')]/div[normalize-space()='1']")));
-        Assert.That(pageNumber.Displayed, Is.True);
-
-        var paginationButtons = driver.FindElements(
-            By.CssSelector("button.MuiButton-textPrimary"));
-        Assert.That(paginationButtons.Count, Is.GreaterThanOrEqualTo(2));
-        Assert.That(paginationButtons[0].GetAttribute("disabled"), Is.Not.Null);
-        Assert.That(paginationButtons[paginationButtons.Count - 1].GetAttribute("disabled"), Is.Not.Null);
-
-        Log("Kerko me te dhena jo te sakta");
-        FillSearch("test");
-
-        Log("Assert no results");
-        IWebElement noResults = wait.Until(ExpectedConditions.ElementIsVisible(
-            By.XPath("//table//td[contains(.,'Nuk u gjend asnjë masë')]")));
-        Assert.That(noResults.Text.Trim(), Is.EqualTo("Nuk u gjend asnjë masë"));
-
-        Log("Pastro kerkimin");
-        FillSearch(string.Empty);
-        wait.Until(d => d.FindElements(By.CssSelector("table tbody tr")).Count == 5);
-
-        Log("Kerko me Periudha Korrik 2026/2");
-        FillSearch("Korrik 2026/2");
-        wait.Until(d => d.FindElements(By.CssSelector("table tbody tr")).Count == 1);
-        AssertTableRow(0, CitizenNid, "Korrik 2026/2", "Pa Konfirmuar", "5000");
-
-        Log("Pastro kerkimin perseri");
-        FillSearch(string.Empty);
-        wait.Until(d => d.FindElements(By.CssSelector("table tbody tr")).Count == 5);
+        Log("Assert mesazhi i bosh");
+        IWebElement emptyMessage = wait.Until(ExpectedConditions.ElementIsVisible(
+            By.XPath("//div[contains(@class,'text-center') and normalize-space()='Nuk gjendet pension i patërhequr!']")));
+        Assert.That(emptyMessage.Displayed, Is.True, "Mesazhi nuk eshte visible");
+        Assert.That(emptyMessage.Text.Trim(),
+            Is.EqualTo("Nuk gjendet pension i patërhequr!"));
 
         Log("Assert nuk ka buton Vazhdo");
         Assert.That(driver.FindElements(By.CssSelector("button.ealb-btn-continue")).Count, Is.EqualTo(0));
@@ -95,6 +79,7 @@ public class _6175_ : QytetarNidF602TestBase
         Log("Assert butoni Kthehu");
         IWebElement backBtn = wait.Until(ExpectedConditions.ElementIsVisible(
             By.CssSelector("button.ealb-btn-back")));
+        Assert.That(backBtn.Displayed, Is.True, "Butoni Kthehu nuk eshte visible");
         Assert.That(backBtn.Text.Trim(), Is.EqualTo("Kthehu"));
 
         Log("Kliko butonin Kthehu");
@@ -102,79 +87,5 @@ public class _6175_ : QytetarNidF602TestBase
         Thread.Sleep(2000);
 
         Log("TEST PASSED");
-    }
-
-    private void WaitForPensionTable()
-    {
-
-        var dataWait = new WebDriverWait(driver, TimeSpan.FromSeconds(40));
-        dataWait.Until(d =>
-        {
-            try
-            {
-                var rows = d.FindElements(By.CssSelector("table tbody tr"));
-                return rows.Count > 0 && rows[0].Displayed;
-            }
-            catch (StaleElementReferenceException)
-            {
-                return false;
-            }
-        });
-    }
-
-    private IWebElement FindSearchInput()
-    {
-
-        return wait.Until(ExpectedConditions.ElementIsVisible(
-            By.CssSelector("input[placeholder='Kërko']")));
-    }
-
-    private void FillSearch(string value)
-    {
-
-        IWebElement input = FindSearchInput();
-
-        ((IJavaScriptExecutor)driver).ExecuteScript(
-            "arguments[0].scrollIntoView({block:'center'});",
-            input
-        );
-        Thread.Sleep(200);
-
-        ((IJavaScriptExecutor)driver).ExecuteScript(@"
-            const el = arguments[0];
-            const setter = Object.getOwnPropertyDescriptor(
-                window.HTMLInputElement.prototype, 'value').set;
-            el.focus();
-            setter.call(el, arguments[1]);
-            el.dispatchEvent(new Event('input', { bubbles: true }));
-            el.dispatchEvent(new Event('change', { bubbles: true }));
-            el.blur();
-        ", input, value ?? string.Empty);
-
-        Thread.Sleep(800);
-    }
-
-    private int GetTableRowCount()
-    {
-
-        return driver.FindElements(By.CssSelector("table tbody tr")).Count;
-    }
-
-    private void AssertTableRow(int rowIndex,
-        string nid,
-        string periudha,
-        string statusi,
-        string shuma)
-    {
-
-        var rows = driver.FindElements(By.CssSelector("table tbody tr"));
-        Assert.That(rows.Count, Is.GreaterThan(rowIndex), $"Tabela duhet te kete rreshtin {rowIndex}");
-
-        var cells = rows[rowIndex].FindElements(By.TagName("td"));
-        Assert.That(cells.Count, Is.EqualTo(4), $"Row {rowIndex} should have 4 columns");
-        Assert.That(cells[0].Text.Trim(), Is.EqualTo(nid), $"Row {rowIndex} NID");
-        Assert.That(cells[1].Text.Trim(), Is.EqualTo(periudha), $"Row {rowIndex} Periudha");
-        Assert.That(cells[2].Text.Trim(), Is.EqualTo(statusi), $"Row {rowIndex} Statusi");
-        Assert.That(cells[3].Text.Trim(), Is.EqualTo(shuma), $"Row {rowIndex} Shuma");
     }
 }

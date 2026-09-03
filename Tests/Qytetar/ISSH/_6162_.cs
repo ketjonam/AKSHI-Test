@@ -9,6 +9,7 @@ public class _6162_ : QytetarNidF602TestBase
     protected override string ServiceCode => "6162";
     protected override string? ServiceTitle => "AplikimMbylljePensioni";
     protected override ServiceStartMode StartMode => ServiceStartMode.NewApplication;
+    protected override bool StartServiceOnSetup => false;
 
     [Test]
     public void AplikimMbylljePensioni()
@@ -104,7 +105,7 @@ public class _6162_ : QytetarNidF602TestBase
 
         Log("Assert NID eshte disabled, maxlength 10 dhe i para-plotesuar");
         IWebElement nidInput = FindInputByLabel("NID");
-        Assert.That(nidInput.GetAttribute("value").Trim(), Is.EqualTo(CitizenNid));
+        Assert.That(nidInput.GetAttribute("value").Trim(), Is.EqualTo("F60416142P"));
         Assert.That(nidInput.GetAttribute("disabled"), Is.Not.Null);
         Assert.That(nidInput.GetAttribute("maxlength"), Is.EqualTo("10"));
 
@@ -143,11 +144,13 @@ public class _6162_ : QytetarNidF602TestBase
         Assert.That(closeText.Text, Does.Contain("të mbyllet dosja e pensionit me Nr."));
         Assert.That(closeText.Text, Does.Contain("për shkak se kam rifilluar punë"));
 
-        Log("Assert dropdown i dosjes eshte bosh");
+        Log("Assert dropdown i dosjes ka Kartele Pleqerie");
         IWebElement dosjeSelect = FindDosjeSelect();
-        Assert.That(new SelectElement(dosjeSelect).SelectedOption.GetAttribute("value"),
-            Is.EqualTo(string.Empty));
-        Assert.That(new SelectElement(dosjeSelect).Options.Count, Is.EqualTo(1));
+        var dosje = new SelectElement(dosjeSelect);
+        Assert.That(dosje.SelectedOption.GetAttribute("value"), Is.EqualTo(string.Empty));
+        Assert.That(dosje.Options.Count, Is.EqualTo(2));
+        Assert.That(dosje.Options[1].GetAttribute("value"), Is.EqualTo("132655"));
+        Assert.That(dosje.Options[1].Text.Trim(), Is.EqualTo("Kartele Pleqerie - 132655"));
 
         Log("Kliko Vazhdo pa zgjedhur DRSSH, ALSSH dhe dosjen");
         AssertDrsshAlsshRequiredErrors();
@@ -159,34 +162,21 @@ public class _6162_ : QytetarNidF602TestBase
         SafeClick(By.CssSelector("label[for='pleqeri']"));
         Assert.That(driver.FindElement(By.Id("pleqeri")).Selected, Is.True);
 
-        Log("Wait qe dropdown i dosjes te mbushet");
-        wait.Until(d =>
-        {
-            try
-            {
-                var dosje = d.FindElement(
-                    By.XPath("//form//p[contains(.,'dosja e pensionit')]//select"));
-                return new SelectElement(dosje).Options.Count > 1;
-            }
-            catch (StaleElementReferenceException)
-            {
-                return false;
-            }
-        });
-
+        Log("Zgjidh dosjen Kartele Pleqerie - 132655");
         dosjeSelect = FindDosjeSelect();
-        var dosje = new SelectElement(dosjeSelect);
-        Assert.That(dosje.Options.Count, Is.GreaterThan(1));
-
-        Log("Zgjidh dosjen e pare te disponueshme");
-        dosje.SelectByIndex(1);
+        dosje = new SelectElement(dosjeSelect);
+        dosje.SelectByValue("132655");
         Thread.Sleep(500);
 
         Log("Kliko Vazhdo Step 2");
         SafeClick(By.CssSelector("button.ealb-btn-continue"));
         Thread.Sleep(3000);
 
-        AssertAndFillAddressStep();
+        AssertAndFillAddressStep(isFinalStep: true);
+
+        //Log("Kliko Apliko");
+        //SafeClick(By.CssSelector("button.ealb-btn-continue"));
+        //Thread.Sleep(5000);
 
         Log("TEST PASSED");
     }
@@ -294,9 +284,59 @@ public class _6162_ : QytetarNidF602TestBase
         Log("Kliko Vazhdo pa zgjedhur DRSSH, ALSSH dhe dosjen");
         AssertDrsshAlsshRequiredErrors();
 
-        Log("Ploteso NID e pensionistit");
-        FillInput(FindInputByLabel("NID"), CitizenNid);
-        Assert.That(FindInputByLabel("NID").GetAttribute("value").Trim(), Is.EqualTo(CitizenNid));
+        Log("Ploteso NID e pensionistit F60416142P");
+        FillInput(FindInputByLabel("NID"), "F60416142P");
+
+        wait.Until(d =>
+        {
+            try
+            {
+                var nid = d.FindElement(
+                    By.XPath("//div[@id='root']//form//label[contains(.,'NID')]/following-sibling::input"));
+                var deceased = d.FindElement(
+                    By.XPath("//form//p[contains(@class,'text-muted')]//input"));
+                var dosjeEl = d.FindElement(
+                    By.XPath("//form//p[contains(.,'dosja e pensionit')]//select"));
+                var agency = d.FindElement(
+                    By.XPath("//form//label[contains(.,'ALSSH')]/following-sibling::select"));
+                return nid.GetAttribute("value").Trim() == "F60416142P"
+                    && deceased.GetAttribute("value").Trim() == "F60416142P"
+                    && new SelectElement(dosjeEl).Options.Count > 1
+                    && new SelectElement(agency).Options.Count > 1;
+            }
+            catch (StaleElementReferenceException)
+            {
+                return false;
+            }
+        });
+
+        Log("Assert NID, ALSSH, emri i te ndjerit dhe dosja pas plotesimit");
+        Assert.That(FindInputByLabel("NID").GetAttribute("value").Trim(), Is.EqualTo("F60416142P"));
+
+        IWebElement alsshAfterNid = FindSelectByLabel("ALSSH");
+        var alsshAfterNidOptions = new SelectElement(alsshAfterNid);
+        Assert.That(alsshAfterNidOptions.Options.Count, Is.EqualTo(3));
+        Assert.That(alsshAfterNidOptions.Options[1].GetAttribute("value"), Is.EqualTo("31"));
+        Assert.That(alsshAfterNidOptions.Options[1].Text.Trim(), Is.EqualTo("Tirane"));
+        Assert.That(alsshAfterNidOptions.Options[2].GetAttribute("value"), Is.EqualTo("32"));
+        Assert.That(alsshAfterNidOptions.Options[2].Text.Trim(), Is.EqualTo("Kavaje"));
+
+        IWebElement closeTextAfterNid = wait.Until(ExpectedConditions.ElementIsVisible(
+            By.XPath("//form//p[contains(@class,'text-muted')]")));
+        var closeStrongs = closeTextAfterNid.FindElements(By.CssSelector("strong"));
+        Assert.That(closeStrongs[0].Text.Trim(), Is.EqualTo("Kadri Kukaj"));
+        Assert.That(closeStrongs[1].Text.Trim(), Is.EqualTo("KADRI KUKAJ"));
+
+        IWebElement deceasedNidAfter = wait.Until(ExpectedConditions.ElementExists(
+            By.XPath("//form//p[contains(@class,'text-muted')]//input")));
+        Assert.That(deceasedNidAfter.GetAttribute("disabled"), Is.Not.Null);
+        Assert.That(deceasedNidAfter.GetAttribute("value").Trim(), Is.EqualTo("F60416142P"));
+
+        dosjeSelect = FindDosjeSelect();
+        dosje = new SelectElement(dosjeSelect);
+        Assert.That(dosje.Options.Count, Is.EqualTo(2));
+        Assert.That(dosje.Options[1].GetAttribute("value"), Is.EqualTo("132655"));
+        Assert.That(dosje.Options[1].Text.Trim(), Is.EqualTo("Kartele Pleqerie - 132655"));
 
         Log("Zgjidh Drejtoria Tirane dhe ALSSH");
         SelectDrsshTiraneAndAlssh();
@@ -305,27 +345,10 @@ public class _6162_ : QytetarNidF602TestBase
         SafeClick(By.CssSelector("label[for='pleqeri']"));
         Assert.That(driver.FindElement(By.Id("pleqeri")).Selected, Is.True);
 
-        Log("Wait qe dropdown i dosjes te mbushet");
-        wait.Until(d =>
-        {
-            try
-            {
-                var dosjeEl = d.FindElement(
-                    By.XPath("//form//p[contains(.,'dosja e pensionit')]//select"));
-                return new SelectElement(dosjeEl).Options.Count > 1;
-            }
-            catch (StaleElementReferenceException)
-            {
-                return false;
-            }
-        });
-
+        Log("Zgjidh dosjen Kartele Pleqerie - 132655");
         dosjeSelect = FindDosjeSelect();
         dosje = new SelectElement(dosjeSelect);
-        Assert.That(dosje.Options.Count, Is.GreaterThan(1));
-
-        Log("Zgjidh dosjen e pare te disponueshme");
-        dosje.SelectByIndex(1);
+        dosje.SelectByValue("132655");
         Thread.Sleep(500);
 
         Log("Kliko Vazhdo Step 2");
@@ -568,7 +591,7 @@ public class _6162_ : QytetarNidF602TestBase
         Assert.That(input.GetAttribute("disabled"), Is.Not.Null);
     }
 
-    private void AssertAndFillAddressStep()
+    private void AssertAndFillAddressStep(bool isFinalStep = false)
     {
 
         Log("Assert Step 3 Title");
@@ -592,11 +615,13 @@ public class _6162_ : QytetarNidF602TestBase
         AssertReadonlyDisabledValue("Fshati", "MALËSI E MADHE");
         AssertReadonlyDisabledValue("Lagjia",
             "PALVAR KOPLIK 03690059; Nd. 69; H. 1; ; QENDËR; BOGIÇ-PALVAR; 4303; MALËSI E MADHE");
-        AssertReadonlyDisabledValue("Nr. Tel.", "0676041404");
-        AssertReadonlyDisabledValue("Email", "ketjona.mema@kreatx.com");
+        AssertReadonlyDisabledValue("Nr. Tel.", "+355676292088");
+        AssertReadonlyDisabledValue("Email", "shkeldiana.gjongecaj@kreatx.com");
 
         Log("Assert fushat e editueshme jane bosh");
-        Assert.That(FindInputByLabel("Pall. Nr.").GetAttribute("value"), Is.EqualTo(string.Empty));
+        IWebElement pallati = FindInputByLabel("Pall. Nr.");
+        Assert.That(pallati.GetAttribute("value"), Is.EqualTo(string.Empty));
+        Assert.That(pallati.GetAttribute("maxlength"), Is.EqualTo("10"));
         Assert.That(FindInputByLabel("Shk.Nr.").GetAttribute("value"), Is.EqualTo(string.Empty));
         Assert.That(FindInputByLabel("Ap.Nr").GetAttribute("value"), Is.EqualTo(string.Empty));
         Assert.That(FindInputByLabel("Rruga").GetAttribute("value"), Is.EqualTo(string.Empty));
@@ -607,7 +632,15 @@ public class _6162_ : QytetarNidF602TestBase
         IWebElement continueBtn = wait.Until(ExpectedConditions.ElementIsVisible(
             By.CssSelector("button.ealb-btn-continue")));
         Assert.That(backBtn.Text.Trim(), Is.EqualTo("Kthehu"));
-        Assert.That(continueBtn.Text.Trim(), Is.EqualTo("Vazhdo"));
+        if (isFinalStep)
+        {
+            Assert.That(continueBtn.Text.Trim(), Does.Contain("Apliko"));
+            Assert.That(continueBtn.GetAttribute("class"), Does.Contain("with-arrow"));
+        }
+        else
+        {
+            Assert.That(continueBtn.Text.Trim(), Is.EqualTo("Vazhdo"));
+        }
 
         Log("Ploteso Adresa e kerkuesit");
         FillInput(FindInputByLabel("Pall. Nr."), "1");
@@ -636,7 +669,7 @@ public class _6162_ : QytetarNidF602TestBase
         Assert.That(shadow.FindElement(By.CssSelector("[data-role='dropzone-text']")).Text.Trim(),
             Is.EqualTo("Kliko për të ngarkuar dokumentin"));
         Assert.That(shadow.FindElement(By.CssSelector("[data-role='hint']")).Text.Trim(),
-            Is.EqualTo("Formatet e lejuara: PDF, JPG, JPEG, PNG. Madhesia maksimale: 25MB."));
+            Is.EqualTo("Formatet e lejuara: PDF, JPG, JPEG, PNG. Madhësia maksimale: 25MB."));
     }
 
     private void AssertFamilyDocumentationStep()

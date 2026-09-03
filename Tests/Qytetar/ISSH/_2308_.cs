@@ -9,27 +9,49 @@ public class _2308_ : QytetarNidJ557TestBase
     protected override string ServiceCode => "2308";
     protected override string? ServiceTitle => "AplikimPerPensionTeParakoheshemUshtarak";
     protected override ServiceStartMode StartMode => ServiceStartMode.NewApplication;
+    protected override bool StartServiceOnSetup => false;
 
     [Test]
     public void AplikimPerPensionTeParakoheshemUshtarak()
     {
-
-
-
-
-        Log("Assert Title");
-        IWebElement Step1Title = wait.Until(ExpectedConditions.ElementIsVisible(
-            By.CssSelector("h5.ealb-header-text")));
-        Assert.That(Step1Title.Text.Trim().ToUpperInvariant(), Is.EqualTo("TË DHËNA MBI GJENDJEN CIVILE"));
+        OpenNewApplicationFromServicePage();
 
         Log("Assert kohëzgjatja");
         IWebElement durationBtn = wait.Until(ExpectedConditions.ElementIsVisible(
             By.CssSelector("button.ealb-btn-5minutes")));
         Assert.That(durationBtn.Text.Trim(), Does.Contain("4 minuta kohëzgjatje"));
 
+        Log("Assert 5 hapa, i pari aktiv");
+        AssertSteps(1);
+
+        Log("Assert Title");
+        IWebElement Step1Title = wait.Until(ExpectedConditions.ElementIsVisible(
+            By.CssSelector("h5.ealb-header-text")));
+        Assert.That(Step1Title.Text.Trim().ToUpperInvariant(), Is.EqualTo("TË DHËNA MBI GJENDJEN CIVILE"));
+
+        Log("Assert butonat e navigimit");
+        IWebElement backBtn = wait.Until(ExpectedConditions.ElementIsVisible(
+            By.CssSelector("button.ealb-btn-back")));
+        IWebElement continueBtn = wait.Until(ExpectedConditions.ElementIsVisible(
+            By.CssSelector("button.ealb-btn-continue")));
+        Assert.That(backBtn.Text.Trim(), Is.EqualTo("Kthehu"));
+        Assert.That(continueBtn.Text.Trim(), Is.EqualTo("Vazhdo"));
+
         Log("Assert Agjencia eshte disabled para zgjedhjes se drejtorise");
         IWebElement agjenciaSelect = FindSelectByLabel("Agjencia e Sigurimeve Shoqërore");
         Assert.That(agjenciaSelect.GetAttribute("disabled"), Is.Not.Null);
+
+        Log("Assert Drejtoria ka opsionet e drejtorive");
+        IWebElement drejtoriaSelect = FindSelectByLabel("Drejtuar");
+        var drejtoria = new SelectElement(drejtoriaSelect);
+        Assert.That(drejtoria.SelectedOption.GetAttribute("value"), Is.EqualTo(string.Empty));
+        Assert.That(drejtoria.Options.Count, Is.EqualTo(15));
+        Assert.That(drejtoria.Options[1].GetAttribute("value"), Is.EqualTo("01"));
+        Assert.That(drejtoria.Options[1].Text.Trim(), Is.EqualTo("Drejtoria Berat"));
+        Assert.That(drejtoria.Options[11].GetAttribute("value"), Is.EqualTo("11"));
+        Assert.That(drejtoria.Options[11].Text.Trim(), Is.EqualTo("Drejtoria Tirane"));
+        Assert.That(drejtoria.Options[13].Text.Trim(), Is.EqualTo("Dega Tropoje"));
+        Assert.That(drejtoria.Options[14].Text.Trim(), Is.EqualTo("Dega Sarande"));
 
         Log("Kliko Vazhdo pa plotesuar fushat e detyrueshme");
         SafeClick(By.CssSelector("button.ealb-btn-continue"));
@@ -63,7 +85,7 @@ public class _2308_ : QytetarNidJ557TestBase
         Assert.That(rruga.GetAttribute("disabled"), Is.Not.Null);
 
         Log("Zgjidh Drejtoria Tirane");
-        IWebElement drejtoriaSelect = FindSelectByLabel("Drejtuar");
+        drejtoriaSelect = FindSelectByLabel("Drejtuar");
         SelectDropdownByValue(drejtoriaSelect, "11");
 
         Log("Wait qe Agjencia te aktivizohet");
@@ -121,6 +143,9 @@ public class _2308_ : QytetarNidJ557TestBase
             By.XPath("//form//h5[contains(@class,'ealb-section-title')]")));
         Assert.That(Step2Title.Text.Trim().ToUpperInvariant(), Is.EqualTo("KËRKESA"));
 
+        Log("Assert 5 hapa, dy te paret aktiv");
+        AssertSteps(2);
+
         Log("Assert teksti i ligjit dhe ndihmesa");
         IWebElement ligjiText = wait.Until(ExpectedConditions.ElementIsVisible(
             By.XPath("//form//p[contains(.,'ligjit nr. 10142')]")));
@@ -137,6 +162,16 @@ public class _2308_ : QytetarNidJ557TestBase
         Assert.That(driver.FindElement(By.Id("reason-familyReasons")).Displayed, Is.True);
         Assert.That(driver.FindElement(By.Id("reason-yearsOnServiceReason")).Displayed, Is.True);
         Assert.That(driver.FindElement(By.Id("reason-agePensionReason")).Displayed, Is.True);
+        Assert.That(driver.FindElement(By.CssSelector("label[for='reason-ageReason']")).Text.Trim(),
+            Is.EqualTo("1. Moshën"));
+        Assert.That(driver.FindElement(By.CssSelector("label[for='reason-healthReasons']")).Text.Trim(),
+            Is.EqualTo("2. Për shkaqe shëndetësore"));
+        Assert.That(driver.FindElement(By.CssSelector("label[for='reason-familyReasons']")).Text.Trim(),
+            Is.EqualTo("3. Për shkaqe familjare"));
+        Assert.That(driver.FindElement(By.CssSelector("label[for='reason-yearsOnServiceReason']")).Text.Trim(),
+            Is.EqualTo("4. Vitet në shërbim"));
+        Assert.That(driver.FindElement(By.CssSelector("label[for='reason-agePensionReason']")).Text.Trim(),
+            Is.EqualTo("5. Jam në pension pleqërie"));
 
         Log("Assert opsionet e tipit te kerkeses");
         Assert.That(driver.FindElement(By.Id("requestType-serviceSeniorityType")).Displayed, Is.True);
@@ -145,6 +180,24 @@ public class _2308_ : QytetarNidJ557TestBase
         Assert.That(driver.FindElement(By.Id("requestType-workFamilySupplementType")).Displayed, Is.True);
         Assert.That(driver.FindElement(By.Id("requestType-familySupplementType")).Displayed, Is.True);
         Assert.That(driver.FindElement(By.Id("requestType-oldageSupplementType")).Displayed, Is.True);
+        Assert.That(driver.FindElement(By.CssSelector("label[for='requestType-serviceSeniorityType']")).Text.Trim(),
+            Is.EqualTo("1. Pension të parakohshëm për vjetërsi shërbimi"));
+        Assert.That(driver.FindElement(By.CssSelector("label[for='requestType-invaliditySupplementType']")).Text.Trim(),
+            Is.EqualTo("2. Pension suplementar invaliditeti"));
+        Assert.That(driver.FindElement(By.CssSelector("label[for='requestType-workInvaliditySupplementType']")).Text.Trim(),
+            Is.EqualTo("3. Pension suplementar invaliditeti për shkak detyre"));
+        Assert.That(driver.FindElement(By.CssSelector("label[for='requestType-workFamilySupplementType']")).Text.Trim(),
+            Is.EqualTo("4. Pension suplementar familjar në detyrë dhe për shkak të saj"));
+        Assert.That(driver.FindElement(By.CssSelector("label[for='requestType-familySupplementType']")).Text.Trim(),
+            Is.EqualTo("5. Pension suplementar familjar"));
+        Assert.That(driver.FindElement(By.CssSelector("label[for='requestType-oldageSupplementType']")).Text.Trim(),
+            Is.EqualTo("6. Pension suplementar pleqërie"));
+
+        Log("Assert opsionet e terheqjes");
+        Assert.That(driver.FindElement(By.CssSelector("label[for='paymentMethod-withdrawFromPost']")).Text.Trim(),
+            Is.EqualTo("Në postën shqiptare, filiali"));
+        Assert.That(driver.FindElement(By.CssSelector("label[for='paymentMethod-withdrawFromBank']")).Text.Trim(),
+            Is.EqualTo("Në bankën"));
 
         Log("Assert dropdown-et e pageses jane disabled para zgjedhjes");
         IWebElement postSelect = FindPaymentSelect("paymentMethod-withdrawFromPost");
@@ -224,6 +277,16 @@ public class _2308_ : QytetarNidJ557TestBase
             By.CssSelector("h4.text-uppercase")));
         Assert.That(Step3Title.Text.Trim().ToUpperInvariant(),
             Is.EqualTo("PERIUDHA TË TJERA PUNË APO SIGURIMI SIPAS LIGJIT NR. 7703 DATË 11.05.1993"));
+
+        Log("Assert 5 hapa, tre te paret aktiv");
+        AssertSteps(3);
+
+        Log("Assert kolonat e tabeles");
+        Assert.That(driver.FindElement(By.XPath("//table//th[normalize-space()='Nr.']")).Displayed, Is.True);
+        Assert.That(driver.FindElement(By.XPath("//table//th[contains(.,'Detyra që kam punuar')]")).Displayed, Is.True);
+        Assert.That(driver.FindElement(By.XPath("//table//th[contains(.,'Data e fillimit')]")).Displayed, Is.True);
+        Assert.That(driver.FindElement(By.XPath("//table//th[contains(.,'Data e largimit')]")).Displayed, Is.True);
+        Assert.That(driver.FindElement(By.XPath("//table//th[normalize-space()='Vërejtje']")).Displayed, Is.True);
 
         Log("Assert tabela eshte bosh");
         IWebElement emptyRow = wait.Until(ExpectedConditions.ElementExists(
@@ -305,11 +368,22 @@ public class _2308_ : QytetarNidJ557TestBase
             By.CssSelector("h4.text-uppercase")));
         Assert.That(Step4Title.Text.Trim().ToUpperInvariant(), Is.EqualTo("DEKLAROJ SE"));
 
+        Log("Assert 5 hapa, kater te paret aktiv");
+        AssertSteps(4);
+
         Log("Assert opsionet e statusit te punes");
         Assert.That(driver.FindElement(By.Id("terminatedEmployment")).Displayed, Is.True);
         Assert.That(driver.FindElement(By.Id("continueEmployment")).Displayed, Is.True);
         Assert.That(driver.FindElement(By.Id("amReceivingPension")).Displayed, Is.True);
         Assert.That(driver.FindElement(By.Id("notReceivingPension")).Displayed, Is.True);
+        Assert.That(driver.FindElement(By.CssSelector("label[for='terminatedEmployment']")).Text.Trim(),
+            Is.EqualTo("Kam ndërprerë marrëdhëniet e punës me subjektin"));
+        Assert.That(driver.FindElement(By.CssSelector("label[for='continueEmployment']")).Text.Trim(),
+            Is.EqualTo("Vazhdoj marrëdhëniet e punës në subjektin"));
+        Assert.That(driver.FindElement(By.CssSelector("label[for='amReceivingPension']")).Text.Trim(),
+            Is.EqualTo("Marr pension (lloji i pensionit)"));
+        Assert.That(driver.FindElement(By.CssSelector("label[for='notReceivingPension']")).Text.Trim(),
+            Is.EqualTo("Nuk marr asnjë lloj pensioni nga sigurimet shoqërore"));
 
         Log("Assert seksioni i njoftimit");
         IWebElement notifyTitle = wait.Until(ExpectedConditions.ElementIsVisible(
@@ -344,6 +418,14 @@ public class _2308_ : QytetarNidJ557TestBase
         durationBtn = wait.Until(ExpectedConditions.ElementIsVisible(
             By.CssSelector("button.ealb-btn-5minutes")));
         Assert.That(durationBtn.Text.Trim(), Does.Contain("4 minuta kohëzgjatje"));
+
+        Log("Assert 5 hapa, te gjithe aktiv");
+        AssertSteps(5);
+
+        Log("Assert butoni Dergo");
+        IWebElement dergoBtn = wait.Until(ExpectedConditions.ElementIsVisible(
+            By.CssSelector("button.ealb-btn-continue")));
+        Assert.That(dergoBtn.Text.Trim(), Is.EqualTo("Dërgo"));
 
         Log("Assert seksionet e dokumenteve");
         Assert.That(driver.FindElement(By.XPath("//td[contains(.,'I. Dokumente që dorëzohen nga vetë personi')]")).Displayed, Is.True);
@@ -405,9 +487,9 @@ public class _2308_ : QytetarNidJ557TestBase
     [Test]
     public void AplikimPerPensionTeParakoheshemUshtarak_GabimMarrjaTeDhenaveGjendjaCivile()
     {
+        OpenNewApplicationFromServicePage();
 
-
-Log("Assert alert Gabim per marrjen e te dhenave nga gjendja civile");
+        Log("Assert alert Gabim per marrjen e te dhenave nga gjendja civile");
         IWebElement alertTitle = wait.Until(ExpectedConditions.ElementIsVisible(
             By.CssSelector("h2.alert-modal-title")));
         Assert.That(alertTitle.Text.Trim(), Is.EqualTo("Gabim"));
@@ -437,6 +519,59 @@ Log("Assert alert Gabim per marrjen e te dhenave nga gjendja civile");
         Assert.That(FindSectionInput("Adresa", "Rruga").GetAttribute("value").Trim(), Is.EqualTo(string.Empty));
 
         Log("TEST PASSED");
+    }
+
+    private void OpenNewApplicationFromServicePage()
+    {
+        Log("Assert page header");
+        IWebElement headerContainer = wait.Until(ExpectedConditions.ElementIsVisible(
+            By.CssSelector("div.page-header-container")));
+        Assert.That(headerContainer.Displayed, Is.True, "Page header nuk eshte visible");
+
+        IWebElement serviceName = wait.Until(ExpectedConditions.ElementIsVisible(
+            By.Id("serviceNameBreadcrumb")));
+        Assert.That(serviceName.Displayed, Is.True, "Breadcrumb i sherbimit nuk eshte visible");
+        Assert.That(serviceName.Text.Trim(),
+            Is.EqualTo("Aplikim për pension të parakohshëm ushtarak sipas Ligjit Nr. 10142"),
+            "Emri i sherbimit nuk eshte i sakte");
+
+        Log("Scroll deri sa butoni Perdor te jete i dukshem");
+        By perdorLocator = By.CssSelector("button.use-service-button");
+        IWebElement perdorBtn = wait.Until(ExpectedConditions.ElementExists(perdorLocator));
+        ((IJavaScriptExecutor)driver).ExecuteScript(
+            "arguments[0].scrollIntoView({block:'center', inline:'nearest'});",
+            perdorBtn);
+        Thread.Sleep(500);
+        perdorBtn = wait.Until(ExpectedConditions.ElementToBeClickable(perdorLocator));
+        Assert.That(perdorBtn.Displayed, Is.True, "Butoni Perdor nuk eshte visible per tu klikuar");
+
+        Log("Kliko butonin Perdor");
+        SafeClick(perdorLocator);
+
+        Log("Kliko Aplikim i ri");
+        By aplikimIRiLocator = By.XPath(
+            "//div[contains(@class,'mbx-content') and @role='button'][.//h6[contains(@class,'mbx-title') and normalize-space()='Aplikim i ri']]");
+        IWebElement aplikimIRi = wait.Until(ExpectedConditions.ElementIsVisible(aplikimIRiLocator));
+        Assert.That(aplikimIRi.Displayed, Is.True, "Karta Aplikim i ri nuk eshte visible");
+        IWebElement aplikimIRiTitle = aplikimIRi.FindElement(By.CssSelector("h6.mbx-title"));
+        Assert.That(aplikimIRiTitle.Text.Trim(), Is.EqualTo("Aplikim i ri"),
+            "Titulli i kartes nuk eshte Aplikim i ri");
+        SafeClick(aplikimIRiLocator);
+        Thread.Sleep(1500);
+    }
+
+    private void AssertSteps(int activeCount)
+    {
+        var steps = driver.FindElements(By.CssSelector(".ealb-step"));
+        Assert.That(steps.Count, Is.EqualTo(5));
+        for (int i = 0; i < steps.Count; i++)
+        {
+            if (i < activeCount)
+                Assert.That(steps[i].GetAttribute("class"), Does.Contain("active"));
+            else
+                Assert.That(steps[i].GetAttribute("class"), Does.Not.Contain("active"));
+            Assert.That(steps[i].GetAttribute("class"), Does.Contain("no-click"));
+        }
     }
 
     private void BlurActiveElement()

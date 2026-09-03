@@ -9,13 +9,12 @@ public class _14928_ : QytetarNidJ557TestBase
     protected override string ServiceCode => "14928";
     protected override string? ServiceTitle => "NjohjeSigurimiPerKB";
     protected override ServiceStartMode StartMode => ServiceStartMode.NewApplication;
+    protected override bool StartServiceOnSetup => false;
 
     [Test]
     public void NjohjeSigurimiPerKB()
     {
-
-
-
+        OpenNewApplicationFromServicePage();
 
         Log("Assert Title");
         IWebElement Step1Title = wait.Until(ExpectedConditions.ElementIsVisible(
@@ -87,7 +86,7 @@ public class _14928_ : QytetarNidJ557TestBase
 
         IWebElement applicantName = wait.Until(ExpectedConditions.ElementIsVisible(
             By.CssSelector(".ealb-declaration-text strong")));
-        Assert.That(applicantName.Text.Trim(), Is.EqualTo("Ketjona Mema"));
+        Assert.That(applicantName.Text.Trim(), Is.EqualTo("Katerina Jançe"));
 
         IWebElement firstParagraph = wait.Until(ExpectedConditions.ElementIsVisible(
             By.XPath("//div[contains(@class,'ealb-declaration-text')]/p[1]")));
@@ -217,15 +216,15 @@ public class _14928_ : QytetarNidJ557TestBase
         Assert.That(nidInput.GetAttribute("disabled"), Is.Not.Null);
 
         IWebElement emerInput = FindInputByLabel("Emër");
-        Assert.That(emerInput.GetAttribute("value").Trim(), Is.EqualTo("Ketjona"));
+        Assert.That(emerInput.GetAttribute("value").Trim(), Is.EqualTo("Katerina"));
         Assert.That(emerInput.GetAttribute("disabled"), Is.Not.Null);
 
         IWebElement atesiaInput = FindInputByLabel("Atësia");
-        Assert.That(atesiaInput.GetAttribute("value").Trim(), Is.EqualTo("Mersin"));
+        Assert.That(atesiaInput.GetAttribute("value").Trim(), Is.EqualTo("Foti"));
         Assert.That(atesiaInput.GetAttribute("disabled"), Is.Not.Null);
 
         IWebElement mbiemerInput = FindInputByLabel("Mbiemër");
-        Assert.That(mbiemerInput.GetAttribute("value").Trim(), Is.EqualTo("Mema"));
+        Assert.That(mbiemerInput.GetAttribute("value").Trim(), Is.EqualTo("Jançe"));
         Assert.That(mbiemerInput.GetAttribute("disabled"), Is.Not.Null);
 
         IWebElement mbiemerParaMarteses = FindInputByLabel("Mbiemër para martesës");
@@ -233,7 +232,7 @@ public class _14928_ : QytetarNidJ557TestBase
         Assert.That(mbiemerParaMarteses.GetAttribute("disabled"), Is.Null);
 
         IWebElement datelindjaInput = FindInputByLabel("Datëlindja");
-        Assert.That(datelindjaInput.GetAttribute("value").Trim(), Is.EqualTo("28.07.1995"));
+        Assert.That(datelindjaInput.GetAttribute("value").Trim(), Is.EqualTo("13.04.1993"));
         Assert.That(datelindjaInput.GetAttribute("disabled"), Is.Not.Null);
 
         Log("Assert seksionet Vendlindja, Adresa dhe Kontakti");
@@ -247,7 +246,7 @@ public class _14928_ : QytetarNidJ557TestBase
         IWebElement rrethi = FindSectionInput("Vendlindja", "Rrethi");
         IWebElement qarku = FindSectionInput("Vendlindja", "Qarku");
         Assert.That(fshati.GetAttribute("value"), Is.EqualTo(string.Empty));
-        Assert.That(qyteti.GetAttribute("value").Trim(), Is.EqualTo("Kavajë"));
+        Assert.That(qyteti.GetAttribute("value").Trim(), Is.EqualTo("Korçë"));
         Assert.That(rrethi.GetAttribute("value"), Is.EqualTo(string.Empty));
         Assert.That(qarku.GetAttribute("value"), Is.EqualTo(string.Empty));
         Assert.That(fshati.GetAttribute("maxlength"), Is.EqualTo("100"));
@@ -264,11 +263,11 @@ public class _14928_ : QytetarNidJ557TestBase
         IWebElement adresaRrethi = FindSectionInput("Adresa", "Rrethi");
         Assert.That(lagjia.GetAttribute("value"), Is.EqualTo(string.Empty));
         Assert.That(rruga.GetAttribute("value").Trim(),
-            Is.EqualTo("THABIT REXHA 04040156; Nd. 6; H. 2; ; KAVAJË; KAVAJË; 2501; KAVAJË"));
+            Is.EqualTo("FROSINA PLAKU; Nd. 88; H. 2; Ap. 9; NJËSIA ADMINISTRATIVE NR. 7; NJËSIA BASHKIAKE NR. 7; 1023; TIRANË"));
         Assert.That(pallati.GetAttribute("value"), Is.EqualTo(string.Empty));
         Assert.That(shkalla.GetAttribute("value"), Is.EqualTo(string.Empty));
-        Assert.That(qytetiFshati.GetAttribute("value").Trim(), Is.EqualTo("KAVAJË"));
-        Assert.That(adresaRrethi.GetAttribute("value").Trim(), Is.EqualTo("KAVAJË"));
+        Assert.That(qytetiFshati.GetAttribute("value").Trim(), Is.EqualTo("TIRANË"));
+        Assert.That(adresaRrethi.GetAttribute("value").Trim(), Is.EqualTo("TIRANË"));
         Assert.That(lagjia.GetAttribute("maxlength"), Is.EqualTo("100"));
         Assert.That(rruga.GetAttribute("maxlength"), Is.EqualTo("100"));
         Assert.That(pallati.GetAttribute("maxlength"), Is.EqualTo("12"));
@@ -281,12 +280,12 @@ public class _14928_ : QytetarNidJ557TestBase
         IWebElement nrTel2 = FindSectionInput("Kontakti", "Nr.tel 2");
         IWebElement email = FindSectionInput("Kontakti", "Email");
         Assert.That(nrTel1.GetAttribute("type"), Is.EqualTo("tel"));
-        Assert.That(nrTel1.GetAttribute("value").Trim(), Is.EqualTo("0676041404"));
+        Assert.That(nrTel1.GetAttribute("value").Trim(), Is.EqualTo("+355697008820"));
         Assert.That(nrTel1.GetAttribute("disabled"), Is.Not.Null);
         Assert.That(nrTel2.GetAttribute("type"), Is.EqualTo("tel"));
         Assert.That(nrTel2.GetAttribute("value"), Is.EqualTo(string.Empty));
         Assert.That(email.GetAttribute("type"), Is.EqualTo("email"));
-        Assert.That(email.GetAttribute("value").Trim(), Is.EqualTo("ketjona.mema@kreatx.com"));
+        Assert.That(email.GetAttribute("value").Trim(), Is.EqualTo("katerina.jance@kreatx.com"));
         Assert.That(email.GetAttribute("disabled"), Is.Not.Null);
 
         Log("Assert butonat e navigimit Step 2");
@@ -396,8 +395,8 @@ public class _14928_ : QytetarNidJ557TestBase
         AssertModalFieldInvalid(FindModalInput("Data e ndryshimit"));
 
         Log("Ploteso ndryshimin e gjeneraliteteve");
-        FillInput(FindModalInput("Emri"), "Ketjona");
-        FillInput(FindModalInput("Atësia"), "Mersin");
+        FillInput(FindModalInput("Emri"), "Katerina");
+        FillInput(FindModalInput("Atësia"), "Foti");
         FillInput(FindModalInput("Mbiemër"), "Hoxha");
         FillModalDate("Data e ndryshimit", "2015-01-01", "01.01.2015");
 
@@ -412,8 +411,8 @@ public class _14928_ : QytetarNidJ557TestBase
         var changeCells = changeRow.FindElements(By.TagName("td"));
         Assert.That(changeCells.Count, Is.GreaterThanOrEqualTo(4));
         Assert.That(changeCells[0].Text.Trim(), Does.Contain("01.01.2015").Or.Contain("2015-01-01"));
-        Assert.That(changeCells[1].Text.Trim(), Is.EqualTo("Ketjona"));
-        Assert.That(changeCells[2].Text.Trim(), Is.EqualTo("Mersin"));
+        Assert.That(changeCells[1].Text.Trim(), Is.EqualTo("Katerina"));
+        Assert.That(changeCells[2].Text.Trim(), Is.EqualTo("Foti"));
         Assert.That(changeCells[3].Text.Trim(), Is.EqualTo("Hoxha"));
 
         Log("Kliko Vazhdo Step 3");
@@ -792,7 +791,7 @@ public class _14928_ : QytetarNidJ557TestBase
         Assert.That(driver.FindElement(By.XPath("//h6[normalize-space()='Kërkuesi']")).Displayed, Is.True);
         IWebElement kerkuesiInput = wait.Until(ExpectedConditions.ElementIsVisible(
             By.XPath("//h6[normalize-space()='Kërkuesi']/following::input[1]")));
-        Assert.That(kerkuesiInput.GetAttribute("value").Trim(), Is.EqualTo("Ketjona Mema"));
+        Assert.That(kerkuesiInput.GetAttribute("value").Trim(), Is.EqualTo("Katerina Jançe"));
         Assert.That(kerkuesiInput.GetAttribute("disabled"), Is.Not.Null);
 
         Log("Assert checkbox i pranimit eshte i pazgjedhur");
@@ -1057,6 +1056,45 @@ public class _14928_ : QytetarNidJ557TestBase
         Assert.That(shadow.FindElement(By.CssSelector("[data-role='dropzone-text']")).Text.Trim(),
             Is.EqualTo("Kliko për të ngarkuar dokument"));
         Assert.That(shadow.FindElement(By.CssSelector("[data-role='hint']")).Text.Trim(),
-            Is.EqualTo("Formatet e lejuara: PDF, JPG, JPEG, PNG. Madhesia maksimale: 25MB."));
+            Is.EqualTo("Formatet e lejuara: PDF, JPG, JPEG, PNG. Madhësia maksimale: 25MB."));
+    }
+
+    private void OpenNewApplicationFromServicePage()
+    {
+        Log("Assert page header");
+        IWebElement headerContainer = wait.Until(ExpectedConditions.ElementIsVisible(
+            By.CssSelector("div.page-header-container")));
+        Assert.That(headerContainer.Displayed, Is.True, "Page header nuk eshte visible");
+
+        IWebElement serviceName = wait.Until(ExpectedConditions.ElementIsVisible(
+            By.Id("serviceNameBreadcrumb")));
+        Assert.That(serviceName.Displayed, Is.True, "Breadcrumb i sherbimit nuk eshte visible");
+        Assert.That(serviceName.Text.Trim(),
+            Is.EqualTo("Aplikim për njohjen si periudhë sigurimi për efekt përfitimi nga sigurimet shoqërore të kohës së punësimit në ish-kooperativat bujqësore sipas ligjit nr. 169/2020 dhe VKM nr.432/2021"),
+            "Emri i sherbimit nuk eshte i sakte");
+
+        Log("Scroll deri sa butoni Perdor te jete i dukshem");
+        By perdorLocator = By.CssSelector("button.use-service-button");
+        IWebElement perdorBtn = wait.Until(ExpectedConditions.ElementExists(perdorLocator));
+        ((IJavaScriptExecutor)driver).ExecuteScript(
+            "arguments[0].scrollIntoView({block:'center', inline:'nearest'});",
+            perdorBtn);
+        Thread.Sleep(500);
+        perdorBtn = wait.Until(ExpectedConditions.ElementToBeClickable(perdorLocator));
+        Assert.That(perdorBtn.Displayed, Is.True, "Butoni Perdor nuk eshte visible per tu klikuar");
+
+        Log("Kliko butonin Perdor");
+        SafeClick(perdorLocator);
+
+        Log("Kliko Aplikim i ri");
+        By aplikimIRiLocator = By.XPath(
+            "//div[contains(@class,'mbx-content') and @role='button'][.//h6[contains(@class,'mbx-title') and normalize-space()='Aplikim i ri']]");
+        IWebElement aplikimIRi = wait.Until(ExpectedConditions.ElementIsVisible(aplikimIRiLocator));
+        Assert.That(aplikimIRi.Displayed, Is.True, "Karta Aplikim i ri nuk eshte visible");
+        IWebElement aplikimIRiTitle = aplikimIRi.FindElement(By.CssSelector("h6.mbx-title"));
+        Assert.That(aplikimIRiTitle.Text.Trim(), Is.EqualTo("Aplikim i ri"),
+            "Titulli i kartes nuk eshte Aplikim i ri");
+        SafeClick(aplikimIRiLocator);
+        Thread.Sleep(1500);
     }
 }
