@@ -1,14 +1,15 @@
-﻿namespace AKSHI.Test;
+namespace AKSHI.Test.TestRuns.Qytetar;
 
 [TestFixture]
 [Timeout(900000)]
 [NonParallelizable]
 [Explicit]
 [Category("TestRun")]
-public class TestRunAMS
+[Category("Qytetar")]
+public class TestRunAQTN
 {
     public static string Script => """
-        run tests.qytetar.ams
+        run tests.qytetar.aqtn
         skip dergo
         """;
 

@@ -327,12 +327,19 @@ public class _15099_ : QytetarNidJ557TestBase
         Assert.That(driver.FindElement(
             By.XPath("//div[contains(@class,'fw-bold') and contains(.,'Fotografi')]//span[normalize-space()='*']")).Displayed, Is.True);
 
-        Log("Assert document-upload Vërtetim praktike");
+        Log("Assert document-upload Raport mjekoligjor");
         AssertDocumentUpload(
-            "fileVertetimPraktikeUpload",
-            "Vërtetim praktike");
+            "fileRaportMjekoligjorUpload",
+            "Raport mjekoligjor (shikim, dëgjim)");
         Assert.That(driver.FindElement(
-            By.XPath("//div[contains(@class,'fw-bold') and contains(.,'Vërtetim praktike')]//span[normalize-space()='*']")).Displayed, Is.True);
+            By.XPath("//div[contains(@class,'fw-bold') and contains(.,'Raport mjekoligjor')]//span[normalize-space()='*']")).Displayed, Is.True);
+
+        Log("Assert document-upload Eksperiencë pune");
+        AssertDocumentUpload(
+            "fileEksperiencePuneUpload",
+            "Eksperiencë pune");
+        Assert.That(driver.FindElement(
+            By.XPath("//div[contains(@class,'fw-bold') and contains(.,'Eksperiencë pune')]//span[normalize-space()='*']")).Displayed, Is.True);
 
         Log("Assert nuk nevojitet dokumentacion nga administrata");
         Assert.That(driver.FindElement(
@@ -357,7 +364,8 @@ public class _15099_ : QytetarNidJ557TestBase
 
         Log("Ngarko dokumentet e detyrueshme");
         UploadDocument("fileFotografiUpload", DocumentPath);
-        UploadDocument("fileVertetimPraktikeUpload", DocumentPath);
+        UploadDocument("fileRaportMjekoligjorUpload", DocumentPath);
+        UploadDocument("fileEksperiencePuneUpload", DocumentPath);
 
         //Log("Kliko Dergo");
         //SafeClick(By.CssSelector("button.ealb-btn-continue"));
@@ -505,8 +513,9 @@ public class _15099_ : QytetarNidJ557TestBase
             el.dispatchEvent(new Event('change', { bubbles: true }));
         ", select);
 
-        wait.Until(d => new SelectElement(d.FindElement(
-            By.CssSelector($"#root form select[name='{name}']"))).SelectedOption.GetAttribute("value") == value);
+        wait.Until(d =>
+            (d.FindElement(By.CssSelector($"#root form select[name='{name}']")).GetAttribute("value") ?? string.Empty)
+                == value);
         Thread.Sleep(300);
     }
 

@@ -7,13 +7,15 @@ namespace AKSHI.Test.Tests.Biznes;
 public sealed class BiznesAssemblySetup
 {
     [OneTimeSetUp]
-    [Timeout(300000)]
-    public async Task LoginOnceThenRunAllBiznesTests()
+    public void PrepareBiznesAuth()
     {
+        Directory.CreateDirectory(SettingsLoader.AuthStateDirectory);
+        string statePath = SettingsLoader.AuthStatePath(LoginProfile.Biznes);
+        if (File.Exists(statePath))
+            File.Delete(statePath);
+
+        AccountSettings account = SettingsLoader.AccountFor(LoginProfile.Biznes);
         TestContext.Progress.WriteLine(
-            $"{DateTime.Now:HH:mm:ss} | === BIZNES: login nje here me M53330201S, pastaj te gjitha testet Organisation ===");
-        await AuthSession.EnsureAsync(LoginProfile.Biznes);
-        TestContext.Progress.WriteLine(
-            $"{DateTime.Now:HH:mm:ss} | === BIZNES: sesioni u ruajt, nisin te gjitha testet e biznesit ===");
+            $"{DateTime.Now:HH:mm:ss} | === BIZNES: login me {account.Username} ne te njejtin browser me testin (OTP), jo ne nje shfletues te vecante ===");
     }
 }

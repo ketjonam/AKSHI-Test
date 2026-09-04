@@ -9,6 +9,7 @@ public class _7178_ : QytetarNidF602TestBase
     protected override string ServiceCode => "7178";
     protected override string? ServiceTitle => "KartaEShendetit";
     protected override ServiceStartMode StartMode => ServiceStartMode.NewApplication;
+    protected override bool StartServiceOnSetup => false;
 
     [Test]
     public void KartaEShendetit()

@@ -4,18 +4,17 @@ namespace AKSHI.Test.Tests.Qytetar.DPSHTRR_AMS;
 
 [Category("DPSHTRR-AMS")]
 [Category("13789")]
-public class _13789_ : QytetarNidJ557TestBase
+public class _13789_ : QytetarNidJ257TestBase
 {
     protected override string ServiceCode => "13789";
     protected override string? ServiceTitle => "PajisjemeCertifikateADR";
     protected override ServiceStartMode StartMode => ServiceStartMode.NewApplication;
+    protected override bool StartServiceOnSetup => false;
 
     [Test]
     public void PajisjemeCertifikateADR()
     {
-
-
-
+        OpenNewApplicationFromServicePage();
 
         Thread.Sleep(4000);
 
@@ -35,7 +34,7 @@ public class _13789_ : QytetarNidJ557TestBase
 
         Log("Assert te dhenat e aplikantit");
         IWebElement NrIdentifikimit = wait.Until(ExpectedConditions.ElementIsVisible(By.XPath("/html/body/div/main/div[3]/div/div/div/div/form/div/div[4]/input")));
-        Assert.That(NrIdentifikimit.GetAttribute("value").Trim(), Is.EqualTo(Settings.Qytetar.Username));
+        Assert.That(NrIdentifikimit.GetAttribute("value").Trim(), Is.EqualTo(CitizenNid));
 
         IWebElement Emri = wait.Until(ExpectedConditions.ElementIsVisible(By.XPath("/html/body/div/main/div[3]/div/div/div/div/form/div/div[1]/input")));
         Assert.That(Emri.GetAttribute("value").Trim(), Is.EqualTo("Ketjona"));

@@ -4,18 +4,17 @@ namespace AKSHI.Test.Tests.Qytetar.DPSHTRR_AMS;
 
 [Category("DPSHTRR-AMS")]
 [Category("13786")]
-public class _13786_ : QytetarNidJ557TestBase
+public class _13786_ : QytetarNidJ257TestBase
 {
     protected override string ServiceCode => "13786";
     protected override string? ServiceTitle => "RinovimCKP";
     protected override ServiceStartMode StartMode => ServiceStartMode.NewApplication;
+    protected override bool StartServiceOnSetup => false;
 
     [Test]
     public void RinovimCKP()
     {
-
-
-
+        OpenNewApplicationFromServicePage();
 
         Thread.Sleep(4000);
 
@@ -35,7 +34,7 @@ public class _13786_ : QytetarNidJ557TestBase
 
         Log("Assert te dhenat e aplikantit");
         IWebElement NrIdentifikimit = wait.Until(ExpectedConditions.ElementIsVisible(By.Id("nid")));
-        Assert.That(NrIdentifikimit.GetAttribute("value").Trim(), Is.EqualTo(Settings.Qytetar.Username));
+        Assert.That(NrIdentifikimit.GetAttribute("value").Trim(), Is.EqualTo(CitizenNid));
 
         IWebElement Emri = wait.Until(ExpectedConditions.ElementIsVisible(By.Id("name")));
         Assert.That(Emri.GetAttribute("value").Trim(), Is.EqualTo("Ketjona"));

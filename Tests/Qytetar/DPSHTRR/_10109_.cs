@@ -9,11 +9,12 @@ public class _10109_ : QytetarNidJ257TestBase
     protected override string ServiceCode => "10109";
     protected override string? ServiceTitle => "Ndryshim_Gjeneralitetesh";
     protected override ServiceStartMode StartMode => ServiceStartMode.NewApplication;
+    protected override bool StartServiceOnSetup => false;
 
     [Test]
     public void Ndryshim_Gjeneralitetesh()
     {
-
+        OpenNewApplicationFromServicePage();
 
 string titleXpath = "/html/body/div/main/div[3]/div/div/div/div/h4";
 

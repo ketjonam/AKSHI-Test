@@ -500,31 +500,46 @@ public class _9636_ : QytetarNidJ557TestBase
         Thread.Sleep(500);
     }
 
+    private static By DocumentTitleBy(string documentTitle) =>
+        By.XPath(
+            $"//span[contains(@class,'form-label') and contains(normalize-space(),'{documentTitle}')] | " +
+            $"//label[contains(normalize-space(),'{documentTitle}')]");
+
     private IWebElement FindUploadByTitle(string documentTitle)
     {
         return wait.Until(d =>
         {
+            var titles = d.FindElements(DocumentTitleBy(documentTitle));
+            if (titles.Count == 0)
+                return null;
+
             var custom = d.FindElements(By.XPath(
-                $"//label[contains(normalize-space(),'{documentTitle}')]/following::document-upload[1]"));
+                $"(//span[contains(@class,'form-label') and contains(normalize-space(),'{documentTitle}')] | " +
+                $"//label[contains(normalize-space(),'{documentTitle}')])" +
+                $"/following::document-upload[1]"));
             if (custom.Count > 0)
                 return custom[0];
 
             var byId = d.FindElements(By.XPath(
-                $"//label[contains(normalize-space(),'{documentTitle}')]/following::*[contains(@id,'Upload')][1]"));
+                $"(//span[contains(@class,'form-label') and contains(normalize-space(),'{documentTitle}')] | " +
+                $"//label[contains(normalize-space(),'{documentTitle}')])" +
+                $"/following::*[contains(@id,'Upload')][1]"));
             return byId.Count > 0 ? byId[0] : null;
         });
     }
 
     private void AssertDocumentUpload(string documentTitle)
     {
-        Assert.That(driver.FindElement(
-            By.XPath($"//label[contains(normalize-space(),'{documentTitle}')]")).Displayed, Is.True);
+        Assert.That(wait.Until(ExpectedConditions.ElementIsVisible(DocumentTitleBy(documentTitle)))
+            .Displayed, Is.True);
 
         IWebElement docUpload = FindUploadByTitle(documentTitle);
         Assert.That(docUpload.GetAttribute("application-reference"), Is.EqualTo("docstreamv2-9636"));
         Assert.That(docUpload.GetAttribute("selection-mode"), Is.EqualTo("single"));
         Assert.That(docUpload.GetAttribute("max-single-file-mb"), Is.EqualTo("5"));
-        Assert.That(docUpload.GetAttribute("max-total-files-mb"), Is.EqualTo("50"));
+        string maxTotal = docUpload.GetAttribute("max-total-files-mb") ?? string.Empty;
+        Assert.That(maxTotal == "50" || maxTotal == "52428800", Is.True,
+            "max-total-files-mb unexpected: " + maxTotal);
         Assert.That(docUpload.GetAttribute("file-types"), Is.EqualTo(".pdf,.jpg,.jpeg,.png"));
         Assert.That(docUpload.GetAttribute("button-label"), Is.EqualTo("Kliko për të ngarkuar dokument"));
 

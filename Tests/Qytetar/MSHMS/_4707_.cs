@@ -9,6 +9,7 @@ public class _4707_ : QytetarNidF602TestBase
     protected override string ServiceCode => "4707";
     protected override string? ServiceTitle => "ListaBarnaveTeRimbursueshme";
     protected override ServiceStartMode StartMode => ServiceStartMode.NewApplication;
+    protected override bool StartServiceOnSetup => false;
 
     [Test]
     public void ListaBarnaveTeRimbursueshme()

@@ -4,18 +4,17 @@ namespace AKSHI.Test.Tests.Qytetar.DPSHTRR_AMS;
 
 [Category("DPSHTRR-AMS")]
 [Category("10095")]
-public class _10095_ : QytetarNidJ557TestBase
+public class _10095_ : QytetarNidJ257TestBase
 {
     protected override string ServiceCode => "10095";
     protected override string? ServiceTitle => "PajisjemeCKP";
     protected override ServiceStartMode StartMode => ServiceStartMode.NewApplication;
+    protected override bool StartServiceOnSetup => false;
 
     [Test]
     public void PajisjemeCKP()
     {
-
-
-
+        OpenNewApplicationFromServicePage();
 
         Thread.Sleep(4000);
 
@@ -25,7 +24,7 @@ public class _10095_ : QytetarNidJ557TestBase
 
         Log("Assert te dhenat e aplikantit");
         IWebElement NrIdentifikimit = wait.Until(ExpectedConditions.ElementIsVisible(By.XPath("/html/body/div/main/div[3]/div/div/div/div/form/div/div[1]/input")));
-        Assert.That(NrIdentifikimit.GetAttribute("value").Trim(), Is.EqualTo(Settings.Qytetar.Username));
+        Assert.That(NrIdentifikimit.GetAttribute("value").Trim(), Is.EqualTo(CitizenNid));
 
         IWebElement Emri = wait.Until(ExpectedConditions.ElementIsVisible(By.XPath("/html/body/div/main/div[3]/div/div/div/div/form/div/div[3]/input")));
         Assert.That(Emri.GetAttribute("value").Trim(), Is.EqualTo("Ketjona"));

@@ -9,13 +9,12 @@ public class _5023_ : QytetarNidJ557TestBase
     protected override string ServiceCode => "5023";
     protected override string? ServiceTitle => "AplikimPensioniFunksioneKushtetuese";
     protected override ServiceStartMode StartMode => ServiceStartMode.NewApplication;
+    protected override bool StartServiceOnSetup => false;
 
     [Test]
     public void AplikimPensioniFunksioneKushtetuese()
     {
-
-
-
+        OpenNewApplicationFromServicePage();
 
         Log("Assert Title");
         IWebElement Step1Title = wait.Until(ExpectedConditions.ElementIsVisible(

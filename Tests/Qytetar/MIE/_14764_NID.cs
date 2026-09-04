@@ -9,11 +9,12 @@ public class _14764_NID : QytetarNidJ557TestBase
     protected override string ServiceCode => "14764";
     protected override string? ServiceTitle => "_14764_NID_AplikimiRI";
     protected override ServiceStartMode StartMode => ServiceStartMode.NewApplication;
+    protected override bool StartServiceOnSetup => false;
 
     [Test]
     public void _14764_NID_AplikimiRI()
     {
-
+        OpenNewApplicationFromServicePage();
 
                 Log("Të dhënat e preventivit");
                 IWebElement DetajetePreventivit = wait.Until(

@@ -9,6 +9,7 @@ public class _4701_ : QytetarNidF602TestBase
     protected override string ServiceCode => "4435";
     protected override string? ServiceTitle => "KontrolliMjekesorBaze";
     protected override ServiceStartMode StartMode => ServiceStartMode.NewApplication;
+    protected override bool StartServiceOnSetup => false;
 
     [Test]
     public void KontrolliMjekesorBaze()

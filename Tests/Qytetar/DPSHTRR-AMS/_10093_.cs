@@ -4,18 +4,17 @@ namespace AKSHI.Test.Tests.Qytetar.DPSHTRR_AMS;
 
 [Category("DPSHTRR-AMS")]
 [Category("10093")]
-public class _10093_ : QytetarNidJ557TestBase
+public class _10093_ : QytetarNidJ257TestBase
 {
     protected override string ServiceCode => "10093";
     protected override string? ServiceTitle => "RipajisjeDAPperMakineriteeRenda";
     protected override ServiceStartMode StartMode => ServiceStartMode.NewApplication;
+    protected override bool StartServiceOnSetup => false;
 
     [Test]
     public void RipajisjeDAPperMakineriteeRenda()
     {
-
-
-
+        OpenNewApplicationFromServicePage();
 
         Thread.Sleep(4000);
 
@@ -25,7 +24,7 @@ public class _10093_ : QytetarNidJ557TestBase
 
         Log("Assert te dhenat e aplikantit");
         IWebElement NrIdentifikimit = wait.Until(ExpectedConditions.ElementIsVisible(By.Name("nid")));
-        Assert.That(NrIdentifikimit.GetAttribute("value").Trim(), Is.EqualTo(Settings.Qytetar.Username));
+        Assert.That(NrIdentifikimit.GetAttribute("value").Trim(), Is.EqualTo(CitizenNid));
 
         IWebElement Emri = wait.Until(ExpectedConditions.ElementIsVisible(By.Name("emri")));
         Assert.That(Emri.GetAttribute("value").Trim(), Is.EqualTo("Ketjona"));

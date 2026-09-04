@@ -41,7 +41,12 @@ public static class CommandScript
         if (commands.Run.Count == 0)
             return null;
 
-        return string.Join("|", commands.Run.Select(ToFilterClause));
+        string include = string.Join("|", commands.Run.Select(ToFilterClause));
+        if (commands.Skip.Count == 0)
+            return include;
+
+        string exclude = string.Join("|", commands.Skip.Select(ToFilterClause));
+        return $"({include})&!({exclude})";
     }
 
     public static bool ShouldRunTest(IEnumerable<string> names, CommandFilterSettings commands)
@@ -146,7 +151,8 @@ public static class CommandScript
 
     private static bool IsTestSelector(string target) =>
         target.Contains('.')
-        || target.StartsWith("tests", StringComparison.OrdinalIgnoreCase);
+        || target.StartsWith("tests", StringComparison.OrdinalIgnoreCase)
+        || target.All(char.IsDigit);
 
     private static string StripComment(string line)
     {

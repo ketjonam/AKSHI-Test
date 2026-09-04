@@ -4,7 +4,7 @@ namespace AKSHI.Test.Tests.Qytetar.MSHMS;
 
 [Category("MSHMS")]
 [Category("15191")]
-public class _15191_ : QytetarNidJ557TestBase
+public class _15191_ : QytetarNidF602TestBase
 {
     protected override string ServiceCode => "15191";
     protected override string? ServiceTitle => "NenaMeShumeFemije";
@@ -24,7 +24,7 @@ public class _15191_ : QytetarNidJ557TestBase
 
         Log("Assert te dhenat e aplikantit");
         IWebElement NID = wait.Until(ExpectedConditions.ElementIsVisible(By.Id("nid")));
-        Assert.That(NID.GetAttribute("value").Trim(), Is.EqualTo(Settings.Qytetar.Username));
+        Assert.That(NID.GetAttribute("value").Trim(), Is.EqualTo(CitizenNid));
         IWebElement Emri = wait.Until(ExpectedConditions.ElementIsVisible(By.Id("emri")));
         Assert.That(Emri.GetAttribute("value").Trim(), Is.EqualTo("Ketjona"));
         IWebElement Atesia = wait.Until(ExpectedConditions.ElementIsVisible(By.Id("atesia")));

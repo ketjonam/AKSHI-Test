@@ -195,7 +195,8 @@ public sealed class WebEl : ISearchContext
     }
 
     public string TagName =>
-        (PwSync.Run(() => Locator.EvaluateAsync<string>("el => el.tagName")) ?? string.Empty);
+        (PwSync.Run(() => Locator.EvaluateAsync<string>("el => el.tagName")) ?? string.Empty)
+            .ToLowerInvariant();
 
     public ISearchContext GetShadowRoot() => this;
 
@@ -385,10 +386,24 @@ public sealed class SelectElement
 
     public List<WebEl> Options => _element.FindElements(By.CssSelector("option"));
 
-    public WebEl SelectedOption =>
-        Options.FirstOrDefault(o => string.Equals(o.GetAttribute("selected"), "true", StringComparison.OrdinalIgnoreCase)
-                                    || string.Equals(o.GetAttribute("selected"), "selected", StringComparison.OrdinalIgnoreCase))
-        ?? Options.First();
+    public WebEl SelectedOption
+    {
+        get
+        {
+            List<WebEl> options = Options;
+            if (options.Count == 0)
+                throw new NoSuchElementException("Select has no options.");
+
+            // React/controlled selects often update select.value without a selected attribute.
+            string current = _element.GetAttribute("value") ?? string.Empty;
+            WebEl? byValue = options.FirstOrDefault(o =>
+                string.Equals(o.GetAttribute("value") ?? string.Empty, current, StringComparison.Ordinal));
+            if (byValue is not null)
+                return byValue;
+
+            return options.FirstOrDefault(o => o.Selected) ?? options.First();
+        }
+    }
 
     public void SelectByValue(string value) =>
         PwSync.Run(() => _element.Locator.SelectOptionAsync(new SelectOptionValue { Value = value }));

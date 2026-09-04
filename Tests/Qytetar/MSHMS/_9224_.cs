@@ -4,7 +4,7 @@ namespace AKSHI.Test.Tests.Qytetar.MSHMS;
 
 [Category("MSHMS")]
 [Category("9224")]
-public class _9224_ : QytetarNidJ557TestBase
+public class _9224_ : QytetarNidF602TestBase
 {
     protected override string ServiceCode => "9224";
     protected override string? ServiceTitle => "KartaShendetitPerFemije";

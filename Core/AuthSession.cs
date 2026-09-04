@@ -70,8 +70,8 @@ public static class AuthSession
         if (string.IsNullOrWhiteSpace(account.Username) || string.IsNullOrWhiteSpace(account.Password))
         {
             Assert.Fail(
-                $"Kredencialet e qytetarit mungojne per {profile} ({account.Username}). " +
-                "Vendos Username / Password ne appsettings.Local.json.");
+                $"Kredencialet mungojne per {profile} ({account.Username}). " +
+                "Vendos Username / Password ne appsettings.json ose appsettings.Local.json.");
         }
 
         TestContext.Progress.WriteLine(

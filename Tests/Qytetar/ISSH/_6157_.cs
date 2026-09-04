@@ -14,7 +14,7 @@ public class _6157_ : QytetarNidJ557TestBase
     [Test]
     public void AplikimPensionInvaliditetiSuplementar()
     {
-        OpenNewApplicationFromServicePage();
+        OpenNewApplicationFromServicePage("Aplikim për pension invaliditeti (KMCAP)");
 
         Log("Assert Title");
         IWebElement Step1Title = wait.Until(ExpectedConditions.ElementIsVisible(
@@ -1074,42 +1074,4 @@ public class _6157_ : QytetarNidJ557TestBase
             Is.EqualTo("Formatet e lejuara: DOC, DOCX, TXT, PDF, BMP, GIF, PNG, JPG, JPEG. Madhesia maksimale: 5MB."));
     }
 
-    private void OpenNewApplicationFromServicePage()
-    {
-        Log("Assert page header");
-        IWebElement headerContainer = wait.Until(ExpectedConditions.ElementIsVisible(
-            By.CssSelector("div.page-header-container")));
-        Assert.That(headerContainer.Displayed, Is.True, "Page header nuk eshte visible");
-
-        IWebElement serviceName = wait.Until(ExpectedConditions.ElementIsVisible(
-            By.Id("serviceNameBreadcrumb")));
-        Assert.That(serviceName.Displayed, Is.True, "Breadcrumb i sherbimit nuk eshte visible");
-        Assert.That(serviceName.Text.Trim(),
-            Is.EqualTo("Aplikim për pension invaliditeti (KMCAP)"),
-            "Emri i sherbimit nuk eshte i sakte");
-
-        Log("Scroll deri sa butoni Perdor te jete i dukshem");
-        By perdorLocator = By.CssSelector("button.use-service-button");
-        IWebElement perdorBtn = wait.Until(ExpectedConditions.ElementExists(perdorLocator));
-        ((IJavaScriptExecutor)driver).ExecuteScript(
-            "arguments[0].scrollIntoView({block:'center', inline:'nearest'});",
-            perdorBtn);
-        Thread.Sleep(500);
-        perdorBtn = wait.Until(ExpectedConditions.ElementToBeClickable(perdorLocator));
-        Assert.That(perdorBtn.Displayed, Is.True, "Butoni Perdor nuk eshte visible per tu klikuar");
-
-        Log("Kliko butonin Perdor");
-        SafeClick(perdorLocator);
-
-        Log("Kliko Aplikim i ri");
-        By aplikimIRiLocator = By.XPath(
-            "//div[contains(@class,'mbx-content') and @role='button'][.//h6[contains(@class,'mbx-title') and normalize-space()='Aplikim i ri']]");
-        IWebElement aplikimIRi = wait.Until(ExpectedConditions.ElementIsVisible(aplikimIRiLocator));
-        Assert.That(aplikimIRi.Displayed, Is.True, "Karta Aplikim i ri nuk eshte visible");
-        IWebElement aplikimIRiTitle = aplikimIRi.FindElement(By.CssSelector("h6.mbx-title"));
-        Assert.That(aplikimIRiTitle.Text.Trim(), Is.EqualTo("Aplikim i ri"),
-            "Titulli i kartes nuk eshte Aplikim i ri");
-        SafeClick(aplikimIRiLocator);
-        Thread.Sleep(1500);
-    }
 }

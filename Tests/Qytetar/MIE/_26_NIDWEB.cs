@@ -9,15 +9,12 @@ public class _26_NIDWEB : QytetarNidJ557TestBase
     protected override string ServiceCode => "26";
     protected override string? ServiceTitle => "_26_Individ";
     protected override ServiceStartMode StartMode => ServiceStartMode.NewApplication;
+    protected override bool StartServiceOnSetup => false;
 
     [Test]
     public void _26_Individ()
     {
-
-        
-
-        Log("Click Aplikimi i Ri");
-        SafeClick(By.XPath("//button[@aria-label='Aplikim i ri']"));
+        OpenNewApplicationFromServicePage();
 
         Log("Assert Step1 Title");
         IWebElement step1Title = wait.Until(

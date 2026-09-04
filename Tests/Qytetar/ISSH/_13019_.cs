@@ -4,18 +4,17 @@ namespace AKSHI.Test.Tests.Qytetar.ISSH;
 
 [Category("ISSH")]
 [Category("13019")]
-public class _13019_ : QytetarNidJ557TestBase
+public class _13019_ : QytetarNidF602TestBase
 {
     protected override string ServiceCode => "13019";
     protected override string? ServiceTitle => "KonfirmimKreditimiLlogarie";
     protected override ServiceStartMode StartMode => ServiceStartMode.NewApplication;
+    protected override bool StartServiceOnSetup => false;
 
     [Test]
     public void KonfirmimKreditimiLlogarie()
     {
-
-
-
+        OpenNewApplicationFromServicePage();
 
         Log("Assert Title");
         IWebElement Step1Title = wait.Until(ExpectedConditions.ElementIsVisible(

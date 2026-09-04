@@ -430,6 +430,16 @@
         "sourceFile":  "DPSHTRR\\_10100.cs"
     },
     {
+        "code":  "10102",
+        "title":  "Ndryshim_Gjeneralitetesh",
+        "institution":  "DPSHTRR",
+        "profileType":  "Individual",
+        "loginProfile":  "Qytetar",
+        "search":  "10102",
+        "startMode":  "NewApplication",
+        "sourceFile":  "DPSHTRR\\_10102_.cs"
+    },
+    {
         "code":  "10109",
         "title":  "Ndryshim_Gjeneralitetesh",
         "institution":  "DPSHTRR",
@@ -1306,7 +1316,7 @@
         "profileType":  "Organisation",
         "loginProfile":  "Biznes",
         "search":  "11143",
-        "startMode":  "Track",
+        "startMode":  "NewApplication",
         "sourceFile":  "MIE\\_11143_BiznesWEB.cs"
     },
     {
@@ -1361,16 +1371,6 @@
     },
     {
         "code":  "9286",
-        "title":  "GjurmoAplikim9286",
-        "institution":  "MIE",
-        "profileType":  "Individual",
-        "loginProfile":  "Qytetar",
-        "search":  "9286",
-        "startMode":  "Track",
-        "sourceFile":  "MIE\\Gjurmimi_9286.cs"
-    },
-    {
-        "code":  "9286",
         "title":  "Aplikim_i_Ri_9286",
         "institution":  "MIE",
         "profileType":  "Individual",
@@ -1390,16 +1390,6 @@
         "sourceFile":  "MIE\\NIDWeb_9287.cs"
     },
     {
-        "code":  "9287",
-        "title":  "GjurmoAplikim9287",
-        "institution":  "MIE",
-        "profileType":  "Individual",
-        "loginProfile":  "Qytetar",
-        "search":  "9287",
-        "startMode":  "Track",
-        "sourceFile":  "MIE\\Gjurmimi_9287.cs"
-    },
-    {
         "code":  "9288",
         "title":  "Aplikim_i_Ri_Biznes_9288",
         "institution":  "MIE",
@@ -1408,16 +1398,6 @@
         "search":  "9288",
         "startMode":  "NewApplication",
         "sourceFile":  "MIE\\NIPTWeb_9288.cs"
-    },
-    {
-        "code":  "9288",
-        "title":  "GjurmoAplikim9288",
-        "institution":  "MIE",
-        "profileType":  "Organisation",
-        "loginProfile":  "Biznes",
-        "search":  "9288",
-        "startMode":  "Track",
-        "sourceFile":  "MIE\\Gjurmimi_9288.cs"
     },
     {
         "code":  "9291",

@@ -9,6 +9,7 @@ public class _10112_ : QytetarNidJ257TestBase
     protected override string ServiceCode => "10112";
     protected override string? ServiceTitle => "Rrimarrje_Leje_Drejtimi";
     protected override ServiceStartMode StartMode => ServiceStartMode.NewApplication;
+    protected override bool StartServiceOnSetup => false;
 
     [Test]
     public void Rrimarrje_Leje_Drejtimi()
@@ -17,6 +18,8 @@ public class _10112_ : QytetarNidJ257TestBase
 
 
 
+
+        OpenNewApplicationFromServicePage();
 
         Log("Assert Step 1 Title");
         IWebElement step2Title = wait.Until(ExpectedConditions.ElementIsVisible(By.XPath("/html/body/div/main/div[3]/div/div/div/div/h4")));

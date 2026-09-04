@@ -33,6 +33,7 @@ public abstract class QytetarNidF602TestBase : QytetarTestBase
 [Category("Biznes")]
 [Category("Organisation")]
 [NonParallelizable]
+[Timeout(900000)]
 public abstract class BiznesTestBase : AkshiTestBase
 {
     protected override LoginProfile Profile => LoginProfile.Biznes;

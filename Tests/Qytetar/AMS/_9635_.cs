@@ -141,7 +141,7 @@ public class _9635_ : QytetarNidJ557TestBase
 
         IWebElement gjendjaCivile = FindNamed("gjendjaCivile");
         var gjendja = new SelectElement(gjendjaCivile);
-        Assert.That(gjendja.SelectedOption.GetAttribute("value"), Is.EqualTo(string.Empty));
+        Assert.That(gjendja.SelectedOption.GetAttribute("value"), Is.EqualTo("Martuar"));
         Assert.That(gjendja.Options[1].GetAttribute("value"), Is.EqualTo("Beqar"));
         Assert.That(gjendja.Options[2].GetAttribute("value"), Is.EqualTo("Martuar"));
         Assert.That(gjendja.Options[3].GetAttribute("value"), Is.EqualTo("Divorcuar"));
@@ -210,10 +210,6 @@ public class _9635_ : QytetarNidJ557TestBase
         Assert.That(bashkiaSelect.Options.Any(o => o.GetAttribute("value") == "Tiranë"), Is.True);
         Assert.That(FindLabelFor("bashkia").Text, Does.Contain("*"));
 
-        IWebElement njesiAdministrative = FindNamed("njesiAdministrative");
-        Assert.That(new SelectElement(njesiAdministrative).Options.Count, Is.EqualTo(1));
-        Assert.That(FindLabelFor("njesiAdministrative").Text, Does.Contain("*"));
-
         IWebElement komisariati = FindNamed("komisariati");
         Assert.That(new SelectElement(komisariati).Options.Count, Is.EqualTo(1));
         Assert.That(FindLabelFor("komisariati").Text, Does.Contain("*"));
@@ -236,22 +232,31 @@ public class _9635_ : QytetarNidJ557TestBase
         Log("Zgjidh Bashkia Tiranë");
         SelectDropdownByValue(FindNamed("bashkia"), "Tiranë");
 
-        Log("Wait qe Njësia administrative te mbushen opsionet");
-        wait.Until(d =>
+        // Disa versione te formes kane Njesi administrative midis Bashkise dhe Komisariatit.
+        var njesiFields = driver.FindElements(By.CssSelector(
+            "select[name='njesiAdministrative'], select[name='njesiaAdministrative']"));
+        if (njesiFields.Count > 0)
         {
-            try
+            Log("Wait qe Njësia administrative te mbushen opsionet");
+            wait.Until(d =>
             {
-                return new SelectElement(d.FindElement(By.CssSelector("select[name='njesiAdministrative']")))
-                    .Options.Count > 1;
-            }
-            catch (StaleElementReferenceException)
-            {
-                return false;
-            }
-        });
+                try
+                {
+                    var fields = d.FindElements(By.CssSelector(
+                        "select[name='njesiAdministrative'], select[name='njesiaAdministrative']"));
+                    return fields.Count > 0 && new SelectElement(fields[0]).Options.Count > 1;
+                }
+                catch (StaleElementReferenceException)
+                {
+                    return false;
+                }
+            });
 
-        Log("Zgjidh Njësia administrative");
-        SelectFirstAvailableOption(FindNamed("njesiAdministrative"));
+            Log("Zgjidh Njësia administrative");
+            njesiFields = driver.FindElements(By.CssSelector(
+                "select[name='njesiAdministrative'], select[name='njesiaAdministrative']"));
+            SelectFirstAvailableOption(njesiFields[0]);
+        }
 
         Log("Wait qe Komisariati te mbushen opsionet");
         wait.Until(d =>

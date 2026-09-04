@@ -9,185 +9,149 @@ public class _5016_ : QytetarNidJ257TestBase
     protected override string ServiceCode => "5016";
     protected override string? ServiceTitle => "GjendjaAktiveeMjetit";
     protected override ServiceStartMode StartMode => ServiceStartMode.NewApplication;
+    protected override bool StartServiceOnSetup => false;
+
+    private const string ExpectedServiceName = "Konfirmim për gjendjen aktive të mjetit";
+    private const string ExpectedTitle = "Lista e automjeteve në zotërim";
+    private const string ExpectedTarga = "AB838HR";
+
+    private static readonly string[] ExpectedVehicleHeaders =
+    {
+        "Zgjidh",
+        "Targa",
+        "Shasia",
+        "Lloji",
+        "Marka",
+        "Modeli",
+        "Tipi",
+        "Ngjyra",
+        "Lënda Djegëse",
+        "Viti i Prodhimit",
+        "Gomat",
+        "Dyer",
+        "Vende",
+        "Nr.Serial i deklaratës së shitjes",
+        "Nr.kontratës deklaratës së shitjes"
+    };
+
+    private static readonly string[] ExpectedVehicleValues =
+    {
+        "Zgjidh",
+        ExpectedTarga,
+        "WDD2040071A106224",
+        "Autoveturë",
+        "DAIMLER CHRYSLER",
+        "C 200 CDI",
+        "204007",
+        "Zezë",
+        "Naftë",
+        "2007",
+        "225/45R17",
+        "4",
+        "5",
+        "",
+        ""
+    };
+
+    private static readonly string[] ExpectedStatusHeaders =
+    {
+        "Kartela",
+        "Data e lejes",
+        "Statusi i mjetit"
+    };
+
+    private static readonly string[] ExpectedStatusValues =
+    {
+        "ELD00788422",
+        "11.10.2022",
+        ""
+    };
 
     [Test]
     public void GjendjaAktiveeMjetit()
     {
+        OpenNewApplicationFromServicePage();
 
+        Log("Assert kohëzgjatja");
+        IWebElement durationBtn = wait.Until(ExpectedConditions.ElementIsVisible(
+            By.CssSelector("button.ealb-btn-5minutes")));
+        Assert.That(durationBtn.Text.Trim(), Does.Contain("1 minut kohëzgjatje"));
 
-string titleXpath = "/html/body/div/main/div[3]/div/div/div/div/h4";
-
-        
+        Log("Assert nje hap aktiv");
+        var steps = driver.FindElements(By.CssSelector(".ealb-step"));
+        Assert.That(steps.Count, Is.EqualTo(1));
+        Assert.That(steps[0].GetAttribute("class"), Does.Contain("active"));
+        Assert.That(steps[0].GetAttribute("class"), Does.Contain("no-click"));
 
         Log("Assert Title");
-        IWebElement titleElement = wait.Until(ExpectedConditions.ElementIsVisible(By.XPath(titleXpath)));
-        Log("Title text: " + titleElement.Text.Trim());
+        IWebElement titleElement = wait.Until(ExpectedConditions.ElementIsVisible(
+            By.XPath($"//h4[contains(@class,'text-uppercase') and contains(.,'{ExpectedTitle}')]")));
         Assert.That(titleElement.Displayed, Is.True, "Titulli nuk eshte visible");
+        Assert.That(titleElement.Text.Trim(), Is.EqualTo(ExpectedTitle), "Titulli nuk eshte i sakte");
 
+        Log("Wait qe te dhenat e tabeles te ngarkohen");
+        IWebElement vehicleTable = WaitForTableByHeader("Targa");
+        AssertTableHeaders(vehicleTable, ExpectedVehicleHeaders);
+
+        Log("Assert rreshtin e automjetit");
+        IWebElement vehicleRow = WaitForDataRow("Targa", ExpectedTarga, columnIndex: 1);
+        AssertTableRow(vehicleRow, ExpectedVehicleValues);
+
+        Log("Assert butoni Kthehu");
+        IWebElement backBtn = wait.Until(ExpectedConditions.ElementIsVisible(
+            By.CssSelector("button.ealb-btn-back")));
+        Assert.That(backBtn.Displayed, Is.True, "Butoni Kthehu nuk eshte visible");
+        Assert.That(backBtn.Text.Trim(), Is.EqualTo("Kthehu"));
 
         Log("Zgjidh automjetin");
-        driver.FindElement(By.XPath("/html/body/div/main/div[3]/div/div/div/div/div[2]/div[1]/div/div[1]/div/table/tbody/tr/td[1]/button")).Click();
+        SafeClick(By.XPath("//table[.//th[normalize-space()='Targa']]//button[normalize-space()='Zgjidh']"));
 
         Log("Assert gjendja e mjetit");
-
         IWebElement gjendjaSection = wait.Until(ExpectedConditions.ElementIsVisible(
-            By.XPath("//div[@class='mt-5' and .//h6[contains(.,'Gjendja e mjetit me targë:')]]")
-        ));
-
+            By.XPath("//div[contains(@class,'mt-5') and .//h6[contains(.,'Gjendja e mjetit me targë:')]]")));
         ((IJavaScriptExecutor)driver).ExecuteScript(
             "arguments[0].scrollIntoView({block:'center'});",
-            gjendjaSection
-        );
-
-        Thread.Sleep(500);
+            gjendjaSection);
 
         Log("Assert titulli i seksionit");
+        IWebElement titulliSeksionit = wait.Until(ExpectedConditions.ElementIsVisible(
+            By.XPath("//h6[contains(.,'Gjendja e mjetit me targë:')]")));
+        Log("Title text: " + titulliSeksionit.Text.Trim());
+        Assert.That(titulliSeksionit.Text.Trim(), Does.Contain("Gjendja e mjetit me targë:"));
+        Assert.That(titulliSeksionit.Text.Trim(), Does.Contain(ExpectedTarga));
 
-        IWebElement TitulliSeksionit = wait.Until(ExpectedConditions.ElementIsVisible(
-            By.XPath("//div[@class='mt-5' and .//h6[contains(.,'Gjendja e mjetit me targë:')]]//h6[contains(.,'Gjendja e mjetit me targë:')]")
-        ));
+        Log("Assert tabelen e gjendjes");
+        IWebElement statusTable = WaitForTableByHeader("Kartela");
+        AssertTableHeaders(statusTable, ExpectedStatusHeaders);
+        IWebElement statusRow = WaitForDataRow("Kartela", ExpectedStatusValues[0], columnIndex: 0);
+        AssertTableRow(statusRow, ExpectedStatusValues);
 
-        ((IJavaScriptExecutor)driver).ExecuteScript(
-            "arguments[0].scrollIntoView({block:'center'});",
-            TitulliSeksionit
-        );
-
-        Thread.Sleep(500);
-
-        Log("Title text: " + TitulliSeksionit.Text.Trim());
-        Assert.That(TitulliSeksionit.Text.Trim(), Does.Contain("Gjendja e mjetit me targë:"));
-        Assert.That(TitulliSeksionit.Text.Trim(), Does.Contain("AB166DP"));
-
-        Log("Assert header row");
-        IWebElement headerRow = wait.Until(ExpectedConditions.ElementIsVisible(
-            By.XPath("//div[@class='mt-5' and .//h6[contains(.,'Gjendja e mjetit me targë:')]]//table/thead/tr")
-        ));
-
-        ((IJavaScriptExecutor)driver).ExecuteScript(
-            "arguments[0].scrollIntoView({block:'center'});",
-            headerRow
-        );
-
-        Thread.Sleep(500);
-
-        var headerCells = headerRow.FindElements(By.XPath("./th"));
-
-        string[] expectedHeaders = new string[]
-        {
-    "Kartela",
-    "Data e lejes",
-    "Statusi i mjetit"
-        };
-
-        Log($"Numri i header cells: {headerCells.Count}");
-        Assert.That(headerCells.Count, Is.EqualTo(expectedHeaders.Length),
-            $"Numri i header-ave nuk përputhet. Actual: {headerCells.Count}, Expected: {expectedHeaders.Length}");
-
-        for (int i = 0; i < expectedHeaders.Length; i++)
-        {
-            string actual = headerCells[i].Text.Trim();
-            string expected = expectedHeaders[i];
-
-            Log($"Header[{i}] -> Actual: '{actual}' | Expected: '{expected}'");
-            Assert.That(actual, Is.EqualTo(expected), $"Header mismatch në kolonën {i}");
-        }
-
-        Log("Assert data row");
-        IWebElement dataRow = wait.Until(ExpectedConditions.ElementIsVisible(
-            By.XPath("//div[@class='mt-5' and .//h6[contains(.,'Gjendja e mjetit me targë:')]]//table/tbody/tr")
-        ));
-
-        ((IJavaScriptExecutor)driver).ExecuteScript(
-            "arguments[0].scrollIntoView({block:'center'});",
-            dataRow
-        );
-
-        Thread.Sleep(500);
-
-        var dataCells = dataRow.FindElements(By.XPath("./td"));
-
-        string[] expectedRow = new string[]
-        {
-    "DRD00857221",
-    "17.06.2021",
-    ""
-        };
-
-        Log($"Numri i data cells: {dataCells.Count}");
-        Assert.That(dataCells.Count, Is.EqualTo(expectedRow.Length),
-            $"Numri i kolonave nuk përputhet. Actual: {dataCells.Count}, Expected: {expectedRow.Length}");
-
-        for (int i = 0; i < expectedRow.Length; i++)
-        {
-            string actual = dataCells[i].Text.Trim();
-            string expected = expectedRow[i];
-
-            Log($"Cell[{i}] -> Actual: '{actual}' | Expected: '{expected}'");
-            Assert.That(actual, Is.EqualTo(expected), $"Cell mismatch në kolonën {i}");
-        }
+        Log("Assert 'Të dhëna të tjera'");
+        IWebElement otherDataTitle = wait.Until(ExpectedConditions.ElementIsVisible(
+            By.XPath("//h6[contains(.,'Të dhëna të tjera')]")));
+        Assert.That(otherDataTitle.Text.Trim(), Is.EqualTo("Të dhëna të tjera"));
 
         Log("Assert 'Gjendje e TVMP'");
-        IWebElement tvmpStatus = wait.Until(ExpectedConditions.ElementIsVisible(By.Id("tvmpStatus")));
-        ((IJavaScriptExecutor)driver).ExecuteScript(
-            "arguments[0].scrollIntoView({block:'center'});",
-            tvmpStatus
-        );
-        Thread.Sleep(300);
-        Log("tvmpStatus value: " + (tvmpStatus.GetAttribute("value") ?? ""));
-        Assert.That(tvmpStatus.GetAttribute("value") ?? "", Is.EqualTo("Mjeti nuk ka detyrime ne taksa"));
+        AssertDisabledInput("tvmpStatus", "Mjeti nuk ka detyrime ne taksa");
 
         Log("Assert 'Gjendja e gjobës KTV'");
-        IWebElement ktvFine = wait.Until(ExpectedConditions.ElementIsVisible(By.Id("ktvFine")));
-        ((IJavaScriptExecutor)driver).ExecuteScript(
-            "arguments[0].scrollIntoView({block:'center'});",
-            ktvFine
-        );
-        Thread.Sleep(300);
-        Log("ktvFine value: " + (ktvFine.GetAttribute("value") ?? ""));
-        Assert.That(ktvFine.GetAttribute("value") ?? "", Is.EqualTo("Mjeti nuk ka detyrime ne gjoba"));
+        AssertDisabledInput("ktvFine", "Mjeti nuk ka detyrime ne gjoba");
 
         Log("Assert 'Gjendja e gjobave të kontrollit në rrugë'");
-        IWebElement roadFine = wait.Until(ExpectedConditions.ElementIsVisible(By.Id("roadFine")));
-        ((IJavaScriptExecutor)driver).ExecuteScript(
-            "arguments[0].scrollIntoView({block:'center'});",
-            roadFine
-        );
-        Thread.Sleep(300);
-        Log("roadFine value: " + (roadFine.GetAttribute("value") ?? ""));
-        Assert.That(roadFine.GetAttribute("value") ?? "", Is.EqualTo("Mjeti nuk ka detyrime ne gjoba"));
+        AssertDisabledInput("roadFine", "Mjeti nuk ka detyrime ne gjoba");
 
         Log("Assert 'Gjendja e dosjes'");
-        IWebElement fileStatus = wait.Until(ExpectedConditions.ElementIsVisible(By.Id("fileStatus")));
-        ((IJavaScriptExecutor)driver).ExecuteScript(
-            "arguments[0].scrollIntoView({block:'center'});",
-            fileStatus
-        );
-        Thread.Sleep(300);
-        Log("fileStatus value: " + (fileStatus.GetAttribute("value") ?? ""));
-        Assert.That(fileStatus.GetAttribute("value") ?? "", Is.EqualTo("Mjeti nuk ka bllokime"));
+        AssertDisabledInput("fileStatus", "Mjeti nuk ka bllokime");
 
         Log("Assert 'Statusi'");
-        IWebElement vehicleStatus = wait.Until(ExpectedConditions.ElementIsVisible(By.Id("vehicleStatus")));
-        ((IJavaScriptExecutor)driver).ExecuteScript(
-            "arguments[0].scrollIntoView({block:'center'});",
-            vehicleStatus
-        );
-        Thread.Sleep(300);
-        Log("vehicleStatus value: '" + (vehicleStatus.GetAttribute("value") ?? "") + "'");
-        Assert.That(vehicleStatus.GetAttribute("value") ?? "", Is.EqualTo(""));
+        AssertDisabledInput("vehicleStatus", "");
 
         Log("Assert butoni 'Shkarko dokumentin e vulosur'");
         IWebElement downloadButton = wait.Until(ExpectedConditions.ElementIsVisible(
-            By.XPath("//div[@class='mt-5' and .//h6[contains(.,'Gjendja e mjetit me targë:')]]//button[contains(.,'Shkarko dokumentin e vulosur')]")
-        ));
-
+            By.XPath("//button[contains(.,'Shkarko dokumentin e vulosur')]")));
         ((IJavaScriptExecutor)driver).ExecuteScript(
             "arguments[0].scrollIntoView({block:'center'});",
-            downloadButton
-        );
-
-        Thread.Sleep(500);
-
+            downloadButton);
         Log("Download button text: " + downloadButton.Text.Trim());
         Assert.That(downloadButton.Displayed, Is.True, "Butoni 'Shkarko dokumentin e vulosur' nuk eshte visible");
         Assert.That(downloadButton.Text.Trim(), Does.Contain("Shkarko dokumentin e vulosur"));
@@ -195,61 +159,146 @@ string titleXpath = "/html/body/div/main/div[3]/div/div/div/div/h4";
         Log("TEST PASSED");
     }
 
-    private void BlurActiveElement()
+    private void OpenNewApplicationFromServicePage()
     {
+        Log("Assert page header");
+        IWebElement headerContainer = wait.Until(ExpectedConditions.ElementIsVisible(
+            By.CssSelector("div.page-header-container")));
+        Assert.That(headerContainer.Displayed, Is.True, "Page header nuk eshte visible");
 
-        try
+        IWebElement serviceName = wait.Until(ExpectedConditions.ElementIsVisible(
+            By.Id("serviceNameBreadcrumb")));
+        Assert.That(serviceName.Displayed, Is.True, "Breadcrumb i sherbimit nuk eshte visible");
+        Assert.That(serviceName.Text.Replace('\u00A0', ' ').Trim(), Is.EqualTo(ExpectedServiceName),
+            "Emri i sherbimit nuk eshte i sakte");
+
+        Log("Scroll deri sa butoni Perdor te jete i dukshem");
+        By perdorLocator = By.CssSelector("button.use-service-button");
+        IWebElement perdorBtn = wait.Until(ExpectedConditions.ElementExists(perdorLocator));
+        ((IJavaScriptExecutor)driver).ExecuteScript(
+            "arguments[0].scrollIntoView({block:'center', inline:'nearest'});",
+            perdorBtn);
+        Thread.Sleep(500);
+        perdorBtn = wait.Until(ExpectedConditions.ElementToBeClickable(perdorLocator));
+        Assert.That(perdorBtn.Displayed, Is.True, "Butoni Perdor nuk eshte visible per tu klikuar");
+        Assert.That(perdorBtn.Text.Trim(), Is.EqualTo("Përdor"), "Butoni nuk eshte Përdor");
+
+        Log("Kliko butonin Perdor");
+        SafeClick(perdorLocator);
+
+        Log("Kliko Aplikim i ri");
+        By aplikimIRiLocator = By.CssSelector("button[aria-label='Aplikim i ri']");
+        IWebElement aplikimIRi = wait.Until(ExpectedConditions.ElementIsVisible(aplikimIRiLocator));
+        Assert.That(aplikimIRi.Displayed, Is.True, "Karta Aplikim i ri nuk eshte visible");
+        IWebElement aplikimIRiTitle = aplikimIRi.FindElement(By.CssSelector("h6.mbx-title"));
+        Assert.That(aplikimIRiTitle.Text.Trim(), Is.EqualTo("Aplikim i ri"),
+            "Titulli i kartes nuk eshte Aplikim i ri");
+        SafeClick(aplikimIRiLocator);
+        Thread.Sleep(1500);
+        DismissCookieBannerIfPresent();
+    }
+
+    private IWebElement WaitForTableByHeader(string headerText)
+    {
+        var dataWait = new WebDriverWait(driver, TimeSpan.FromSeconds(40));
+        return dataWait.Until(d =>
         {
-            ((IJavaScriptExecutor)driver).ExecuteScript(
-                "if(document.activeElement){document.activeElement.blur();}"
-            );
-        }
-        catch (Exception ex)
+            try
+            {
+                var table = d.FindElement(By.XPath($"//table[.//th[normalize-space()='{headerText}']]"));
+                var rows = table.FindElements(By.CssSelector("tbody tr"));
+                return rows.Count > 0 && rows[0].Displayed ? table : null;
+            }
+            catch (StaleElementReferenceException)
+            {
+                return null;
+            }
+            catch (NoSuchElementException)
+            {
+                return null;
+            }
+        });
+    }
+
+    private IWebElement WaitForDataRow(string headerText, string expectedValue, int columnIndex)
+    {
+        return wait.Until(d =>
         {
-            Log("BlurActiveElement error: " + ex.Message);
+            try
+            {
+                var table = d.FindElement(By.XPath($"//table[.//th[normalize-space()='{headerText}']]"));
+                var row = table.FindElement(By.CssSelector("tbody tr"));
+                string rowText = row.Text.Trim();
+                Log("Current tbody/tr text: " + rowText);
+
+                if (string.IsNullOrWhiteSpace(rowText))
+                    return null;
+
+                var cells = row.FindElements(By.XPath("./td"));
+                if (cells.Count <= columnIndex)
+                    return null;
+
+                string actual = cells[columnIndex].Text.Trim();
+                Log($"Detected row cell[{columnIndex}]: '{actual}'");
+                return actual == expectedValue ? row : null;
+            }
+            catch (StaleElementReferenceException)
+            {
+                return null;
+            }
+            catch (NoSuchElementException)
+            {
+                return null;
+            }
+        });
+    }
+
+    private void AssertTableHeaders(IWebElement table, string[] expectedHeaders)
+    {
+        IWebElement headerRow = table.FindElement(By.CssSelector("thead tr"));
+        Assert.That(headerRow.Displayed, Is.True, "Header row nuk është visible");
+
+        var headerCells = headerRow.FindElements(By.XPath("./th"));
+        Log($"Numri i header cells: {headerCells.Count}");
+        Assert.That(headerCells.Count, Is.EqualTo(expectedHeaders.Length),
+            $"Numri i kolonave nuk përputhet. Actual: {headerCells.Count}, Expected: {expectedHeaders.Length}");
+
+        for (int i = 0; i < expectedHeaders.Length; i++)
+        {
+            string actual = headerCells[i].Text.Trim();
+            string expected = expectedHeaders[i];
+            Log($"Header[{i}] -> Actual: '{actual}' | Expected: '{expected}'");
+            Assert.That(actual, Is.EqualTo(expected), $"Header mismatch në kolonën {i}");
         }
     }
 
-    private void ClearFilterInput(By locator)
+    private void AssertTableRow(IWebElement row, string[] expectedValues)
     {
+        Assert.That(row.Displayed, Is.True, "Data row nuk është visible");
 
-        Log("Clear filter input with Ctrl+A + Delete");
-        IWebElement input = wait.Until(ExpectedConditions.ElementIsVisible(locator));
+        var cells = row.FindElements(By.XPath("./td"));
+        Log($"Numri i kolonave ne rresht: {cells.Count}");
+        Assert.That(cells.Count, Is.EqualTo(expectedValues.Length),
+            $"Numri i kolonave nuk përputhet. Actual: {cells.Count}, Expected: {expectedValues.Length}");
 
+        for (int i = 0; i < expectedValues.Length; i++)
+        {
+            string actual = cells[i].Text.Trim();
+            string expected = expectedValues[i];
+            Log($"Cell[{i}] -> Actual: '{actual}' | Expected: '{expected}'");
+            Assert.That(actual, Is.EqualTo(expected), $"Cell mismatch në kolonën {i}");
+        }
+    }
+
+    private void AssertDisabledInput(string id, string expectedValue)
+    {
+        IWebElement input = wait.Until(ExpectedConditions.ElementIsVisible(By.Id(id)));
         ((IJavaScriptExecutor)driver).ExecuteScript(
             "arguments[0].scrollIntoView({block:'center'});",
-            input
-        );
-
-        input.Click();
+            input);
         Thread.Sleep(300);
-
-        input.SendKeys(Keys.Control + "a");
-        Thread.Sleep(200);
-        input.SendKeys(Keys.Delete);
-        Thread.Sleep(500);
-
-        string currentValue = input.GetAttribute("value") ?? string.Empty;
-        Log("Filter value after keyboard clear: '" + currentValue + "'");
-
-        if (!string.IsNullOrEmpty(currentValue))
-        {
-            Log("Keyboard clear nuk mjaftoi, provoj me JS");
-            ((IJavaScriptExecutor)driver).ExecuteScript(@"
-                const el = arguments[0];
-                el.value = '';
-                el.dispatchEvent(new Event('input', { bubbles: true }));
-                el.dispatchEvent(new Event('change', { bubbles: true }));
-            ", input);
-
-            Thread.Sleep(500);
-        }
-
-        BlurActiveElement();
-        Thread.Sleep(800);
-
-        input = wait.Until(ExpectedConditions.ElementIsVisible(locator));
-        currentValue = input.GetAttribute("value") ?? string.Empty;
-        Log("Filter value final: '" + currentValue + "'");
+        string actual = input.GetAttribute("value") ?? "";
+        Log($"{id} value: '{actual}'");
+        Assert.That(actual, Is.EqualTo(expectedValue));
     }
 }

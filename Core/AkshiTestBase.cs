@@ -62,22 +62,7 @@ public abstract class AkshiTestBase : PageTest
 
         if (!File.Exists(SettingsLoader.AuthStatePath(Profile)))
         {
-            if (Profile.IsQytetar())
-            {
-                await AuthSession.LoginInCurrentPageAsync(Page, Profile);
-            }
-            else if (Profile == LoginProfile.Biznes)
-            {
-                Assert.Fail(
-                    "Nuk u gjet sesioni i login-it si biznes. Login-i duhet te kryhet nje here ne fillim " +
-                    "(Hyr → Biznes → NIPT/fjalëkalim → OTP) para se te nisin testet.");
-            }
-            else
-            {
-                Assert.Ignore(
-                    $"Nuk u gjet sesioni i login-it per {Profile}. " +
-                    "Plotëso kredencialet në appsettings.json ose appsettings.Local.json.");
-            }
+            await AuthSession.LoginInCurrentPageAsync(Page, Profile);
         }
 
         ServiceInfo service = ServiceCatalog.Resolve(ServiceCode, ServiceTitle);
@@ -172,7 +157,7 @@ public abstract class AkshiTestBase : PageTest
             try
             {
                 IWebElement select = d.FindElement(By.CssSelector($"#root form select[name='{name}']"));
-                string value = new SelectElement(select).SelectedOption.GetAttribute("value") ?? string.Empty;
+                string value = select.GetAttribute("value") ?? string.Empty;
                 return value.Equals(expectedValue, StringComparison.OrdinalIgnoreCase) ? select : null;
             }
             catch (NoSuchElementException)
@@ -241,6 +226,60 @@ public abstract class AkshiTestBase : PageTest
         SafeClick(By.CssSelector("#cookieConsent.show button.cookie-btn.accept"));
         wait.Until(ExpectedConditions.InvisibilityOfElementLocated(
             By.CssSelector("#cookieConsent.show")));
+    }
+
+    protected void OpenNewApplicationFromServicePage(string? expectedServiceName = null)
+    {
+        OpenMailboxChoiceFromServicePage(expectedServiceName, "Aplikim i ri");
+    }
+
+    protected void OpenTrackFromServicePage(string? expectedServiceName = null)
+    {
+        OpenMailboxChoiceFromServicePage(expectedServiceName, "Gjurmo");
+    }
+
+    private void OpenMailboxChoiceFromServicePage(string? expectedServiceName, string cardTitle)
+    {
+        Log("Assert page header");
+        IWebElement headerContainer = wait.Until(ExpectedConditions.ElementIsVisible(
+            By.CssSelector("div.page-header-container")));
+        Assert.That(headerContainer.Displayed, Is.True, "Page header nuk eshte visible");
+
+        IWebElement serviceName = wait.Until(ExpectedConditions.ElementIsVisible(
+            By.Id("serviceNameBreadcrumb")));
+        Assert.That(serviceName.Displayed, Is.True, "Breadcrumb i sherbimit nuk eshte visible");
+        string actualName = serviceName.Text.Replace('\u00A0', ' ').Trim();
+        if (!string.IsNullOrEmpty(expectedServiceName))
+        {
+            Assert.That(actualName, Is.EqualTo(expectedServiceName),
+                "Emri i sherbimit nuk eshte i sakte");
+        }
+        else
+        {
+            Assert.That(actualName, Is.Not.Empty, "Emri i sherbimit eshte bosh");
+        }
+
+        Log("Scroll deri sa butoni Perdor te jete i dukshem");
+        By perdorLocator = By.CssSelector("button.use-service-button");
+        IWebElement perdorBtn = wait.Until(ExpectedConditions.ElementExists(perdorLocator));
+        ((IJavaScriptExecutor)driver).ExecuteScript(
+            "arguments[0].scrollIntoView({block:'center', inline:'nearest'});",
+            perdorBtn);
+        Thread.Sleep(500);
+        perdorBtn = wait.Until(ExpectedConditions.ElementToBeClickable(perdorLocator));
+        Assert.That(perdorBtn.Displayed, Is.True, "Butoni Perdor nuk eshte visible per tu klikuar");
+
+        Log("Kliko butonin Perdor");
+        SafeClick(perdorLocator);
+
+        Log($"Kliko {cardTitle}");
+        By cardLocator = By.XPath(
+            $"//div[contains(@class,'mbx-content') and @role='button'][.//h6[contains(@class,'mbx-title') and normalize-space()='{cardTitle}']]" +
+            $" | //button[@aria-label='{cardTitle}']");
+        wait.Until(ExpectedConditions.ElementIsVisible(cardLocator));
+        SafeClick(cardLocator);
+        Thread.Sleep(1500);
+        DismissCookieBannerIfPresent();
     }
 
     protected void AssertFieldError(string expected)

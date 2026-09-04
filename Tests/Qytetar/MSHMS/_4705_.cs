@@ -9,6 +9,7 @@ public class _4705_ : QytetarNidF602TestBase
     protected override string ServiceCode => "4705";
     protected override string? ServiceTitle => "ListaESemundjeveKronike";
     protected override ServiceStartMode StartMode => ServiceStartMode.NewApplication;
+    protected override bool StartServiceOnSetup => false;
 
     [Test]
     public void ListaESemundjeveKronike()
